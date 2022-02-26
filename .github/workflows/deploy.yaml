@@ -1,0 +1,149 @@
+name: 'Test and Deploy'
+
+on:
+  push:
+    branches:
+      - master
+      - 'deploy/*'
+  pull_request:
+
+jobs:
+  build-api-docker:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          aws-region: eu-central-1
+          role-to-assume: arn:aws:iam::831119889470:role/github_deploy_production
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+        id: contember-version
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          push: true
+          file: api.Dockerfile
+          tags: |
+            831119889470.dkr.ecr.eu-central-1.amazonaws.com/mangoweb/app/ukrajina/api:gh-${{ github.sha }}
+
+  build-admin-docker:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          aws-region: eu-central-1
+          role-to-assume: arn:aws:iam::831119889470:role/github_deploy_production
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+        id: contember-version
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          push: true
+          file: admin.Dockerfile
+          tags: |
+            831119889470.dkr.ecr.eu-central-1.amazonaws.com/mangoweb/app/ukrajina/admin:gh-${{ github.sha }}
+
+  deploy-api:
+    if: ${{ contains('refs/heads/deploy/beta',github.ref) || contains('refs/heads/deploy/prod',github.ref) }}
+    permissions:
+      id-token: write
+      contents: read
+    needs:
+      - build-api-docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PAT_JAZZ }}
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          aws-region: eu-central-1
+          role-to-assume: arn:aws:iam::831119889470:role/github_deploy_production
+      - name: Check out kubernetes-v2 repository
+        uses: actions/checkout@v2
+        with:
+          repository: manGoweb/kubernetes-v2
+          ref: main
+          token: ${{ secrets.PAT_JAZZ }}
+          path: ./kubernetes-v2
+      - name: set release name
+        id: release
+        run: |
+          case "${{ github.ref }}" in
+            "refs/heads/deploy/beta") echo "::set-output name=suffix::beta" ;;
+            "refs/heads/deploy/prod") echo "::set-output name=suffix::prod" ;;
+            *) echo "::set-output name=suffix::wtf" ;;
+          esac
+      - name: Deploy kubernetes release
+        uses: ./kubernetes-v2/actions/deploy
+        with:
+          release: ukrajina-${{ steps.release.outputs.suffix }}-api
+          basePath: ./kubernetes-v2
+          cluster: production
+          values: |
+            version: gh-${{ github.sha }}
+
+  deploy-admin:
+    if: ${{ contains('refs/heads/deploy/beta',github.ref) || contains('refs/heads/deploy/prod',github.ref) }}
+    permissions:
+      id-token: write
+      contents: read
+    needs:
+      - build-admin-docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PAT_JAZZ }}
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          aws-region: eu-central-1
+          role-to-assume: arn:aws:iam::831119889470:role/github_deploy_production
+      - name: Check out kubernetes-v2 repository
+        uses: actions/checkout@v2
+        with:
+          repository: manGoweb/kubernetes-v2
+          ref: main
+          token: ${{ secrets.PAT_JAZZ }}
+          path: ./kubernetes-v2
+      - name: set release name
+        id: release
+        run: |
+          case "${{ github.ref }}" in
+            "refs/heads/deploy/beta") echo "::set-output name=suffix::beta" ;;
+            "refs/heads/deploy/prod") echo "::set-output name=suffix::prod" ;;
+            *) echo "::set-output name=suffix::wtf" ;;
+          esac
+      - name: Deploy kubernetes release
+        uses: ./kubernetes-v2/actions/deploy
+        with:
+          release: ukrajina-${{ steps.release.outputs.suffix }}-admin
+          basePath: ./kubernetes-v2
+          cluster: production
+          values: |
+            version: gh-${{ github.sha }}

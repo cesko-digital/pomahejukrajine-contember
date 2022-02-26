@@ -1,0 +1,75 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/volunteer",
+					"value": {
+						"inherits": [
+							"public"
+						],
+						"variables": {
+							"volunteerId": {
+								"type": "entity",
+								"entityName": "Volunteer"
+							}
+						},
+						"stages": "*",
+						"entities": {
+							"Volunteer": {
+								"predicates": {
+									"self": {
+										"id": {
+											"eq": "volunteerId"
+										}
+									}
+								},
+								"operations": {
+									"read": {
+										"email": "self",
+										"phone": "self",
+										"userNote": "self",
+										"expertise": "self",
+										"districts": "self",
+										"offers": "self"
+									},
+									"update": {
+										"userNote": "self",
+										"expertise": "self",
+										"districts": "self",
+										"offers": "self"
+									}
+								}
+							},
+							"Offer": {
+								"predicates": {
+									"self": {
+										"volunteer": {
+											"id": {
+												"eq": "volunteerId"
+											}
+										}
+									}
+								},
+								"operations": {
+									"read": {
+										"type": "self",
+										"capacity": "self",
+										"userNote": "self"
+									},
+									"update": {
+										"userNote": "self"
+									},
+									"delete": "self"
+								}
+							}
+						}
+					}
+				}
+			]
+		}
+	]
+}

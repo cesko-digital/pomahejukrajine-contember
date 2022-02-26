@@ -76,6 +76,35 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 				},
 			},
 		},
+		volunteer: {
+			inherits: ['public'],
+			variables: {
+				volunteerId: {
+					type: Acl.VariableType.entity,
+					entityName: 'Volunteer',
+				},
+			},
+			stages: '*',
+			entities: {
+				Volunteer: {
+					predicates: { self: { id: { eq: 'volunteerId' } } },
+					operations: {
+						read: someFields('self', ['email', 'phone', 'userNote', 'expertise', 'districts', 'offers']),
+						update: someFields('self', ['userNote', 'expertise', 'districts', 'offers']),
+					},
+				},
+				Offer: {
+					predicates: {
+						self: { volunteer: { id: { eq: 'volunteerId' }, }, },
+					},
+					operations: {
+						read: someFields('self', ['type', 'capacity', 'userNote']),
+						update: someFields('self', ['userNote']),
+						delete: 'self',
+					},
+				},
+			},
+		}
 	},
 })
 
