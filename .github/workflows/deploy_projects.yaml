@@ -46,18 +46,18 @@ jobs:
         if: ${{ env.STAGE == 'beta' }}
         uses: docker://contember/cli:1.0.0-rc.7
         env:
-          CONTEMBER_API_URL: https://api.ukrajina-beta.contember.online
+          CONTEMBER_API_URL: https://api.ukrajina-beta.contember.cz
           CONTEMBER_API_TOKEN: ${{ secrets.CONTEMBER_BETA_API_TOKEN }}
           CONTEMBER_PROJECT_NAME: ukrajina
         with:
-          args: deploy ukrajina --admin https://ukrajina-beta.contember.online --yes
+          args: deploy ukrajina --admin https://ukrajina-beta.contember.cz --yes
 
       - name: Deploy Prod
         if: ${{ env.STAGE == 'prod' }}
         uses: docker://contember/cli:1.0.0-rc.7
         env:
-          CONTEMBER_API_URL: https://api.ukrajina.contember.online
+          CONTEMBER_API_URL: https://api.ukrajina.contember.cz
           CONTEMBER_API_TOKEN: ${{ secrets.CONTEMBER_PROD_API_TOKEN }}
           CONTEMBER_PROJECT_NAME: ukrajina
         with:
-          args: deploy ukrajina --admin https://ukrajina.contember.online --yes
+          args: deploy ukrajina --admin https://ukrajina.contember.cz --yes
