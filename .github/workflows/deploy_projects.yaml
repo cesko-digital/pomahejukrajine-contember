@@ -20,8 +20,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Check that deploy branch is behind master
-        run: git merge-base --is-ancestor HEAD refs/remotes/origin/master
+      - name: Check that deploy branch is behind main
+        run: git merge-base --is-ancestor HEAD refs/remotes/origin/main
 
       - name: Install dependencies
         run: ./bin-docker/npm ci --also=dev
