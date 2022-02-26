@@ -1,0 +1,200 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "removeField",
+			"entityName": "District",
+			"fieldName": "volunteer"
+		},
+		{
+			"modification": "removeField",
+			"entityName": "VolunteerTag",
+			"fieldName": "volunteer"
+		},
+		{
+			"modification": "removeField",
+			"entityName": "Volunteer",
+			"fieldName": "districts"
+		},
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "VolunteerDistrict",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					}
+				},
+				"tableName": "volunteer_district"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "VolunteerDistrict",
+			"owningSide": {
+				"name": "volunteer",
+				"inversedBy": "districts",
+				"nullable": false,
+				"type": "ManyHasOne",
+				"target": "Volunteer",
+				"joiningColumn": {
+					"columnName": "volunteer_id",
+					"onDelete": "cascade"
+				}
+			},
+			"inverseSide": {
+				"name": "districts",
+				"ownedBy": "volunteer",
+				"type": "OneHasMany",
+				"target": "VolunteerDistrict"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "VolunteerDistrict",
+			"owningSide": {
+				"name": "district",
+				"inversedBy": "volunteers",
+				"nullable": false,
+				"type": "ManyHasOne",
+				"target": "District",
+				"joiningColumn": {
+					"columnName": "district_id",
+					"onDelete": "restrict"
+				}
+			},
+			"inverseSide": {
+				"name": "volunteers",
+				"ownedBy": "district",
+				"type": "OneHasMany",
+				"target": "VolunteerDistrict"
+			}
+		},
+		{
+			"modification": "createRelationInverseSide",
+			"entityName": "VolunteerTag",
+			"relation": {
+				"name": "volunteers",
+				"ownedBy": "tags",
+				"target": "Volunteer",
+				"type": "ManyHasMany"
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/VolunteerDistrict",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"create": {
+								"id": true,
+								"volunteer": true,
+								"district": true
+							},
+							"read": {
+								"id": true,
+								"volunteer": true,
+								"district": true
+							},
+							"update": {
+								"id": true,
+								"volunteer": true,
+								"district": true
+							},
+							"delete": true
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/District/operations/create/volunteers",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/District/operations/update/volunteers",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/District/operations/read/volunteers",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/VolunteerTag/operations/create/volunteers",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/VolunteerTag/operations/update/volunteers",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/VolunteerTag/operations/read/volunteers",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Volunteer/operations/create/districts",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Volunteer/operations/update/districts",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Volunteer/operations/read/districts",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/VolunteerDistrict",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"create": {
+								"id": true,
+								"volunteer": true,
+								"district": true
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/District/operations/read/volunteers",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/Volunteer/operations/create/districts",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Volunteer/operations/update/districts",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Volunteer/operations/read/districts",
+					"value": "self"
+				}
+			]
+		}
+	]
+}

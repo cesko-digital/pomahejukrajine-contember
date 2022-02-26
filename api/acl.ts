@@ -1,5 +1,5 @@
-import { PermissionsBuilder } from '@contember/schema-definition'
-import { Acl, Model } from '@contember/schema'
+import {PermissionsBuilder} from '@contember/schema-definition'
+import {Acl, Model} from '@contember/schema'
 
 const fieldNames = (model: Model.Schema, entity: string): string[] => {
 	return Object.keys(model.entities[entity].fields)
@@ -66,6 +66,12 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 					predicates: {},
 					operations: {
 						create: someFields(true, ['email', 'phone', 'userNote', 'expertise', 'districts', 'offers']),
+					},
+				},
+				VolunteerDistrict: {
+					predicates: {},
+					operations: {
+						create: allField(model, 'VolunteerDistrict', true),
 					},
 				},
 				Offer: {

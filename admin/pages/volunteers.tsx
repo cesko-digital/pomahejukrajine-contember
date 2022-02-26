@@ -21,13 +21,16 @@ import {
 	FieldView, StaticRender, Field, DataGrid, TitleBar,
 } from '@contember/admin'
 import {Conditional} from "../components/Conditional";
+import {HasManyCell} from "../components/HasManyCell";
 
 export const volunteers = (
 	<DataGridPage entities="Volunteer[verified=true][banned=false]" itemsPerPage={100} rendererProps={{ title: "Dobrovolníci" }}>
 		<TextCell field="email" header="Email" />
 		<TextCell field="phone" header="Telefon" />
 		<TextCell field="expertise" header="Odbornost" />
-		<HasManySelectCell field="districts" options="District.name" header="Okresy" />
+		<HasManyCell field="districts" entityList="District" hasOneField="district" header="Okresy">
+			<Field field="name" />
+		</HasManyCell>
 		<HasManySelectCell field="tags" options="VolunteerTag.name" header="Tagy" />
 		<TextCell field="userNote" header="Poznámka uživatele" hidden />
 		<TextCell field="internalNote" header="Interní poznámka" hidden />
@@ -54,7 +57,9 @@ export const offers = (
 			<TextCell field="volunteer.email" header="Dobrovolník: Email" hidden />
 			<TextCell field="volunteer.phone" header="Dobrovolník: Telefon" hidden />
 			<TextCell field="volunteer.expertise" header="Dobrovolník: Odbornost" hidden />
-			<HasManySelectCell field="volunteer.districts" options="District.name" header="Dobrovolník: Okresy" />
+			<HasManyCell field="volunteer.districts" entityList="District" hasOneField="district" header="Dobrovolník: Okresy">
+				<Field field="name" />
+			</HasManyCell>
 			<HasManySelectCell field="volunteer.tags" options="VolunteerTag.name" header="Dobrovolník: Tagy" />
 			<TextCell field="volunteer.userNote" header="Dobrovolník: Poznámka uživatele" hidden />
 			<TextCell field="volunteer.internalNote" header="Dobrovolník: Interní poznámka" hidden />
@@ -111,7 +116,9 @@ const VolunteerForm = Component(
 			<TextField field="email" label="Email" />
 			<TextField field="phone" label="Telefon" />
 			<TextField field="expertise" label="Odbornost" />
-			<MultiSelectField label="Okresy" field="districts" options="District.name" />
+			<Repeater field="districts" label="Okresy" orderBy={undefined}>
+				<SelectField label={undefined} options="District.name" field="district" />
+			</Repeater>
 			<MultiSelectField label="Tagy" field="tags" options="VolunteerTag.name" />
 			<TextAreaField field="userNote" label="Poznámka uživatele" />
 			<TextAreaField field="internalNote" label="Interní poznámka" />

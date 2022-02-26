@@ -8,13 +8,13 @@ export class Region { // Kraj
 export class District { // Okres
 	region = def.manyHasOne(Region, 'districts').notNull()
 	name = def.stringColumn().notNull().unique()
-	volunteer = def.manyHasManyInverse(Volunteer, 'districts')
+	volunteers = def.oneHasMany(VolunteerDistrict, 'district')
 }
 
 export class VolunteerTag {
 	order = def.intColumn().notNull().default(0)
 	name = def.stringColumn().notNull().unique()
-	volunteer = def.manyHasManyInverse(Volunteer, 'tags')
+	volunteers = def.manyHasManyInverse(Volunteer, 'tags')
 }
 
 // 'accomodation', 'transportation', 'interpretation', 'volunteering', 'materials'
@@ -41,10 +41,16 @@ export class Volunteer {
 	userNote = def.stringColumn().notNull().default('')
 	internalNote = def.stringColumn().notNull().default('')
 	expertise = def.stringColumn().notNull().default('')
-	districts = def.manyHasMany(District, 'volunteer')
-	tags = def.manyHasMany(VolunteerTag, 'volunteer').orderBy('order')
+	districts = def.oneHasMany(VolunteerDistrict, 'volunteer')
+	tags = def.manyHasMany(VolunteerTag, 'volunteers').orderBy('order')
 	createdAt = def.dateTimeColumn().notNull().default('now')
 	createdInAdmin = def.boolColumn().default(false).notNull()
+}
+
+
+export class VolunteerDistrict {
+	volunteer = def.manyHasOne(Volunteer, 'districts').notNull().cascadeOnDelete()
+	district = def.manyHasOne(District, 'volunteers').notNull()
 }
 
 export class Offer {
