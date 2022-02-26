@@ -27,7 +27,7 @@ jobs:
         run: npm ci --also=dev
 
       - name: TypeScript
-        run: npm run tsc
+        run: node_modules/.bin/tsc
 
       - name: Validate Schema
         uses: docker://contember/cli:1.0.0-rc.7
