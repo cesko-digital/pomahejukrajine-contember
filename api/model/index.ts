@@ -33,7 +33,7 @@ export class OfferType {
 export class Volunteer {
 	identityId = def.uuidColumn()
 	email = def.stringColumn().notNull()
-	phone = def.stringColumn().notNull()
+	phone = def.stringColumn().notNull().default('')
 	offers = def.oneHasMany(Offer, 'volunteer')
 	verified = def.boolColumn().default(false).notNull()
 	banned = def.boolColumn().default(false).notNull()
