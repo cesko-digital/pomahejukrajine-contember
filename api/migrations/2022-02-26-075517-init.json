@@ -1,0 +1,870 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "Region",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					}
+				},
+				"tableName": "region"
+			}
+		},
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "District",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					}
+				},
+				"tableName": "district"
+			}
+		},
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "VolunteerTag",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					}
+				},
+				"tableName": "volunteer_tag"
+			}
+		},
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "OfferType",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					}
+				},
+				"tableName": "offer_type"
+			}
+		},
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "Volunteer",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					}
+				},
+				"tableName": "volunteer"
+			}
+		},
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "Offer",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					}
+				},
+				"tableName": "offer"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Region",
+			"field": {
+				"name": "name",
+				"columnName": "name",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "District",
+			"field": {
+				"name": "name",
+				"columnName": "name",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "VolunteerTag",
+			"field": {
+				"name": "order",
+				"columnName": "order",
+				"nullable": false,
+				"default": 0,
+				"type": "Integer",
+				"columnType": "integer"
+			},
+			"fillValue": 0
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "VolunteerTag",
+			"field": {
+				"name": "name",
+				"columnName": "name",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferType",
+			"field": {
+				"name": "order",
+				"columnName": "order",
+				"nullable": false,
+				"default": 0,
+				"type": "Integer",
+				"columnType": "integer"
+			},
+			"fillValue": 0
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferType",
+			"field": {
+				"name": "name",
+				"columnName": "name",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferType",
+			"field": {
+				"name": "hasCapacity",
+				"columnName": "has_capacity",
+				"nullable": false,
+				"default": false,
+				"type": "Bool",
+				"columnType": "boolean"
+			},
+			"fillValue": false
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferType",
+			"field": {
+				"name": "noteLabel",
+				"columnName": "note_label",
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferType",
+			"field": {
+				"name": "noteRequired",
+				"columnName": "note_required",
+				"nullable": false,
+				"default": false,
+				"type": "Bool",
+				"columnType": "boolean"
+			},
+			"fillValue": false
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Volunteer",
+			"field": {
+				"name": "identityId",
+				"columnName": "identity_id",
+				"nullable": true,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Volunteer",
+			"field": {
+				"name": "email",
+				"columnName": "email",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Volunteer",
+			"field": {
+				"name": "phone",
+				"columnName": "phone",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Volunteer",
+			"field": {
+				"name": "verified",
+				"columnName": "verified",
+				"nullable": false,
+				"default": false,
+				"type": "Bool",
+				"columnType": "boolean"
+			},
+			"fillValue": false
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Volunteer",
+			"field": {
+				"name": "banned",
+				"columnName": "banned",
+				"nullable": false,
+				"default": false,
+				"type": "Bool",
+				"columnType": "boolean"
+			},
+			"fillValue": false
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Volunteer",
+			"field": {
+				"name": "secretCode",
+				"columnName": "secret_code",
+				"nullable": true,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Volunteer",
+			"field": {
+				"name": "userNote",
+				"columnName": "user_note",
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Volunteer",
+			"field": {
+				"name": "internalNote",
+				"columnName": "internal_note",
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Volunteer",
+			"field": {
+				"name": "expertise",
+				"columnName": "expertise",
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Volunteer",
+			"field": {
+				"name": "createdAt",
+				"columnName": "created_at",
+				"nullable": false,
+				"default": "now",
+				"type": "DateTime",
+				"columnType": "timestamptz"
+			},
+			"fillValue": "now"
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Volunteer",
+			"field": {
+				"name": "createdInAdmin",
+				"columnName": "created_in_admin",
+				"nullable": false,
+				"default": false,
+				"type": "Bool",
+				"columnType": "boolean"
+			},
+			"fillValue": false
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Offer",
+			"field": {
+				"name": "capacity",
+				"columnName": "capacity",
+				"nullable": true,
+				"type": "Integer",
+				"columnType": "integer"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Offer",
+			"field": {
+				"name": "userNote",
+				"columnName": "user_note",
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Offer",
+			"field": {
+				"name": "internalNote",
+				"columnName": "internal_note",
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Offer",
+			"field": {
+				"name": "exhausted",
+				"columnName": "exhausted",
+				"nullable": false,
+				"default": false,
+				"type": "Bool",
+				"columnType": "boolean"
+			},
+			"fillValue": false
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "District",
+			"owningSide": {
+				"name": "region",
+				"inversedBy": "districts",
+				"nullable": false,
+				"type": "ManyHasOne",
+				"target": "Region",
+				"joiningColumn": {
+					"columnName": "region_id",
+					"onDelete": "restrict"
+				}
+			},
+			"inverseSide": {
+				"name": "districts",
+				"ownedBy": "region",
+				"type": "OneHasMany",
+				"target": "District",
+				"orderBy": [
+					{
+						"path": [
+							"name"
+						],
+						"direction": "asc"
+					}
+				]
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "Volunteer",
+			"owningSide": {
+				"type": "ManyHasMany",
+				"name": "districts",
+				"inversedBy": "volunteer",
+				"target": "District",
+				"joiningTable": {
+					"tableName": "volunteer_districts",
+					"joiningColumn": {
+						"columnName": "volunteer_id",
+						"onDelete": "cascade"
+					},
+					"inverseJoiningColumn": {
+						"columnName": "district_id",
+						"onDelete": "cascade"
+					}
+				}
+			},
+			"inverseSide": {
+				"name": "volunteer",
+				"ownedBy": "districts",
+				"target": "Volunteer",
+				"type": "ManyHasMany"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "Volunteer",
+			"owningSide": {
+				"type": "ManyHasMany",
+				"name": "tags",
+				"inversedBy": "volunteer",
+				"target": "VolunteerTag",
+				"joiningTable": {
+					"tableName": "volunteer_tags",
+					"joiningColumn": {
+						"columnName": "volunteer_id",
+						"onDelete": "cascade"
+					},
+					"inverseJoiningColumn": {
+						"columnName": "volunteer_tag_id",
+						"onDelete": "cascade"
+					}
+				},
+				"orderBy": [
+					{
+						"path": [
+							"order"
+						],
+						"direction": "asc"
+					}
+				]
+			},
+			"inverseSide": {
+				"name": "volunteer",
+				"ownedBy": "tags",
+				"target": "Volunteer",
+				"type": "ManyHasMany"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "Offer",
+			"owningSide": {
+				"name": "volunteer",
+				"inversedBy": "offers",
+				"nullable": false,
+				"type": "ManyHasOne",
+				"target": "Volunteer",
+				"joiningColumn": {
+					"columnName": "volunteer_id",
+					"onDelete": "restrict"
+				}
+			},
+			"inverseSide": {
+				"name": "offers",
+				"ownedBy": "volunteer",
+				"type": "OneHasMany",
+				"target": "Offer"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "Offer",
+			"owningSide": {
+				"name": "type",
+				"inversedBy": "offers",
+				"nullable": false,
+				"type": "ManyHasOne",
+				"target": "OfferType",
+				"joiningColumn": {
+					"columnName": "type_id",
+					"onDelete": "restrict"
+				}
+			},
+			"inverseSide": {
+				"name": "offers",
+				"ownedBy": "type",
+				"type": "OneHasMany",
+				"target": "Offer"
+			}
+		},
+		{
+			"modification": "createUniqueConstraint",
+			"entityName": "Region",
+			"unique": {
+				"fields": [
+					"name"
+				],
+				"name": "unique_Region_name_15569d"
+			}
+		},
+		{
+			"modification": "createUniqueConstraint",
+			"entityName": "District",
+			"unique": {
+				"fields": [
+					"name"
+				],
+				"name": "unique_District_name_bb6a54"
+			}
+		},
+		{
+			"modification": "createUniqueConstraint",
+			"entityName": "VolunteerTag",
+			"unique": {
+				"fields": [
+					"name"
+				],
+				"name": "unique_VolunteerTag_name_e43597"
+			}
+		},
+		{
+			"modification": "createUniqueConstraint",
+			"entityName": "OfferType",
+			"unique": {
+				"fields": [
+					"name"
+				],
+				"name": "unique_OfferType_name_c9e205"
+			}
+		},
+		{
+			"modification": "createUniqueConstraint",
+			"entityName": "Volunteer",
+			"unique": {
+				"fields": [
+					"secretCode"
+				],
+				"name": "unique_Volunteer_secretCode_a01a1b"
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin",
+					"value": {
+						"variables": {},
+						"stages": "*",
+						"entities": {
+							"Region": {
+								"predicates": {},
+								"operations": {
+									"create": {
+										"id": true,
+										"name": true,
+										"districts": true
+									},
+									"read": {
+										"id": true,
+										"name": true,
+										"districts": true
+									},
+									"update": {
+										"id": true,
+										"name": true,
+										"districts": true
+									},
+									"delete": true
+								}
+							},
+							"District": {
+								"predicates": {},
+								"operations": {
+									"create": {
+										"id": true,
+										"region": true,
+										"name": true,
+										"volunteer": true
+									},
+									"read": {
+										"id": true,
+										"region": true,
+										"name": true,
+										"volunteer": true
+									},
+									"update": {
+										"id": true,
+										"region": true,
+										"name": true,
+										"volunteer": true
+									},
+									"delete": true
+								}
+							},
+							"VolunteerTag": {
+								"predicates": {},
+								"operations": {
+									"create": {
+										"id": true,
+										"order": true,
+										"name": true,
+										"volunteer": true
+									},
+									"read": {
+										"id": true,
+										"order": true,
+										"name": true,
+										"volunteer": true
+									},
+									"update": {
+										"id": true,
+										"order": true,
+										"name": true,
+										"volunteer": true
+									},
+									"delete": true
+								}
+							},
+							"OfferType": {
+								"predicates": {},
+								"operations": {
+									"create": {
+										"id": true,
+										"order": true,
+										"name": true,
+										"hasCapacity": true,
+										"noteLabel": true,
+										"noteRequired": true,
+										"offers": true
+									},
+									"read": {
+										"id": true,
+										"order": true,
+										"name": true,
+										"hasCapacity": true,
+										"noteLabel": true,
+										"noteRequired": true,
+										"offers": true
+									},
+									"update": {
+										"id": true,
+										"order": true,
+										"name": true,
+										"hasCapacity": true,
+										"noteLabel": true,
+										"noteRequired": true,
+										"offers": true
+									},
+									"delete": true
+								}
+							},
+							"Volunteer": {
+								"predicates": {},
+								"operations": {
+									"create": {
+										"id": true,
+										"identityId": true,
+										"email": true,
+										"phone": true,
+										"offers": true,
+										"verified": true,
+										"banned": true,
+										"secretCode": true,
+										"userNote": true,
+										"internalNote": true,
+										"expertise": true,
+										"districts": true,
+										"tags": true,
+										"createdAt": true,
+										"createdInAdmin": true
+									},
+									"read": {
+										"id": true,
+										"identityId": true,
+										"email": true,
+										"phone": true,
+										"offers": true,
+										"verified": true,
+										"banned": true,
+										"secretCode": true,
+										"userNote": true,
+										"internalNote": true,
+										"expertise": true,
+										"districts": true,
+										"tags": true,
+										"createdAt": true,
+										"createdInAdmin": true
+									},
+									"update": {
+										"id": true,
+										"identityId": true,
+										"email": true,
+										"phone": true,
+										"offers": true,
+										"verified": true,
+										"banned": true,
+										"secretCode": true,
+										"userNote": true,
+										"internalNote": true,
+										"expertise": true,
+										"districts": true,
+										"tags": true,
+										"createdAt": true,
+										"createdInAdmin": true
+									},
+									"delete": true
+								}
+							},
+							"Offer": {
+								"predicates": {},
+								"operations": {
+									"create": {
+										"id": true,
+										"volunteer": true,
+										"type": true,
+										"capacity": true,
+										"userNote": true,
+										"internalNote": true,
+										"exhausted": true
+									},
+									"read": {
+										"id": true,
+										"volunteer": true,
+										"type": true,
+										"capacity": true,
+										"userNote": true,
+										"internalNote": true,
+										"exhausted": true
+									},
+									"update": {
+										"id": true,
+										"volunteer": true,
+										"type": true,
+										"capacity": true,
+										"userNote": true,
+										"internalNote": true,
+										"exhausted": true
+									},
+									"delete": true
+								}
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/public",
+					"value": {
+						"variables": {},
+						"stages": "*",
+						"entities": {
+							"Region": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"name": true,
+										"districts": true
+									}
+								}
+							},
+							"District": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"region": true,
+										"name": true,
+										"volunteer": true
+									}
+								}
+							},
+							"OfferType": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"order": true,
+										"name": true,
+										"hasCapacity": true,
+										"noteLabel": true,
+										"noteRequired": true
+									}
+								}
+							},
+							"Volunteer": {
+								"predicates": {},
+								"operations": {
+									"create": {
+										"email": true,
+										"phone": true,
+										"userNote": true,
+										"expertise": true,
+										"districts": true,
+										"offers": true
+									}
+								}
+							},
+							"Offer": {
+								"predicates": {},
+								"operations": {
+									"create": {
+										"volunteer": true,
+										"type": true,
+										"capacity": true,
+										"userNote": true
+									}
+								}
+							}
+						}
+					}
+				}
+			]
+		}
+	]
+}
