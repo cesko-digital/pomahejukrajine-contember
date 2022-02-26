@@ -48,6 +48,7 @@ jobs:
         env:
           CONTEMBER_API_URL: https://api.ukrajina-beta.contember.online
           CONTEMBER_API_TOKEN: ${{ secrets.CONTEMBER_BETA_API_TOKEN }}
+          CONTEMBER_PROJECT_NAME: ukrajina
         with:
           args: deploy ukrajina --admin https://ukrajina-beta.contember.online --yes
 
@@ -57,5 +58,6 @@ jobs:
         env:
           CONTEMBER_API_URL: https://api.ukrajina.contember.online
           CONTEMBER_API_TOKEN: ${{ secrets.CONTEMBER_PROD_API_TOKEN }}
+          CONTEMBER_PROJECT_NAME: ukrajina
         with:
           args: deploy ukrajina --admin https://ukrajina.contember.online --yes
