@@ -40,7 +40,7 @@ jobs:
           VITE_USER_NODE_ENV: production
           VITE_CONTEMBER_ADMIN_API_BASE_URL: '/_api'
           VITE_CONTEMBER_ADMIN_SESSION_TOKEN: '__SESSION_TOKEN__'
-        run: node_modules/.bin/vite build "admin" --config vite.config.ts --base "/ukrajina/"
+        run: node_modules/.bin/vite build "admin" --base "/ukrajina/"
 
       - name: Deploy Beta
         if: ${{ env.STAGE == 'beta' }}
