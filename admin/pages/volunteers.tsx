@@ -376,6 +376,9 @@ const OfferForm = Component(
 const VolunteerForm = Component(
 	() => (
 		<>
+			<MultiSelectField label="Tagy" field="tags" options="VolunteerTag.name" />
+			<hr />
+			<h3>Údaje o uživateli</h3>
 			<TextField field="name" label="Jméno" />
 			<TextField field="organization" label="Organizace" />
 			<TextField field="contactHours" label="Můžete mne kontaktovat (čas)" />
@@ -388,10 +391,11 @@ const VolunteerForm = Component(
 			<Repeater field="districts" label="Okresy" orderBy={undefined}>
 				<SelectField label={undefined} options="District.name" field="district" />
 			</Repeater>
-			<MultiSelectField label="Tagy" field="tags" options="VolunteerTag.name" />
 			<TextAreaField field="userNote" label="Poznámka uživatele" />
 			<TextAreaField field="internalNote" label="Interní poznámka" />
 			<CheckboxField field="verified" label="Ověřený" defaultValue={false} />
+			<hr />
+			<h3>Co nabízí</h3>
 			<Repeater field="offers" label="Nabídky" orderBy="type.order">
 				<OfferForm />
 			</Repeater>
@@ -416,4 +420,3 @@ export const editVolunteer = (
 		</FieldContainer>
 	</EditPage>
 )
-
