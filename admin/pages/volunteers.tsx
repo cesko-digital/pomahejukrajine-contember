@@ -32,17 +32,27 @@ import {Conditional} from "../components/Conditional";
 import {HasManyCell} from "../components/HasManyCell";
 import {Language} from "../../api/model";
 
+const limitLength = (maxLength: number) => (value: any) => {
+	if (typeof value !== 'string') {
+		return value
+	}
+	if (value.length > maxLength) {
+		return <span title={value}>{value.substr(0, maxLength) + '…'}</span>
+	}
+	return value
+};
+
 export const volunteers = (
 	<DataGridPage entities="Volunteer[verified=true][banned=false]" itemsPerPage={100} rendererProps={{ title: "Dobrovolníci" }}>
-		<TextCell field="email" header="Email" />
-		<TextCell field="phone" header="Telefon" />
-		<TextCell field="expertise" header="Odbornost" />
+		<TextCell field="email" header="Email" format={limitLength(30)} />
+		<TextCell field="phone" header="Telefon" format={limitLength(30)} />
+		<TextCell field="expertise" header="Odbornost" format={limitLength(30)} />
 		<HasManyCell field="districts" entityList="District" hasOneField="district" header="Okresy">
 			<Field field="name" />
 		</HasManyCell>
 		<HasManySelectCell field="tags" options="VolunteerTag.name" header="Tagy" />
-		<TextCell field="userNote" header="Poznámka uživatele" hidden />
-		<TextCell field="internalNote" header="Interní poznámka" hidden />
+		<TextCell field="userNote" header="Poznámka uživatele" hidden format={limitLength(30)} />
+		<TextCell field="internalNote" header="Interní poznámka" hidden format={limitLength(30)} />
 		<DateCell field="createdAt" header="Datum registrace" hidden />
 		<BooleanCell field="createdInAdmin" header="Registrován administrátorem" hidden />
 		<GenericCell canBeHidden={false} shrunk>
@@ -313,6 +323,33 @@ const OfferForm = Component(
 										// 		);
 										// 	}} />
 										// </HasMany>
+									)}
+								/>
+							</Conditional>
+
+							<Conditional showIf={acc => acc.getField('type').value === 'district'}>
+								<EntityView
+									render={(entity) => (
+										<>
+											<Radio
+												value={getParameter(entity)}
+												options={Array.from(entity.getEntityList('options'), (option) => ({
+													label: option.getField<string>('label').value!,
+													value: option.getField<string>('value').value!,
+												}))}
+												onChange={value => setParameter(entity, value)}
+											/>
+											{
+												Array.from(entity.getEntityList('options'))
+													.find(it => it.getField<string>('value').value === getParameter(entity))
+													?.getField<boolean>('requireSpecification').value!
+												&& (
+													<TextInput
+														value={getParameter(entity, 'specification')}
+														onChange={e => setParameter(entity, e.target.value, 'specification')}
+													/>
+												)}
+										</>
 									)}
 								/>
 							</Conditional>
