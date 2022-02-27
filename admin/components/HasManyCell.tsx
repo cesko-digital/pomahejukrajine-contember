@@ -23,7 +23,7 @@ export type HasManyCellProps = DataGridHeaderCellPublicProps &
 	hasOneField?: string
 }
 
-interface HasManyCellFilterState {
+type HasManyCellFilterState = {
 	ids: string[]
 	combinator: 'or' | 'and'
 }
@@ -52,8 +52,8 @@ const HasManyCellFilter = React.memo<HasManyCellFilter>(({ setFilter, filter, en
 		</div>
 
 		<div style={{ marginBottom: '.7em', display: 'flex', gap: '1em' }}>
-			<Button size="small" onClick={() => setFilter({ ...filter, ids: new Set(Array.from(list).filter(it => it.existsOnServer).map(it => it.id!)) })}>Vybrat všechny</Button>
-			<Button size="small" onClick={() => setFilter({ ...filter, ids: new Set() })}>Vybrat žádné</Button>
+			<Button size="small" onClick={() => setFilter({ ...filter, ids: Array.from(list).filter(it => it.existsOnServer).map(it => it.id!) })}>Vybrat všechny</Button>
+			<Button size="small" onClick={() => setFilter({ ...filter, ids: [] })}>Vybrat žádné</Button>
 		</div>
 
 		<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '.5em' }}>
@@ -88,7 +88,7 @@ export const HasManyCell = Component<HasManyCellProps>(
 				{...props}
 				enableOrdering={false}
 				getNewFilter={(filter, { environment }) => {
-					if (filter === undefined || filter.ids.size === 0) {
+					if (filter === undefined || filter.ids.length === 0) {
 						return undefined
 					}
 
@@ -103,7 +103,7 @@ export const HasManyCell = Component<HasManyCellProps>(
 						})),
 					})
 				}}
-				emptyFilter={{ combinator: 'or', ids: new Set() }}
+				emptyFilter={{ combinator: 'or', ids: [] }}
 				enableFiltering={true}
 				initialFilter={undefined}
 				filterRenderer={({ filter, setFilter }) => {

@@ -225,7 +225,7 @@ const OfferForm = Component(
 							<Conditional showIf={acc => acc.getField('type').value === 'date'}>
 								<EntityView
 									render={(entity) => (
-										<DateTimeInput type="date" value={getParameter(entity)} onChange={value => setParameter(entity, value)} />
+										<DateTimeInput type="date" value={getParameter(entity)} onChange={value => setParameter(entity, value ?? '')} />
 									)}
 								/>
 							</Conditional>
