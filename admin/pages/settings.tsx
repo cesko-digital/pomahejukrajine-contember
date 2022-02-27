@@ -53,6 +53,7 @@ export const offerTypes = (
 					{ value: 'textarea', label: 'Víceřádkový text' },
 					{ value: 'number', label: 'Číslo' },
 					{ value: 'date', label: 'Datum' },
+					{ value: 'district', label: 'Výběr okresu' },
 				]}
 			/>
 			<Conditional showIf={acc => ['radio', 'checkbox'].includes(acc.getField<string>('type').value ?? '')}>

@@ -28,7 +28,7 @@ export class OfferType {
 	offers = def.oneHasMany(Offer, 'type')
 }
 
-export const QuestionType = def.createEnum('radio', 'checkbox', 'text', 'textarea', 'number', 'date')
+export const QuestionType = def.createEnum('radio', 'checkbox', 'text', 'textarea', 'number', 'date', 'district')
 
 export class Question {
 	offerType = def.manyHasOne(OfferType, 'questions').notNull().cascadeOnDelete()
