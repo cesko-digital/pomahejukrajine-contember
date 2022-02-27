@@ -21,19 +21,53 @@ export class VolunteerTag {
 export class OfferType {
 	order = def.intColumn().notNull().default(0)
 	name = def.stringColumn().notNull().unique()
-	hasCapacity = def.boolColumn().default(false).notNull()
-	noteLabel = def.stringColumn().notNull().default('')
-	noteRequired = def.boolColumn().default(false).notNull()
+	infoText = def.stringColumn().notNull().default('')
+	questions = def.oneHasMany(Question, 'offerType').orderBy('order')
+	needsVerification = def.boolColumn().notNull().default(false) // vyžaduje ověření
 
 	offers = def.oneHasMany(Offer, 'type')
+}
+
+export const QuestionType = def.createEnum('radio', 'checkbox', 'text', 'textarea', 'number', 'date')
+
+export class Question {
+	offerType = def.manyHasOne(OfferType, 'questions').notNull().cascadeOnDelete()
+	order = def.intColumn().notNull().default(0)
+	label = def.stringColumn().notNull()
+	question = def.stringColumn().notNull()
+	type = def.enumColumn(QuestionType).notNull()
+	options = def.oneHasMany(QuestionOption, 'question').orderBy('order')
+	required = def.boolColumn().default(false).notNull()
+	public = def.boolColumn().default(false).notNull()
+
+	offerParameters = def.oneHasMany(OfferParameter, 'question')
+}
+
+export class QuestionOption {
+	question = def.manyHasOne(Question, 'options').notNull().cascadeOnDelete()
+	order = def.intColumn().notNull().default(0)
+	value = def.stringColumn().notNull()
+	label = def.stringColumn().notNull()
+	requireSpecification = def.boolColumn().default(false).notNull()
+}
+
+export class Language {
+	order = def.intColumn().notNull().default(0)
+	name = def.stringColumn().notNull().unique()
+	volunteers = def.oneHasMany(VolunteerLanguage, 'language')
 }
 
 // ---
 
 export class Volunteer {
 	identityId = def.uuidColumn()
+	name = def.stringColumn().notNull()
 	email = def.stringColumn().notNull()
 	phone = def.stringColumn().notNull().default('')
+	organization = def.stringColumn().notNull().default('')
+	contactHours = def.stringColumn().notNull().default('')
+	languages = def.oneHasMany(VolunteerLanguage, 'volunteer')
+
 	offers = def.oneHasMany(Offer, 'volunteer')
 	verified = def.boolColumn().default(false).notNull()
 	banned = def.boolColumn().default(false).notNull()
@@ -47,7 +81,13 @@ export class Volunteer {
 	createdInAdmin = def.boolColumn().default(false).notNull()
 }
 
+@def.Unique('volunteer', 'language')
+export class VolunteerLanguage {
+	volunteer = def.manyHasOne(Volunteer, 'languages').notNull()
+	language = def.manyHasOne(Language, 'volunteers').notNull()
+}
 
+@def.Unique('volunteer', 'district')
 export class VolunteerDistrict {
 	volunteer = def.manyHasOne(Volunteer, 'districts').notNull().cascadeOnDelete()
 	district = def.manyHasOne(District, 'volunteers').notNull()
@@ -56,12 +96,28 @@ export class VolunteerDistrict {
 export class Offer {
 	volunteer = def.manyHasOne(Volunteer, 'offers').notNull()
 	type = def.manyHasOne(OfferType, 'offers').notNull()
-	capacity = def.intColumn()
-	userNote = def.stringColumn().notNull().default('')
 	internalNote = def.stringColumn().notNull().default('')
 	exhausted = def.boolColumn().notNull().default(false)
+	parameters = def.oneHasMany(OfferParameter, 'offer')
 	// matches = def.oneHasMany(Match, 'offer')
 }
+
+@def.Unique('offer', 'question')
+export class OfferParameter {
+	offer = def.manyHasOne(Offer, 'parameters').notNull().cascadeOnDelete()
+	question = def.manyHasOne(Question, 'offerParameters').notNull()
+	value = def.stringColumn()
+	specification = def.stringColumn()
+	values = def.oneHasMany(OfferParameterValue, 'parameter')
+}
+
+export class OfferParameterValue {
+	parameter = def.manyHasOne(OfferParameter, 'values').notNull().cascadeOnDelete()
+	value = def.stringColumn().notNull()
+	specification = def.stringColumn()
+}
+
+
 
 // export class Demand {
 // 	// TODO

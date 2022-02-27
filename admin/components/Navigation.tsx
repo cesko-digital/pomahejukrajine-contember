@@ -10,22 +10,23 @@ export const Navigation = () => (
 			<Menu.Item title="Seznam" to="volunteers" />
 			<Menu.Item title="Registrovat" to="newVolunteer" />
 		</Menu.Item>
-		<Menu.Item title="Nabídky">
-			<DataBindingProvider stateComponent={FeedbackRenderer} refreshOnEnvironmentChange={false}>
-				<EntityListSubTree entities="OfferType" orderBy="order">
-					<FieldView
-						fields={["name", "id"]}
-						render={({ value: name }, { value: id }) => (
-							<Menu.Item title={name} to={{ pageName: "offers", parameters: { id } }} />
-						)}
-					/>
-				</EntityListSubTree>
-			</DataBindingProvider>
-		</Menu.Item>
+		{/*<Menu.Item title="Nabídky">*/}
+		{/*	<DataBindingProvider stateComponent={FeedbackRenderer} refreshOnEnvironmentChange={false}>*/}
+		{/*		<EntityListSubTree entities="OfferType" orderBy="order">*/}
+		{/*			<FieldView*/}
+		{/*				fields={["name", "id"]}*/}
+		{/*				render={({ value: name }, { value: id }) => (*/}
+		{/*					<Menu.Item title={name} to={{ pageName: "offers", parameters: { id } }} />*/}
+		{/*				)}*/}
+		{/*			/>*/}
+		{/*		</EntityListSubTree>*/}
+		{/*	</DataBindingProvider>*/}
+		{/*</Menu.Item>*/}
 		<Menu.Item title="Nastavení">
 			<Menu.Item title="Typy nabídek" to="offerTypes" />
 			<Menu.Item title="Tagy dobrovolníků" to="tags" />
 			<Menu.Item title="Kraje" to="districts" />
+			<Menu.Item title="Jazyky" to="languages" />
 		</Menu.Item>
 	</Menu>
 )

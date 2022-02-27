@@ -1,0 +1,1027 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "removeField",
+			"entityName": "OfferType",
+			"fieldName": "hasCapacity"
+		},
+		{
+			"modification": "removeField",
+			"entityName": "OfferType",
+			"fieldName": "noteLabel"
+		},
+		{
+			"modification": "removeField",
+			"entityName": "OfferType",
+			"fieldName": "noteRequired"
+		},
+		{
+			"modification": "removeField",
+			"entityName": "Offer",
+			"fieldName": "capacity"
+		},
+		{
+			"modification": "removeField",
+			"entityName": "Offer",
+			"fieldName": "userNote"
+		},
+		{
+			"modification": "createEnum",
+			"enumName": "QuestionType",
+			"values": [
+				"radio",
+				"checkbox",
+				"text",
+				"textarea",
+				"number",
+				"date"
+			]
+		},
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "Question",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					}
+				},
+				"tableName": "question"
+			}
+		},
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "QuestionOption",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					}
+				},
+				"tableName": "question_option"
+			}
+		},
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "Language",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					}
+				},
+				"tableName": "language"
+			}
+		},
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "VolunteerLanguage",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					}
+				},
+				"tableName": "volunteer_language"
+			}
+		},
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "OfferParameter",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					}
+				},
+				"tableName": "offer_parameter"
+			}
+		},
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "OfferParameterValue",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					}
+				},
+				"tableName": "offer_parameter_value"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferType",
+			"field": {
+				"name": "infoText",
+				"columnName": "info_text",
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferType",
+			"field": {
+				"name": "needsVerification",
+				"columnName": "needs_verification",
+				"nullable": false,
+				"default": false,
+				"type": "Bool",
+				"columnType": "boolean"
+			},
+			"fillValue": false
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Volunteer",
+			"field": {
+				"name": "name",
+				"columnName": "name",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Volunteer",
+			"field": {
+				"name": "organization",
+				"columnName": "organization",
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Volunteer",
+			"field": {
+				"name": "contactHours",
+				"columnName": "contact_hours",
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Question",
+			"field": {
+				"name": "order",
+				"columnName": "order",
+				"nullable": false,
+				"default": 0,
+				"type": "Integer",
+				"columnType": "integer"
+			},
+			"fillValue": 0
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Question",
+			"field": {
+				"name": "label",
+				"columnName": "label",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Question",
+			"field": {
+				"name": "question",
+				"columnName": "question",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Question",
+			"field": {
+				"name": "type",
+				"columnName": "type",
+				"nullable": false,
+				"type": "Enum",
+				"columnType": "QuestionType"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Question",
+			"field": {
+				"name": "required",
+				"columnName": "required",
+				"nullable": false,
+				"default": false,
+				"type": "Bool",
+				"columnType": "boolean"
+			},
+			"fillValue": false
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Question",
+			"field": {
+				"name": "public",
+				"columnName": "public",
+				"nullable": false,
+				"default": false,
+				"type": "Bool",
+				"columnType": "boolean"
+			},
+			"fillValue": false
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "QuestionOption",
+			"field": {
+				"name": "order",
+				"columnName": "order",
+				"nullable": false,
+				"default": 0,
+				"type": "Integer",
+				"columnType": "integer"
+			},
+			"fillValue": 0
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "QuestionOption",
+			"field": {
+				"name": "value",
+				"columnName": "value",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "QuestionOption",
+			"field": {
+				"name": "label",
+				"columnName": "label",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "QuestionOption",
+			"field": {
+				"name": "requireSpecification",
+				"columnName": "require_specification",
+				"nullable": false,
+				"default": false,
+				"type": "Bool",
+				"columnType": "boolean"
+			},
+			"fillValue": false
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Language",
+			"field": {
+				"name": "order",
+				"columnName": "order",
+				"nullable": false,
+				"default": 0,
+				"type": "Integer",
+				"columnType": "integer"
+			},
+			"fillValue": 0
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Language",
+			"field": {
+				"name": "name",
+				"columnName": "name",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferParameter",
+			"field": {
+				"name": "specification",
+				"columnName": "specification",
+				"nullable": true,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferParameter",
+			"field": {
+				"nullable": true,
+				"type": "String",
+				"columnType": "text",
+				"name": "value",
+				"columnName": "value"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferParameterValue",
+			"field": {
+				"name": "value",
+				"columnName": "value",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferParameterValue",
+			"field": {
+				"name": "specification",
+				"columnName": "specification",
+				"nullable": true,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "Question",
+			"owningSide": {
+				"name": "offerType",
+				"inversedBy": "questions",
+				"nullable": false,
+				"type": "ManyHasOne",
+				"target": "OfferType",
+				"joiningColumn": {
+					"columnName": "offer_type_id",
+					"onDelete": "cascade"
+				}
+			},
+			"inverseSide": {
+				"name": "questions",
+				"ownedBy": "offerType",
+				"type": "OneHasMany",
+				"target": "Question",
+				"orderBy": [
+					{
+						"path": [
+							"order"
+						],
+						"direction": "asc"
+					}
+				]
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "QuestionOption",
+			"owningSide": {
+				"name": "question",
+				"inversedBy": "options",
+				"nullable": false,
+				"type": "ManyHasOne",
+				"target": "Question",
+				"joiningColumn": {
+					"columnName": "question_id",
+					"onDelete": "cascade"
+				}
+			},
+			"inverseSide": {
+				"name": "options",
+				"ownedBy": "question",
+				"type": "OneHasMany",
+				"target": "QuestionOption",
+				"orderBy": [
+					{
+						"path": [
+							"order"
+						],
+						"direction": "asc"
+					}
+				]
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "VolunteerLanguage",
+			"owningSide": {
+				"name": "volunteer",
+				"inversedBy": "languages",
+				"nullable": false,
+				"type": "ManyHasOne",
+				"target": "Volunteer",
+				"joiningColumn": {
+					"columnName": "volunteer_id",
+					"onDelete": "restrict"
+				}
+			},
+			"inverseSide": {
+				"name": "languages",
+				"ownedBy": "volunteer",
+				"type": "OneHasMany",
+				"target": "VolunteerLanguage"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "VolunteerLanguage",
+			"owningSide": {
+				"name": "language",
+				"inversedBy": "volunteers",
+				"nullable": false,
+				"type": "ManyHasOne",
+				"target": "Language",
+				"joiningColumn": {
+					"columnName": "language_id",
+					"onDelete": "restrict"
+				}
+			},
+			"inverseSide": {
+				"name": "volunteers",
+				"ownedBy": "language",
+				"type": "OneHasMany",
+				"target": "VolunteerLanguage"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "OfferParameter",
+			"owningSide": {
+				"name": "offer",
+				"inversedBy": "parameters",
+				"nullable": false,
+				"type": "ManyHasOne",
+				"target": "Offer",
+				"joiningColumn": {
+					"columnName": "offer_id",
+					"onDelete": "cascade"
+				}
+			},
+			"inverseSide": {
+				"name": "parameters",
+				"ownedBy": "offer",
+				"type": "OneHasMany",
+				"target": "OfferParameter"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "OfferParameter",
+			"owningSide": {
+				"name": "question",
+				"inversedBy": "offerParameters",
+				"nullable": false,
+				"type": "ManyHasOne",
+				"target": "Question",
+				"joiningColumn": {
+					"columnName": "question_id",
+					"onDelete": "restrict"
+				}
+			},
+			"inverseSide": {
+				"name": "offerParameters",
+				"ownedBy": "question",
+				"type": "OneHasMany",
+				"target": "OfferParameter"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "OfferParameterValue",
+			"owningSide": {
+				"name": "parameter",
+				"inversedBy": "values",
+				"nullable": false,
+				"type": "ManyHasOne",
+				"target": "OfferParameter",
+				"joiningColumn": {
+					"columnName": "parameter_id",
+					"onDelete": "cascade"
+				}
+			},
+			"inverseSide": {
+				"name": "values",
+				"ownedBy": "parameter",
+				"type": "OneHasMany",
+				"target": "OfferParameterValue"
+			}
+		},
+		{
+			"modification": "createUniqueConstraint",
+			"entityName": "VolunteerDistrict",
+			"unique": {
+				"name": "unique_VolunteerDistrict_volunteer_district_997196",
+				"fields": [
+					"volunteer",
+					"district"
+				]
+			}
+		},
+		{
+			"modification": "createUniqueConstraint",
+			"entityName": "Language",
+			"unique": {
+				"fields": [
+					"name"
+				],
+				"name": "unique_Language_name_ccb3ef"
+			}
+		},
+		{
+			"modification": "createUniqueConstraint",
+			"entityName": "VolunteerLanguage",
+			"unique": {
+				"name": "unique_VolunteerLanguage_volunteer_language_679fb5",
+				"fields": [
+					"volunteer",
+					"language"
+				]
+			}
+		},
+		{
+			"modification": "createUniqueConstraint",
+			"entityName": "OfferParameter",
+			"unique": {
+				"name": "unique_OfferParameter_offer_question_520faa",
+				"fields": [
+					"offer",
+					"question"
+				]
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Question",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"create": {
+								"id": true,
+								"offerType": true,
+								"order": true,
+								"label": true,
+								"question": true,
+								"type": true,
+								"options": true,
+								"required": true,
+								"offerParameters": true,
+								"public": true
+							},
+							"read": {
+								"id": true,
+								"offerType": true,
+								"order": true,
+								"label": true,
+								"question": true,
+								"type": true,
+								"options": true,
+								"required": true,
+								"offerParameters": true,
+								"public": true
+							},
+							"update": {
+								"id": true,
+								"offerType": true,
+								"order": true,
+								"label": true,
+								"question": true,
+								"type": true,
+								"options": true,
+								"required": true,
+								"offerParameters": true,
+								"public": true
+							},
+							"delete": true
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/QuestionOption",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"create": {
+								"id": true,
+								"question": true,
+								"order": true,
+								"value": true,
+								"label": true,
+								"requireSpecification": true
+							},
+							"read": {
+								"id": true,
+								"question": true,
+								"order": true,
+								"value": true,
+								"label": true,
+								"requireSpecification": true
+							},
+							"update": {
+								"id": true,
+								"question": true,
+								"order": true,
+								"value": true,
+								"label": true,
+								"requireSpecification": true
+							},
+							"delete": true
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Language",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"create": {
+								"id": true,
+								"order": true,
+								"name": true,
+								"volunteers": true
+							},
+							"read": {
+								"id": true,
+								"order": true,
+								"name": true,
+								"volunteers": true
+							},
+							"update": {
+								"id": true,
+								"order": true,
+								"name": true,
+								"volunteers": true
+							},
+							"delete": true
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/VolunteerLanguage",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"create": {
+								"id": true,
+								"volunteer": true,
+								"language": true
+							},
+							"read": {
+								"id": true,
+								"volunteer": true,
+								"language": true
+							},
+							"update": {
+								"id": true,
+								"volunteer": true,
+								"language": true
+							},
+							"delete": true
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameter",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"create": {
+								"id": true,
+								"offer": true,
+								"question": true,
+								"value": true,
+								"specification": true,
+								"values": true
+							},
+							"read": {
+								"id": true,
+								"offer": true,
+								"question": true,
+								"value": true,
+								"specification": true,
+								"values": true
+							},
+							"update": {
+								"id": true,
+								"offer": true,
+								"question": true,
+								"value": true,
+								"specification": true,
+								"values": true
+							},
+							"delete": true
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameterValue",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"create": {
+								"id": true,
+								"parameter": true,
+								"value": true,
+								"specification": true
+							},
+							"read": {
+								"id": true,
+								"parameter": true,
+								"value": true,
+								"specification": true
+							},
+							"update": {
+								"id": true,
+								"parameter": true,
+								"value": true,
+								"specification": true
+							},
+							"delete": true
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/create/questions",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/create/infoText",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/create/needsVerification",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/update/questions",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/update/infoText",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/update/needsVerification",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/read/questions",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/read/infoText",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/read/needsVerification",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Volunteer/operations/create/name",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Volunteer/operations/create/organization",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Volunteer/operations/create/contactHours",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Volunteer/operations/create/languages",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Volunteer/operations/update/name",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Volunteer/operations/update/organization",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Volunteer/operations/update/contactHours",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Volunteer/operations/update/languages",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Volunteer/operations/read/name",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Volunteer/operations/read/organization",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Volunteer/operations/read/contactHours",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Volunteer/operations/read/languages",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/create/parameters",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/update/parameters",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/read/parameters",
+					"value": true
+				},
+				{
+					"op": "remove",
+					"path": "/roles/public/entities/Volunteer"
+				},
+				{
+					"op": "remove",
+					"path": "/roles/public/entities/Offer"
+				},
+				{
+					"op": "remove",
+					"path": "/roles/public/entities/VolunteerDistrict"
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/Question",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"offerType": true,
+								"order": true,
+								"label": true,
+								"question": true,
+								"type": true,
+								"options": true,
+								"required": true,
+								"offerParameters": true,
+								"public": true
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/QuestionOption",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"question": true,
+								"order": true,
+								"value": true,
+								"label": true,
+								"requireSpecification": true
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/Language",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"order": true,
+								"name": true,
+								"volunteers": true
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/OfferType/operations/read/id",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/OfferType/operations/read/questions",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/OfferType/operations/read/offers",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/OfferType/operations/read/infoText",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/OfferType/operations/read/needsVerification",
+					"value": true
+				},
+				{
+					"op": "remove",
+					"path": "/roles/volunteer/entities/Offer/operations/update"
+				}
+			]
+		}
+	]
+}

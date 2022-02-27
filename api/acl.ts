@@ -59,25 +59,25 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 				OfferType: {
 					predicates: {},
 					operations: {
-						read: someFields(true, ['order', 'name', 'hasCapacity', 'noteLabel', 'noteRequired']),
+						read: allField(model, 'OfferType', true),
 					},
 				},
-				Volunteer: {
+				Question: {
 					predicates: {},
 					operations: {
-						create: someFields(true, ['email', 'phone', 'userNote', 'expertise', 'districts', 'offers']),
+						read: allField(model, 'Question', true),
 					},
 				},
-				VolunteerDistrict: {
+				QuestionOption: {
 					predicates: {},
 					operations: {
-						create: allField(model, 'VolunteerDistrict', true),
+						read: allField(model, 'QuestionOption', true),
 					},
 				},
-				Offer: {
+				Language: {
 					predicates: {},
 					operations: {
-						create: someFields(true, ['volunteer', 'type', 'capacity', 'userNote']),
+						read: allField(model, 'Language', true),
 					},
 				},
 			},
@@ -104,8 +104,8 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 						self: { volunteer: { id: { eq: 'volunteerId' }, }, },
 					},
 					operations: {
-						read: someFields('self', ['type', 'capacity', 'userNote']),
-						update: someFields('self', ['userNote']),
+						read: someFields('self', ['type']),
+						// update: someFields('self', ['userNote']),
 						delete: 'self',
 					},
 				},
