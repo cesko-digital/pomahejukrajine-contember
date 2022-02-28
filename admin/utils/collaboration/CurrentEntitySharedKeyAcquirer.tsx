@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { EntityView } from "@contember/admin"
 import { memo } from "react"
 import { SharedKeyAcquirer } from "./SharedKeyAcquirer"

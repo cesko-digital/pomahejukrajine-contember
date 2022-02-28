@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { Component, EntityView } from "@contember/admin"
 import { memo } from "react"
 import { CollaborationKeyListener, KeyData } from "./KeyListener"
