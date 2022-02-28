@@ -13,6 +13,8 @@ import {
 	HasMany,
 	HasManySelectCell, HasOneSelectCell,
 	LinkButton,
+	NavigateBackButton,
+	Section,
 	TextCell,
 	useAuthedContentMutation,
 	useAuthedContentQuery,
@@ -22,9 +24,9 @@ import {
 } from '@contember/admin'
 import * as React from 'react'
 import { useCallback } from 'react'
-import { HasManyCell } from '../components/HasManyCell'
 import { HasManyFilterCell } from '../components/HasManyFilterCell'
-import {OfferForm} from "../components/OfferForm";
+import { OfferForm } from "../components/OfferForm"
+import './offer.sass'
 
 const LIST_QUESTION_QUERY = `
 	query ($id: UUID!) {
@@ -83,7 +85,7 @@ const OffersGrid = (
 										field={`parameters(question.id='${question.id}').values`}
 										header={question.label}
 										createWhere={(query) => ({
-												value: query,
+											value: query,
 										})}
 										render={({ entities }) => (
 											<>
@@ -139,7 +141,7 @@ const OfferManage = Component(() => {
 	const [assignSelf] = useAuthedContentMutation<{
 		ok: boolean
 		errorMessage?: string
-	}, {personId: string, offerId: string}>(`
+	}, { personId: string, offerId: string }>(`
 mutation($offerId: UUID!, $personId: UUID!) {
 	updateOffer(by: {id: $offerId}, data: {assignee: {connect: {personId: $personId}}}) {
 		ok
@@ -165,7 +167,7 @@ mutation($offerId: UUID!) {
 }
 `)
 	const unassign = useCallback(async () => {
-		await unassignSelf({  offerId: offer.id })
+		await unassignSelf({ offerId: offer.id })
 		redirect('editOffer(id: $entity.id)')
 	}, [assignSelf, redirect])
 
@@ -175,7 +177,7 @@ mutation($offerId: UUID!) {
 			<Button onClick={unassign}>Zrušit přiřazení</Button>
 		</> // todo: show detail
 	} else if (assignedPerson) {
-		return <>Prirazen {assignee.getField('name').value}</>
+		return <>Přiřazen {assignee.getField('name').value}</>
 	}
 	return <Button onClick={assign}>Přiřadit sebe</Button>
 }, () => (
@@ -186,28 +188,50 @@ mutation($offerId: UUID!) {
 ))
 
 export const editOffer = (
-	<EditPage entity="Offer(id=$id)">
-		<h3><Field field="type.name" /></h3>
+	<EditPage
+		entity="Offer(id=$id)"
+		rendererProps={{
+			title: <Field field="type.name" />,
+			navigation: <NavigateBackButton to="offers(id: $entity.type.id)">Zpět na nabídky <Field field="type.name" /></NavigateBackButton>
+		}}
+	>
 		<OfferManage />
-		<dl>
-			<dt>Jméno:</dt>
-			<dd><Field field="volunteer.name" /></dd>
-			<dt>Organizace:</dt>
-			<dd><Field field="volunteer.organization" /></dd>
-			<dt>Telefon:</dt>
-			<dd><Field field="volunteer.phone" /></dd>
-			<dt>Email:</dt>
-			<dd><Field field="volunteer.email" /></dd>
-			<dt>Odbornost:</dt>
-			<dd><Field field="volunteer.expertise" /></dd>
-			<dt>Jazyky:</dt>
-			<dd>
-				<HasMany field="volunteer.languages">
-					<Field field="language.name" />
-					<br />
-				</HasMany>
-			</dd>
-		</dl>
-		<OfferForm />
-	</EditPage>
+		<Section heading="Nabídka">
+			<OfferForm />
+		</Section>
+		<Section heading="Dobrovolník">
+			<div className="volunteer-wrapper">
+				<table>
+					<tr>
+						<td>Jméno</td>
+						<td><Field field="volunteer.name" /></td>
+					</tr>
+					<tr>
+						<td>Organizace</td>
+						<td><Field field="volunteer.organization" /></td>
+					</tr>
+					<tr>
+						<td>Telefon</td>
+						<td><Field field="volunteer.phone" /></td>
+					</tr>
+					<tr>
+						<td>Email</td>
+						<td><Field field="volunteer.email" /></td>
+					</tr>
+					<tr>
+						<td>Odbornost</td>
+						<td><Field field="volunteer.expertise" /></td>
+					</tr>
+					<tr>
+						<td>Jazyky</td>
+						<td>
+							<HasMany field="volunteer.languages">
+								<Field field="language.name" />
+							</HasMany>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</Section>
+	</EditPage >
 )
