@@ -5,7 +5,7 @@ import { Navigation } from './Navigation'
 
 export const Layout = (props: { children?: ReactNode }) => (
 	<ContemberLayout
-		sidebarHeader="OPU: Dobrovolníci"
+		sidebarHeader="Pomáhej Ukrajině"
 		navigation={<Navigation />}
 		children={props.children}
 	/>
