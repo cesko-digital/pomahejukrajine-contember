@@ -28,6 +28,16 @@ import { HasManyFilterCell } from '../components/HasManyFilterCell'
 import { OfferForm } from "../components/OfferForm"
 import './offer.sass'
 
+const limitLength = (maxLength: number) => (value: any) => {
+	if (typeof value !== 'string') {
+		return value
+	}
+	if (value.length > maxLength) {
+		return <span title={value}>{value.substr(0, maxLength) + '…'}</span>
+	}
+	return value
+};
+
 const LIST_QUESTION_QUERY = `
 	query ($id: UUID!) {
 		listQuestion(filter: { offerType: { id: { eq: $id } } }) {
@@ -58,6 +68,9 @@ const OffersGrid = (
 		return (
 			<DataBindingProvider stateComponent={FeedbackRenderer} refreshOnEnvironmentChange={false}>
 				<DataGrid entities="Offer[type.id=$id][volunteer.verified=true][volunteer.banned=false]" itemsPerPage={100}>
+					<GenericCell canBeHidden={false} shrunk>
+						<LinkButton to="editOffer(id: $entity.id)">Otevřít</LinkButton>
+					</GenericCell>
 					<HasOneSelectCell field="assignee" header="Přiřazen" options={'OrganizationManager.name'} />
 					{
 						query.data.listQuestion.map(question => {
@@ -68,6 +81,7 @@ const OffersGrid = (
 										field={`parameters(question.id='${question.id}').value`}
 										header={question.label}
 										hidden={question.type === "textarea"}
+										format={limitLength(30)}
 									/>
 								)
 							} else if (question.type === "number") {
@@ -118,9 +132,6 @@ const OffersGrid = (
 					{/*<GenericCell canBeHidden={false} shrunk>*/}
 					{/*	<LinkButton to="editVolunteer(id: $entity.volunteer.id)">Dobrovolník</LinkButton>*/}
 					{/*</GenericCell>*/}
-					<GenericCell canBeHidden={false} shrunk>
-						<LinkButton to="editOffer(id: $entity.id)">Detail nabídky</LinkButton>
-					</GenericCell>
 				</DataGrid>
 			</DataBindingProvider >
 		)
