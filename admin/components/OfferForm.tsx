@@ -15,6 +15,7 @@ import {
 	TextInput,
 	useEntityList,
 	Repeater,
+	Section,
 	TextAreaField,
     useIdentity,
     useEntityBeforePersist,
@@ -333,6 +334,8 @@ const LogForm = Component(
 		})
 
 		return (
+			<>
+			<div>Pokud s nabídkou jakkoli pracujete, zanechte prosím o tom zde v logu zprávu.</div>
 			<Repeater label="Log" field="logs" orderBy="createdAt" enableRemoving={false}>
 				<Conditional showIf={it => it.existsOnServer}>
 					<strong><FieldView field="createdAt" render={date => dateFormat.format(new Date(date.value as string))} />, <Field field="author.name" /> (<Field field="author.organization.name" />)</strong>
@@ -342,6 +345,8 @@ const LogForm = Component(
 					<TextAreaField field="text" label={undefined} />
 				</Conditional>
 			</Repeater>
+			<div>(Zpráva se neukládá automaticky, uložíte ji tlačítkem Save vpravo nahoře.)</div>
+			</>
 		)
 	},
 	() => {
@@ -369,11 +374,12 @@ export const OfferForm = Component(
 	() => {
 		return (
 			<>
-				<SelectField label="Stav" options="OfferStatus.name" field="status" allowNull />
+				<SelectField label="Stav nabídky" options="OfferStatus.name" field="status" allowNull />
 				<LogForm />
-				<hr/>
-				<OfferParametersForm />
-
+				<Section heading="Nabídka">
+					<div>(V současné chvíli mohou nabídku upravovat pouze superadministrátoři.)</div>
+					<OfferParametersForm />
+				</Section>
 			</>
 		)
 	},

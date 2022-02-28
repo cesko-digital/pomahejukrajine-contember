@@ -179,7 +179,7 @@ mutation($offerId: UUID!) {
 	} else if (assignedPerson) {
 		return <>Přiřazen {assignee.getField('name').value}</>
 	}
-	return <Button onClick={assign}>Přiřadit sebe</Button>
+	return <Button onClick={assign}>Přiřadit se k nabídce</Button>
 }, () => (
 	<>
 		<Field field={'assignee.personId'} />
@@ -196,10 +196,11 @@ export const editOffer = (
 		}}
 	>
 		<OfferManage />
-		<Section heading="Nabídka">
-			<OfferForm />
-		</Section>
+		<OfferForm />
 		<Section heading="Dobrovolník">
+			<div>
+				Pro zobrazení konktaktních údajů musíte mít na sebe přiřazenou nabídku.
+			</div>
 			<div className="volunteer-wrapper">
 				<table>
 					<tr>
@@ -226,7 +227,7 @@ export const editOffer = (
 						<td>Jazyky</td>
 						<td>
 							<HasMany field="volunteer.languages">
-								<Field field="language.name" />
+								<Field field="language.name" />{' '}
 							</HasMany>
 						</td>
 					</tr>
