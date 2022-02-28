@@ -1,0 +1,132 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "OfferStatus",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					}
+				},
+				"tableName": "offer_status"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferStatus",
+			"field": {
+				"name": "order",
+				"columnName": "order",
+				"nullable": false,
+				"default": 0,
+				"type": "Integer",
+				"columnType": "integer"
+			},
+			"fillValue": 0
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferStatus",
+			"field": {
+				"name": "name",
+				"columnName": "name",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "Offer",
+			"owningSide": {
+				"name": "status",
+				"inversedBy": "offers",
+				"nullable": true,
+				"type": "ManyHasOne",
+				"target": "OfferStatus",
+				"joiningColumn": {
+					"columnName": "status_id",
+					"onDelete": "restrict"
+				}
+			},
+			"inverseSide": {
+				"name": "offers",
+				"ownedBy": "status",
+				"type": "OneHasMany",
+				"target": "Offer"
+			}
+		},
+		{
+			"modification": "createUniqueConstraint",
+			"entityName": "OfferStatus",
+			"unique": {
+				"fields": [
+					"name"
+				],
+				"name": "unique_OfferStatus_name_f03e19"
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferStatus",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"create": {
+								"id": true,
+								"order": true,
+								"name": true,
+								"offers": true
+							},
+							"read": {
+								"id": true,
+								"order": true,
+								"name": true,
+								"offers": true
+							},
+							"update": {
+								"id": true,
+								"order": true,
+								"name": true,
+								"offers": true
+							},
+							"delete": true
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/create/status",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/update/status",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/read/status",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Offer/operations/read/status",
+					"value": true
+				}
+			]
+		}
+	]
+}

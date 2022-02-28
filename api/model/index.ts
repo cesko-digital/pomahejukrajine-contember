@@ -58,6 +58,12 @@ export class Language {
 	volunteers = def.oneHasMany(VolunteerLanguage, 'language')
 }
 
+export class OfferStatus {
+	order = def.intColumn().notNull().default(0)
+	name = def.stringColumn().notNull().unique()
+	offers = def.oneHasMany(Offer, 'status')
+}
+
 // ---
 
 export class Volunteer {
@@ -101,6 +107,7 @@ export class Offer {
 	exhausted = def.boolColumn().notNull().default(false)
 	parameters = def.oneHasMany(OfferParameter, 'offer')
 	assignee = def.manyHasOne(OrganizationManager, 'assignedOffers').setNullOnDelete()
+	status = def.manyHasOne(OfferStatus, 'offers')
 	// matches = def.oneHasMany(Match, 'offer')
 }
 

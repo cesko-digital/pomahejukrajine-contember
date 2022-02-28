@@ -110,6 +110,7 @@ export const OfferForm = Component(
 
 		return (
 			<>
+				<SelectField label="Stav" options="OfferStatus.name" field="status" allowNull />
 				<SelectField
 					label="Typ nabídky"
 					field="type"
@@ -254,6 +255,7 @@ export const OfferForm = Component(
 	},
 	() => (
 		<>
+			<SelectField label="Stav" options="OfferStatus.name" field="status" allowNull />
 			<SelectField
 				label="Typ nabídky"
 				field="type"

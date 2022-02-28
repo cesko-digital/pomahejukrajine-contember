@@ -26,6 +26,14 @@ export const tags = (
 		<TextField field="name" label="Název" />
 	</MultiEditPage>
 )
+
+
+export const status = (
+	<MultiEditPage entities="OfferStatus" rendererProps={{ sortableBy: "order", title: "Stavy nabídek" }}>
+		<TextField field="name" label="Název" />
+	</MultiEditPage>
+)
+
 export const languages = (
 	<MultiEditPage entities="Language" rendererProps={{ sortableBy: "order", title: "Jazyky" }}>
 		<TextField field="name" label="Název" />

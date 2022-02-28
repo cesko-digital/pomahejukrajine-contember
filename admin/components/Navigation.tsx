@@ -29,6 +29,7 @@ export const Navigation = () => (
 			<Menu.Item title="Jazyky" to="languages" />
 			<Menu.Item title="Organizace" to="organizations" />
 			<Menu.Item title="Pracovníci" to="organizationManagerList" />
+			<Menu.Item title="Stavy" to="status" />
 		</Menu.Item>
 	</Menu>
 )
