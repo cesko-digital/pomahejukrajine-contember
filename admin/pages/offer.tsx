@@ -45,7 +45,7 @@ type QuestionQueryResult = {
 
 const OffersGrid = (
 	() => {
-		const id = useCurrentRequest()!.parameters.id
+		const id = useCurrentRequest()!.parameters.id as string
 		const { state: query } = useAuthedContentQuery<QuestionQueryResult, { id: string }>(LIST_QUESTION_QUERY, { id })
 
 		if (query.state !== 'success') {

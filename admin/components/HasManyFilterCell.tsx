@@ -30,7 +30,7 @@ export type HasManyFilterCellProps = DataGridHeaderCellPublicProps &
 	onlyIfField?: string
 }
 
-interface TextFilterArtifacts {
+type TextFilterArtifacts = {
 	mode: 'matches' | 'matchesExactly' | 'startsWith' | 'endsWith' | 'doesNotMatch'
 	query: string
 	onlyHasNone: boolean
