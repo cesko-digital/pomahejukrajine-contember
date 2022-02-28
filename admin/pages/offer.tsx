@@ -74,7 +74,7 @@ const OffersGrid = (
 						<LinkButton to="editOffer(id: $entity.id)">Otevřít</LinkButton>
 					</GenericCell>
 					<HasOneSelectCell field="assignee" header="Přiřazen" options={'OrganizationManager.name'} />
-					<GenericCell>
+					<GenericCell header="Právě edituje">
 						<CurrentEntityKeyListener>
 							{(data) => <CollaborationList emails={data?.keys?.map(key => key.client.email) ?? []} />}
 						</CurrentEntityKeyListener>
