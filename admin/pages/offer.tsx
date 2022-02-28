@@ -56,7 +56,7 @@ const OffersGrid = (
 		return (
 			<DataBindingProvider stateComponent={FeedbackRenderer} refreshOnEnvironmentChange={false}>
 				<DataGrid entities="Offer[type.id=$id][volunteer.verified=true][volunteer.banned=false]" itemsPerPage={100}>
-					<BooleanCell field="exhausted" header="Vyčerpáno" />
+					<HasOneSelectCell field="assignee" header="Přiřazen" options={'OrganizationManager.name'} />
 					{
 						query.data.listQuestion.map(question => {
 							if (["text", "radio", "textarea", "date"].includes(question.type)) {
@@ -113,7 +113,6 @@ const OffersGrid = (
 					<TextCell field="volunteer.internalNote" header="Dobrovolník: Interní poznámka" hidden />
 					<DateCell field="volunteer.createdAt" header="Dobrovolník: Datum registrace" hidden />
 					<BooleanCell field="volunteer.createdInAdmin" header="Dobrovolník: Registrován administrátorem" hidden />
-					<HasOneSelectCell field="assignee" header="Přiřazený pracovník" hidden options={'OrganizationManager.name'} />
 					{/*<GenericCell canBeHidden={false} shrunk>*/}
 					{/*	<LinkButton to="editVolunteer(id: $entity.volunteer.id)">Dobrovolník</LinkButton>*/}
 					{/*</GenericCell>*/}
