@@ -1,6 +1,6 @@
 import {PermissionsBuilder} from '@contember/schema-definition'
 import {Acl, Model} from '@contember/schema'
-import { OrganizationManager, VolunteerTag } from "./model";
+import {OrganizationManager, VolunteerTag} from "./model";
 
 const fieldNames = (model: Model.Schema, entity: string): string[] => {
 	return Object.keys(model.entities[entity].fields)
@@ -81,7 +81,17 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 						read: allField(model, 'Offer', true),
 						update: {
 							assignee: 'assignable',
-						}
+							logs: true,
+						},
+					},
+				},
+				OfferLog: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'OfferLog', true),
+						create: allField(model, 'OfferLog', true),
+						update: allField(model, 'OfferLog', true), // TODO: Due to bug in contember: https://github.com/contember/private-issues/issues/74
+						// delete: true,
 					},
 				},
 				OfferParameterValue: {

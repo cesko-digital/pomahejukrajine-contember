@@ -1,9 +1,10 @@
 import {
 	Checkbox,
-	Component,
+	Component, DateFieldView,
 	DateTimeInput,
 	Entity,
 	EntityAccessor,
+	EntityListSubTree,
 	EntityView,
 	Field,
 	FieldContainer,
@@ -12,12 +13,17 @@ import {
 	SelectField,
 	Stack,
 	TextInput,
-	useEntityList
+	useEntityList,
+	Repeater,
+	TextAreaField,
+    useIdentity,
+    useEntityBeforePersist,
+    FieldView,
 } from "@contember/admin"
 import { Conditional } from "./Conditional"
 import * as React from "react"
 
-export const OfferForm = Component(
+const OfferParametersForm = Component(
 	() => {
 		const parameters = useEntityList('parameters')
 
@@ -111,7 +117,6 @@ export const OfferForm = Component(
 
 		return (
 			<>
-				<SelectField label="Stav" options="OfferStatus.name" field="status" allowNull />
 				<SelectField
 					label="Typ nabídky"
 					field="type"
@@ -258,7 +263,6 @@ export const OfferForm = Component(
 	},
 	() => (
 		<>
-			<SelectField label="Stav" options="OfferStatus.name" field="status" allowNull />
 			<SelectField
 				label="Typ nabídky"
 				field="type"
@@ -305,5 +309,73 @@ export const OfferForm = Component(
 			</HasMany>
 		</>
 	),
+	'OfferForm',
+)
+
+const dateFormat = new Intl.DateTimeFormat("cs", { timeStyle: "short", dateStyle: "full" })
+
+
+const LogForm = Component(
+	() => {
+		const identity = useIdentity()
+
+		useEntityBeforePersist((getEntity, opts) => {
+			const managers = opts.getEntityListSubTree({ entities: 'OrganizationManager' })
+			const manager = Array.from(managers).find(it => it.getField('personId').value === identity.personId)
+
+			if (manager) {
+				for (const entity of getEntity().getEntityList({ field: 'logs', orderBy: 'createdAt' })) {
+					if (!entity.existsOnServer && entity.hasUnpersistedChanges) {
+						entity.connectEntityAtField('author', manager)
+					}
+				}
+			}
+		})
+
+		return (
+			<Repeater label="Log" field="logs" orderBy="createdAt" enableRemoving={false}>
+				<Conditional showIf={it => it.existsOnServer}>
+					<strong><FieldView field="createdAt" render={date => dateFormat.format(new Date(date.value as string))} />, <Field field="author.name" /> (<Field field="author.organization.name" />)</strong>
+					<p style={{ margin: 0 }}><Field field="text" format={it => (it as string)?.split('\n').map(it => <>{it}<br/></>)} /></p>
+				</Conditional>
+				<Conditional showIf={it => !it.existsOnServer}>
+					<TextAreaField field="text" label={undefined} />
+				</Conditional>
+			</Repeater>
+		)
+	},
+	() => {
+		return (
+			<>
+				<Repeater label="Log" field="logs" orderBy="createdAt" enableRemoving={false}>
+					<Field field="author.name" />
+					<Field field="author.organization.name" />
+					<Field field="createdAt" />
+					<TextAreaField field="text" label={undefined} />
+					<Field field="author.id" />
+				</Repeater>
+				<EntityListSubTree entities="OrganizationManager">
+					<Field field="personId" />
+					<Field field="name" />
+					<Field field="organization.name" />
+				</EntityListSubTree>
+			</>
+		)
+	},
+)
+
+
+export const OfferForm = Component(
+	() => {
+		return (
+			<>
+				<SelectField label="Stav" options="OfferStatus.name" field="status" allowNull />
+				<LogForm />
+				<hr/>
+				<OfferParametersForm />
+
+			</>
+		)
+	},
 	'OfferForm',
 )

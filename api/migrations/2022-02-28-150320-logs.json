@@ -1,0 +1,147 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "OfferLog",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					}
+				},
+				"tableName": "offer_log"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferLog",
+			"field": {
+				"name": "createdAt",
+				"columnName": "created_at",
+				"nullable": false,
+				"default": "now",
+				"type": "DateTime",
+				"columnType": "timestamptz"
+			},
+			"fillValue": "now"
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferLog",
+			"field": {
+				"name": "text",
+				"columnName": "text",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "OfferLog",
+			"owningSide": {
+				"name": "offer",
+				"inversedBy": "logs",
+				"nullable": false,
+				"type": "ManyHasOne",
+				"target": "Offer",
+				"joiningColumn": {
+					"columnName": "offer_id",
+					"onDelete": "restrict"
+				}
+			},
+			"inverseSide": {
+				"name": "logs",
+				"ownedBy": "offer",
+				"type": "OneHasMany",
+				"target": "OfferLog",
+				"orderBy": [
+					{
+						"path": [
+							"createdAt"
+						],
+						"direction": "asc"
+					}
+				]
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "OfferLog",
+			"owningSide": {
+				"name": "author",
+				"nullable": false,
+				"type": "ManyHasOne",
+				"target": "OrganizationManager",
+				"joiningColumn": {
+					"columnName": "author_id",
+					"onDelete": "restrict"
+				}
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferLog",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"create": {
+								"id": true,
+								"offer": true,
+								"createdAt": true,
+								"text": true,
+								"author": true
+							},
+							"read": {
+								"id": true,
+								"offer": true,
+								"createdAt": true,
+								"text": true,
+								"author": true
+							},
+							"update": {
+								"id": true,
+								"offer": true,
+								"createdAt": true,
+								"text": true,
+								"author": true
+							},
+							"delete": true
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/create/logs",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/update/logs",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/read/logs",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Offer/operations/read/logs",
+					"value": true
+				}
+			]
+		}
+	]
+}

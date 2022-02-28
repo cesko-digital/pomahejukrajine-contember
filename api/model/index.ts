@@ -108,7 +108,14 @@ export class Offer {
 	parameters = def.oneHasMany(OfferParameter, 'offer')
 	assignee = def.manyHasOne(OrganizationManager, 'assignedOffers').setNullOnDelete()
 	status = def.manyHasOne(OfferStatus, 'offers')
-	// matches = def.oneHasMany(Match, 'offer')
+	logs = def.oneHasMany(OfferLog, 'offer').orderBy('createdAt')
+}
+
+export class OfferLog {
+	offer = def.manyHasOne(Offer, 'logs').notNull()
+	createdAt = def.dateTimeColumn().notNull().default('now')
+	text = def.stringColumn().notNull()
+	author = def.manyHasOne(OrganizationManager).notNull()
 }
 
 @def.Unique('offer', 'question')

@@ -1,0 +1,45 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OfferLog",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"offer": true,
+								"createdAt": true,
+								"text": true,
+								"author": true
+							},
+							"create": {
+								"id": true,
+								"offer": true,
+								"createdAt": true,
+								"text": true,
+								"author": true
+							},
+							"update": {
+								"text": true,
+								"id": true,
+								"offer": true,
+								"createdAt": true,
+								"author": true
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Offer/operations/update/logs",
+					"value": true
+				}
+			]
+		}
+	]
+}
