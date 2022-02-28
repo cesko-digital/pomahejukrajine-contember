@@ -1,0 +1,31 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Volunteer/predicates/isAssigned",
+					"value": {
+						"offers": {
+							"assignee": {
+								"personId": "personId"
+							}
+						}
+					}
+				},
+				{
+					"op": "replace",
+					"path": "/roles/organizationManager/entities/Volunteer/operations/read/email",
+					"value": "isAssigned"
+				},
+				{
+					"op": "replace",
+					"path": "/roles/organizationManager/entities/Volunteer/operations/read/phone",
+					"value": "isAssigned"
+				}
+			]
+		}
+	]
+}

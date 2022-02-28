@@ -125,8 +125,22 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 					operations: readOnly(model, 'OrganizationManager', true),
 				},
 				Volunteer: {
-					predicates: {},
-					operations: readOnly(model, 'Volunteer', true),
+					predicates: {
+						isAssigned: {
+							offers: {
+								assignee: {
+									personId: 'personId',
+								}
+							}
+						}
+					},
+					operations: {
+						read: {
+							...allField(model, 'Volunteer', true),
+							email: 'isAssigned',
+							phone: 'isAssigned',
+						},
+					},
 				},
 				VolunteerDistrict: {
 					predicates: {},
