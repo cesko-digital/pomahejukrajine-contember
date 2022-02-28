@@ -1,0 +1,19 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Offer/operations/update/status",
+					"value": true
+				},
+				{
+					"op": "remove",
+					"path": "/roles/organizationManager/entities/OfferStatus/operations/update"
+				}
+			]
+		}
+	]
+}

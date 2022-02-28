@@ -82,6 +82,7 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 						update: {
 							assignee: 'assignable',
 							logs: true,
+							status: true,
 						},
 					},
 				},
@@ -100,10 +101,7 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 				},
 				OfferStatus: {
 					predicates: {},
-					operations: {
-						read: allField(model, 'OfferStatus', true),
-						update: allField(model, 'OfferStatus', true),
-					}
+					operations: readOnly(model, 'OfferStatus', true),
 				},
 				OfferParameter: {
 					predicates: {},
