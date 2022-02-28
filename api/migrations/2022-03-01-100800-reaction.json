@@ -1,0 +1,189 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "Reaction",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					}
+				},
+				"tableName": "reaction"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Reaction",
+			"field": {
+				"name": "createdAt",
+				"columnName": "created_at",
+				"nullable": false,
+				"default": "now",
+				"type": "DateTime",
+				"columnType": "timestamptz"
+			},
+			"fillValue": "now"
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Reaction",
+			"field": {
+				"name": "email",
+				"columnName": "email",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Reaction",
+			"field": {
+				"name": "phone",
+				"columnName": "phone",
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Reaction",
+			"field": {
+				"name": "secretCode",
+				"columnName": "secret_code",
+				"nullable": true,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Reaction",
+			"field": {
+				"name": "verified",
+				"columnName": "verified",
+				"nullable": false,
+				"default": false,
+				"type": "Bool",
+				"columnType": "boolean"
+			},
+			"fillValue": false
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Reaction",
+			"field": {
+				"name": "volunteerNotified",
+				"columnName": "volunteer_notified",
+				"nullable": false,
+				"default": false,
+				"type": "Bool",
+				"columnType": "boolean"
+			},
+			"fillValue": false
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "Reaction",
+			"owningSide": {
+				"name": "offer",
+				"inversedBy": "reactions",
+				"nullable": false,
+				"type": "ManyHasOne",
+				"target": "Offer",
+				"joiningColumn": {
+					"columnName": "offer_id",
+					"onDelete": "cascade"
+				}
+			},
+			"inverseSide": {
+				"name": "reactions",
+				"ownedBy": "offer",
+				"type": "OneHasMany",
+				"target": "Reaction"
+			}
+		},
+		{
+			"modification": "createUniqueConstraint",
+			"entityName": "Reaction",
+			"unique": {
+				"fields": [
+					"secretCode"
+				],
+				"name": "unique_Reaction_secretCode_6be827"
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Reaction",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"create": {
+								"id": true,
+								"offer": true,
+								"createdAt": true,
+								"email": true,
+								"phone": true,
+								"secretCode": true,
+								"verified": true,
+								"volunteerNotified": true
+							},
+							"read": {
+								"id": true,
+								"offer": true,
+								"createdAt": true,
+								"email": true,
+								"phone": true,
+								"secretCode": true,
+								"verified": true,
+								"volunteerNotified": true
+							},
+							"update": {
+								"id": true,
+								"offer": true,
+								"createdAt": true,
+								"email": true,
+								"phone": true,
+								"secretCode": true,
+								"verified": true,
+								"volunteerNotified": true
+							},
+							"delete": true
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/create/reactions",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/update/reactions",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/read/reactions",
+					"value": true
+				}
+			]
+		}
+	]
+}
