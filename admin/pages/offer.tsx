@@ -196,6 +196,9 @@ export const editOffer = (
 		}}
 	>
 		<OfferManage />
+		<Section heading="Nabídka">
+			<OfferForm />
+		</Section>
 		<Section heading="Dobrovolník">
 			<div className="volunteer-wrapper">
 				<table>
@@ -229,9 +232,6 @@ export const editOffer = (
 					</tr>
 				</table>
 			</div>
-		</Section>
-		<Section heading="Nabídka">
-			<OfferForm />
 		</Section>
 	</EditPage >
 )
