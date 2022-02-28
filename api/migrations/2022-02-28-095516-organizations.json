@@ -1,0 +1,396 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "Organization",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					}
+				},
+				"tableName": "organization"
+			}
+		},
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "OrganizationManager",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					}
+				},
+				"tableName": "organization_manager"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Organization",
+			"field": {
+				"name": "name",
+				"columnName": "name",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OrganizationManager",
+			"field": {
+				"name": "name",
+				"columnName": "name",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OrganizationManager",
+			"field": {
+				"name": "email",
+				"columnName": "email",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OrganizationManager",
+			"field": {
+				"name": "phone",
+				"columnName": "phone",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OrganizationManager",
+			"field": {
+				"name": "personId",
+				"columnName": "person_id",
+				"nullable": false,
+				"type": "Uuid",
+				"columnType": "uuid"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "OrganizationManager",
+			"owningSide": {
+				"name": "organization",
+				"inversedBy": "managers",
+				"nullable": false,
+				"type": "ManyHasOne",
+				"target": "Organization",
+				"joiningColumn": {
+					"columnName": "organization_id",
+					"onDelete": "cascade"
+				}
+			},
+			"inverseSide": {
+				"name": "managers",
+				"ownedBy": "organization",
+				"type": "OneHasMany",
+				"target": "OrganizationManager"
+			}
+		},
+		{
+			"modification": "createUniqueConstraint",
+			"entityName": "OrganizationManager",
+			"unique": {
+				"fields": [
+					"personId"
+				],
+				"name": "unique_OrganizationManager_personId_ec6e42"
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/organizationManager",
+					"value": {
+						"variables": {},
+						"stages": "*",
+						"entities": {
+							"Region": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"name": true,
+										"districts": true
+									}
+								}
+							},
+							"District": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"region": true,
+										"name": true,
+										"volunteers": true
+									}
+								}
+							},
+							"Offer": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"volunteer": true,
+										"type": true,
+										"internalNote": true,
+										"exhausted": true,
+										"parameters": true
+									}
+								}
+							},
+							"OfferParameterValue": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"parameter": true,
+										"value": true,
+										"specification": true
+									}
+								}
+							},
+							"OfferParameter": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"offer": true,
+										"question": true,
+										"value": true,
+										"specification": true,
+										"values": true
+									}
+								}
+							},
+							"OfferType": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"order": true,
+										"name": true,
+										"infoText": true,
+										"questions": true,
+										"needsVerification": true,
+										"offers": true
+									}
+								}
+							},
+							"Question": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"offerType": true,
+										"order": true,
+										"label": true,
+										"question": true,
+										"type": true,
+										"options": true,
+										"required": true,
+										"public": true,
+										"offerParameters": true
+									}
+								}
+							},
+							"QuestionOption": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"question": true,
+										"order": true,
+										"value": true,
+										"label": true,
+										"requireSpecification": true
+									}
+								}
+							},
+							"Language": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"order": true,
+										"name": true,
+										"volunteers": true
+									}
+								}
+							},
+							"Organization": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"name": true,
+										"managers": true
+									}
+								}
+							},
+							"OrganizationManager": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"organization": true,
+										"name": true,
+										"email": true,
+										"phone": true,
+										"personId": true
+									}
+								}
+							},
+							"Volunteer": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"identityId": true,
+										"name": true,
+										"email": true,
+										"phone": true,
+										"organization": true,
+										"contactHours": true,
+										"languages": true,
+										"offers": true,
+										"verified": true,
+										"banned": true,
+										"secretCode": true,
+										"userNote": true,
+										"internalNote": true,
+										"expertise": true,
+										"districts": true,
+										"tags": true,
+										"createdAt": true,
+										"createdInAdmin": true
+									}
+								}
+							},
+							"VolunteerDistrict": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"volunteer": true,
+										"district": true
+									}
+								}
+							},
+							"VolunteerLanguage": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"volunteer": true,
+										"language": true
+									}
+								}
+							},
+							"VolunteerTag": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"order": true,
+										"name": true,
+										"volunteers": true
+									}
+								}
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"create": {
+								"id": true,
+								"name": true,
+								"managers": true
+							},
+							"update": {
+								"id": true,
+								"name": true,
+								"managers": true
+							},
+							"read": {
+								"id": true,
+								"name": true,
+								"managers": true
+							},
+							"delete": true
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OrganizationManager",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"create": {
+								"id": true,
+								"organization": true,
+								"name": true,
+								"email": true,
+								"phone": true,
+								"personId": true
+							},
+							"update": {
+								"id": true,
+								"organization": true,
+								"name": true,
+								"email": true,
+								"phone": true,
+								"personId": true
+							},
+							"read": {
+								"id": true,
+								"organization": true,
+								"name": true,
+								"email": true,
+								"phone": true,
+								"personId": true
+							},
+							"delete": true
+						}
+					}
+				}
+			]
+		}
+	]
+}

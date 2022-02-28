@@ -1,5 +1,6 @@
 import {PermissionsBuilder} from '@contember/schema-definition'
 import {Acl, Model} from '@contember/schema'
+import { OrganizationManager, VolunteerTag } from "./model";
 
 const fieldNames = (model: Model.Schema, entity: string): string[] => {
 	return Object.keys(model.entities[entity].fields)
@@ -43,6 +44,103 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 			variables: {},
 			stages: '*',
 			entities: PermissionsBuilder.create(model).allowAll().permissions,
+		},
+		organizationManager: {
+			variables: {
+				personId: {
+					type: Acl.VariableType.predefined,
+					value: 'personID',
+				}
+			},
+			stages: '*',
+			entities: {
+				Region: {
+					predicates: {},
+					operations: readOnly(model, 'Region', true),
+				},
+				District: {
+					predicates: {},
+					operations: readOnly(model, 'District', true),
+				},
+				Offer: {
+					predicates: {
+						assignable: {
+							assignee: {
+								or: [
+									{
+										personId: 'personId',
+									},
+									{
+										personId: { isNull: true },
+									}
+								],
+							},
+						},
+					},
+					operations: {
+						read: allField(model, 'Offer', true),
+						update: {
+							assignee: 'assignable',
+						}
+					},
+				},
+				OfferParameterValue: {
+					predicates: {},
+					operations: readOnly(model, 'OfferParameterValue', true),
+				},
+				OfferParameter: {
+					predicates: {},
+					operations: readOnly(model, 'OfferParameter', true),
+				},
+				OfferType: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'OfferType', true),
+					},
+				},
+				Question: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'Question', true),
+					},
+				},
+				QuestionOption: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'QuestionOption', true),
+					},
+				},
+				Language: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'Language', true),
+					},
+				},
+				Organization: {
+					predicates: {},
+					operations: readOnly(model, 'Organization', true),
+				},
+				OrganizationManager: {
+					predicates: {},
+					operations: readOnly(model, 'OrganizationManager', true),
+				},
+				Volunteer: {
+					predicates: {},
+					operations: readOnly(model, 'Volunteer', true),
+				},
+				VolunteerDistrict: {
+					predicates: {},
+					operations: readOnly(model, 'VolunteerDistrict', true),
+				},
+				VolunteerLanguage: {
+					predicates: {},
+					operations: readOnly(model, 'VolunteerLanguage', true),
+				},
+				VolunteerTag: {
+					predicates: {},
+					operations: readOnly(model, 'VolunteerTag', true),
+				},
+			},
 		},
 		public: {
 			variables: {},

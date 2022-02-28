@@ -1,26 +1,27 @@
 import {
 	BooleanCell,
+	Button,
+	Component,
 	DataBindingProvider,
 	DataGrid,
 	DateCell,
 	EditPage,
+	FeedbackRenderer,
 	Field,
 	GenericCell,
+	GenericPage,
+	HasMany,
 	HasManySelectCell,
 	LinkButton,
 	TextCell,
-	FeedbackRenderer,
-	EntityListSubTree,
-	Component,
-	useField,
-	HasMany,
+	useAuthedContentMutation,
 	useAuthedContentQuery,
-	GenericPage,
-	TextField,
-	Page,
-	useCurrentRequest
+	useCurrentRequest,
+	useEntity, useEnvironment,
+	useIdentity, useRedirect
 } from '@contember/admin'
 import * as React from 'react'
+import { useCallback } from 'react'
 import { HasManyCell } from '../components/HasManyCell'
 import { HasManyFilterCell } from '../components/HasManyFilterCell'
 import {OfferForm} from "../components/OfferForm";
@@ -130,9 +131,64 @@ export const offers = (
 	</GenericPage>
 )
 
+const OfferManage = Component(() => {
+	const offer = useEntity()
+	const assignee = offer.getEntity('assignee')
+	const identity = useIdentity()
+	const env = useEnvironment()
+	const [assignSelf] = useAuthedContentMutation<{
+		ok: boolean
+		errorMessage?: string
+	}, {personId: string, offerId: string}>(`
+mutation($offerId: UUID!, $personId: UUID!) {
+	updateOffer(by: {id: $offerId}, data: {assignee: {connect: {personId: $personId}}}) {
+		ok
+		errorMessage
+	}
+}
+`)
+	const redirect = useRedirect()
+	const assign = useCallback(async () => {
+		await assignSelf({ personId: identity.personId, offerId: offer.id })
+		redirect('editOffer(id: $entity.id)')
+	}, [assignSelf, redirect])
+
+	const [unassignSelf] = useAuthedContentMutation<{
+		ok: boolean
+		errorMessage?: string
+	}, { offerId: string }>(`
+mutation($offerId: UUID!) {
+	updateOffer(by: {id: $offerId}, data: {assignee: {disconnect: true}}) {
+		ok
+		errorMessage
+	}
+}
+`)
+	const unassign = useCallback(async () => {
+		await unassignSelf({  offerId: offer.id })
+		redirect('editOffer(id: $entity.id)')
+	}, [assignSelf, redirect])
+
+	const assignedPerson = assignee.getField('personId').value
+	if (assignedPerson === identity.personId) {
+		return <>
+			<Button onClick={unassign}>Zrušit přiřazení</Button>
+		</> // todo: show detail
+	} else if (assignedPerson) {
+		return <>Prirazen {assignee.getField('name').value}</>
+	}
+	return <Button onClick={assign}>Přiřadit sebe</Button>
+}, () => (
+	<>
+		<Field field={'assignee.personId'} />
+		<Field field={'assignee.name'} />
+	</>
+))
+
 export const editOffer = (
 	<EditPage entity="Offer(id=$id)">
 		<h3><Field field="type.name" /></h3>
+		<OfferManage />
 		<dl>
 			<dt>Jméno:</dt>
 			<dd><Field field="volunteer.name" /></dd>

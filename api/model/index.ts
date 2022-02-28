@@ -1,4 +1,5 @@
 import { SchemaDefinition as def } from "@contember/schema-definition"
+import { Model } from "@contember/schema";
 
 export class Region { // Kraj
 	name = def.stringColumn().notNull().unique()
@@ -99,6 +100,7 @@ export class Offer {
 	internalNote = def.stringColumn().notNull().default('')
 	exhausted = def.boolColumn().notNull().default(false)
 	parameters = def.oneHasMany(OfferParameter, 'offer')
+	assignee = def.manyHasOne(OrganizationManager, 'assignedOffers').setNullOnDelete()
 	// matches = def.oneHasMany(Match, 'offer')
 }
 
@@ -115,6 +117,20 @@ export class OfferParameterValue {
 	parameter = def.manyHasOne(OfferParameter, 'values').notNull().cascadeOnDelete()
 	value = def.stringColumn().notNull()
 	specification = def.stringColumn()
+}
+
+export class Organization {
+	name = def.stringColumn().notNull()
+	managers = def.oneHasMany(OrganizationManager, 'organization')
+}
+
+export class OrganizationManager {
+	personId = def.column(Model.ColumnType.Uuid).unique().notNull()
+	organization = def.manyHasOne(Organization, 'managers').notNull().cascadeOnDelete()
+	name = def.stringColumn().notNull()
+	email = def.stringColumn().notNull()
+	phone = def.stringColumn().notNull()
+	assignedOffers = def.oneHasMany(Offer, 'assignee')
 }
 
 

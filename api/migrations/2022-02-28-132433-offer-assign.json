@@ -1,0 +1,104 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createRelation",
+			"entityName": "Offer",
+			"owningSide": {
+				"name": "assignee",
+				"inversedBy": "assignedOffers",
+				"nullable": true,
+				"type": "ManyHasOne",
+				"target": "OrganizationManager",
+				"joiningColumn": {
+					"columnName": "assignee_id",
+					"onDelete": "set null"
+				}
+			},
+			"inverseSide": {
+				"name": "assignedOffers",
+				"ownedBy": "assignee",
+				"type": "OneHasMany",
+				"target": "Offer"
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/create/assignee",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/update/assignee",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/read/assignee",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OrganizationManager/operations/create/assignedOffers",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OrganizationManager/operations/update/assignedOffers",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OrganizationManager/operations/read/assignedOffers",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/variables/personId",
+					"value": {
+						"type": "predefined",
+						"value": "personID"
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Offer/predicates/assignable",
+					"value": {
+						"assignee": {
+							"or": [
+								{
+									"personId": "personId"
+								},
+								{
+									"personId": {
+										"isNull": true
+									}
+								}
+							]
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Offer/operations/update",
+					"value": {
+						"assignee": "assignable"
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Offer/operations/read/assignee",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OrganizationManager/operations/read/assignedOffers",
+					"value": true
+				}
+			]
+		}
+	]
+}
