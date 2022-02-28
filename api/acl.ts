@@ -100,7 +100,10 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 				},
 				OfferStatus: {
 					predicates: {},
-					operations: readOnly(model, 'OfferStatus', true),
+					operations: {
+						read: allField(model, 'OfferStatus', true),
+						update: allField(model, 'OfferStatus', true),
+					}
 				},
 				OfferParameter: {
 					predicates: {},

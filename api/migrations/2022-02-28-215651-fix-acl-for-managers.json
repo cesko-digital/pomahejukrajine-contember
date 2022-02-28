@@ -1,0 +1,20 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OfferStatus/operations/update",
+					"value": {
+						"id": true,
+						"order": true,
+						"name": true,
+						"offers": true
+					}
+				}
+			]
+		}
+	]
+}
