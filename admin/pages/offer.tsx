@@ -11,7 +11,7 @@ import {
 	GenericCell,
 	GenericPage,
 	HasMany,
-	HasManySelectCell,
+	HasManySelectCell, HasOneSelectCell,
 	LinkButton,
 	TextCell,
 	useAuthedContentMutation,
@@ -113,6 +113,7 @@ const OffersGrid = (
 					<TextCell field="volunteer.internalNote" header="Dobrovolník: Interní poznámka" hidden />
 					<DateCell field="volunteer.createdAt" header="Dobrovolník: Datum registrace" hidden />
 					<BooleanCell field="volunteer.createdInAdmin" header="Dobrovolník: Registrován administrátorem" hidden />
+					<HasOneSelectCell field="assignee" header="Přiřazený pracovník" hidden options={'OrganizationManager.name'} />
 					{/*<GenericCell canBeHidden={false} shrunk>*/}
 					{/*	<LinkButton to="editVolunteer(id: $entity.volunteer.id)">Dobrovolník</LinkButton>*/}
 					{/*</GenericCell>*/}
