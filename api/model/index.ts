@@ -136,7 +136,7 @@ export class OrganizationManager {
 	organization = def.manyHasOne(Organization, 'managers').notNull().cascadeOnDelete()
 	name = def.stringColumn().notNull()
 	email = def.stringColumn().notNull()
-	phone = def.stringColumn().notNull()
+	phone = def.stringColumn().notNull().default('')
 	assignedOffers = def.oneHasMany(Offer, 'assignee')
 }
 

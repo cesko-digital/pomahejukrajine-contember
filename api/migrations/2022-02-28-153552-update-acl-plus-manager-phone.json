@@ -1,0 +1,36 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "updateColumnDefinition",
+			"entityName": "OrganizationManager",
+			"fieldName": "phone",
+			"definition": {
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OfferStatus",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"order": true,
+								"name": true,
+								"offers": true
+							}
+						}
+					}
+				}
+			]
+		}
+	]
+}
