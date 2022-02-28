@@ -1,0 +1,40 @@
+.avatar
+	width: 1.8em
+	height: 1.8em
+	border-radius: 50%
+	border: 2px solid white
+	text-align: center
+	box-shadow: 0 0 0 0.0625em rgba(57, 57, 57, 0.05), 0 0.0625em 0.1875em 0 rgba(57, 57, 57, 0.15)
+	display: flex
+	align-items: center
+	justify-content: center
+	font-weight: bold
+	font-size: 80%
+	cursor: default
+	-ms-user-select: none
+	-moz-user-select: none
+	-webkit-user-select: none
+	user-select: none
+
+	&::after
+		content: attr(data-title)
+		display: block
+		border-radius: 4px
+		background-color: #000
+		pointer-events: none
+		position: absolute
+		color: #fff
+		font-size: 1em
+		opacity: 0
+		transform: translate(0, 2em)
+		z-index: 999
+		padding: 0 0.5em
+		font-weight: normal
+		max-width: 24em
+		overflow: hidden
+		text-overflow: ellipsis
+
+	&:hover
+		&::after
+			opacity: 1
+			transition: opacity 0.3s ease-in-out

@@ -24,8 +24,10 @@ import {
 } from '@contember/admin'
 import * as React from 'react'
 import { useCallback } from 'react'
+import { CollaborationList } from '../components/CollaborationList'
 import { HasManyFilterCell } from '../components/HasManyFilterCell'
 import { OfferForm } from "../components/OfferForm"
+import { CurrentEntityKeyListener } from '../utils/collaboration/CurrentEntityKeyListener'
 import './offer.sass'
 
 const limitLength = (maxLength: number) => (value: any) => {
@@ -72,6 +74,11 @@ const OffersGrid = (
 						<LinkButton to="editOffer(id: $entity.id)">Otevřít</LinkButton>
 					</GenericCell>
 					<HasOneSelectCell field="assignee" header="Přiřazen" options={'OrganizationManager.name'} />
+					<GenericCell>
+						<CurrentEntityKeyListener>
+							{(data) => <CollaborationList emails={data?.keys?.map(key => key.client.email) ?? []} />}
+						</CurrentEntityKeyListener>
+					</GenericCell>
 					{
 						query.data.listQuestion.map(question => {
 							if (["text", "radio", "textarea", "date"].includes(question.type)) {

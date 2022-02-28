@@ -3,6 +3,7 @@ import { ApplicationEntrypoint, LoginEntrypoint, Pages, runReactApp } from '@con
 import '@contember/admin/style.css'
 import { Layout } from './components/Layout'
 import { csCZ } from '@contember/admin-i18n'
+import { CollaborationClientProvider } from "./utils/collaboration/CollaborationClientProvider"
 
 
 const apiBaseUrl = import.meta.env.VITE_CONTEMBER_ADMIN_API_BASE_URL as string
@@ -25,10 +26,12 @@ if (window.location.hash === '#login') {
 			project={import.meta.env.VITE_CONTEMBER_ADMIN_PROJECT_NAME}
 			stage="live"
 			children={
-				<Pages
-					layout={Layout}
-					children={Object.assign({}, ...Object.values(import.meta.globEager('./pages/*.tsx')))}
-				/>
+				<CollaborationClientProvider>
+					<Pages
+						layout={Layout}
+						children={Object.assign({}, ...Object.values(import.meta.globEager('./pages/*.tsx')))}
+					/>
+				</CollaborationClientProvider>
 			}
 			defaultLocale={"cs-CZ"}
 			dictionaries={{ 'cs-CZ': csCZ }}
