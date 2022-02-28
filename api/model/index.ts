@@ -69,7 +69,7 @@ export class OfferStatus {
 export class Volunteer {
 	identityId = def.uuidColumn()
 	name = def.stringColumn().notNull()
-	email = def.stringColumn().notNull()
+	email = def.stringColumn()
 	phone = def.stringColumn().notNull().default('')
 	organization = def.stringColumn().notNull().default('')
 	contactHours = def.stringColumn().notNull().default('')
