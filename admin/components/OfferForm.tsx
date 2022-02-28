@@ -10,11 +10,12 @@ import {
 	HasMany,
 	Radio,
 	SelectField,
+	Stack,
 	TextInput,
 	useEntityList
-} from "@contember/admin";
-import {Conditional} from "./Conditional";
-import * as React from "react";
+} from "@contember/admin"
+import { Conditional } from "./Conditional"
+import * as React from "react"
 
 export const OfferForm = Component(
 	() => {
@@ -40,8 +41,8 @@ export const OfferForm = Component(
 
 		const setParameters = (question: EntityAccessor, value: string[]) => {
 			const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
-			const optionsList = parameter?.getEntityList('options');
-			const options = Array.from(optionsList ?? []);
+			const optionsList = parameter?.getEntityList('options')
+			const options = Array.from(optionsList ?? [])
 			const staying = options.filter(option => value.includes(option.getField<string>('value').value ?? ''))
 			const remove = options.filter(option => !value.includes(option.getField<string>('value').value ?? ''))
 			const add = value.filter(value => !options.find(option => option.getField<string>('value').value === value))
@@ -57,7 +58,7 @@ export const OfferForm = Component(
 
 		const toggleParameter = (question: EntityAccessor, value: string, add: boolean) => {
 			const updateParameter = (parameter: EntityAccessor) => {
-				const valuesEntityList = parameter.getEntityList('values');
+				const valuesEntityList = parameter.getEntityList('values')
 				const currentOptions = Array.from(valuesEntityList ?? []).map(option => option.getField<string>('value').value!)
 				if (add) {
 					if (!currentOptions.includes(value)) {
@@ -159,7 +160,7 @@ export const OfferForm = Component(
 								<EntityView
 									render={(entity) => (
 										<TextInput allowNewlines value={getParameter(entity)}
-															 onChange={e => setParameter(entity, e.target.value)} />
+											onChange={e => setParameter(entity, e.target.value)} />
 									)}
 								/>
 							</Conditional>
@@ -168,7 +169,7 @@ export const OfferForm = Component(
 								<EntityView
 									render={(entity) => (
 										<DateTimeInput type="date" value={getParameter(entity)}
-																	 onChange={value => setParameter(entity, value ?? '')} />
+											onChange={value => setParameter(entity, value ?? '')} />
 									)}
 								/>
 							</Conditional>
@@ -177,7 +178,7 @@ export const OfferForm = Component(
 								<EntityView
 									render={(entity) => (
 										<TextInput type="number" value={getParameter(entity)}
-															 onChange={e => setParameter(entity, e.target.value)} />
+											onChange={e => setParameter(entity, e.target.value)} />
 									)}
 								/>
 							</Conditional>
@@ -211,31 +212,33 @@ export const OfferForm = Component(
 
 
 							<Conditional showIf={acc => acc.getField('type').value === 'checkbox'}>
-								<EntityView
-									render={(questionEntity) => (
-										Array.from(questionEntity.getEntityList('options')).map(optionEntity => {
-											const value = optionEntity.getField<string>('value').value!;
-											return (
-												<Entity accessor={optionEntity} key={value}>
-													<Checkbox
-														value={getParameters(questionEntity, value)}
-														onChange={checked => {
-															toggleParameter(questionEntity, value, checked)
-														}}
-													>
-														<Field field="label" />
-													</Checkbox>
-													{optionEntity.getField<boolean>('requireSpecification').value && (
-														<TextInput
-															value={getParametersSpecification(questionEntity, value)}
-															onChange={e => setParametersSpecification(questionEntity, value, e.target.value)}
-														/>
-													)}
-												</Entity>
-											);
-										})
-									)}
-								/>
+								<Stack direction={"vertical"}>
+									<EntityView
+										render={(questionEntity) => (
+											Array.from(questionEntity.getEntityList('options')).map(optionEntity => {
+												const value = optionEntity.getField<string>('value').value!
+												return (
+													<Entity accessor={optionEntity} key={value}>
+														<Checkbox
+															value={getParameters(questionEntity, value)}
+															onChange={checked => {
+																toggleParameter(questionEntity, value, checked)
+															}}
+														>
+															<Field field="label" />
+														</Checkbox>
+														{optionEntity.getField<boolean>('requireSpecification').value && (
+															<TextInput
+																value={getParametersSpecification(questionEntity, value)}
+																onChange={e => setParametersSpecification(questionEntity, value, e.target.value)}
+															/>
+														)}
+													</Entity>
+												)
+											})
+										)}
+									/>
+								</Stack>
 							</Conditional>
 
 							<Conditional showIf={acc => acc.getField('type').value === 'district'}>
@@ -251,7 +254,7 @@ export const OfferForm = Component(
 					</HasMany>
 				</Conditional>
 			</>
-		);
+		)
 	},
 	() => (
 		<>
