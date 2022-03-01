@@ -38,6 +38,7 @@ export const volunteers = (
 	<DataGridPage entities="Volunteer[verified=true][banned=false]" itemsPerPage={100} rendererProps={{ title: "Dobrovolníci" }}>
 		<TextCell field="email" header="Email" format={limitLength(30)} />
 		<TextCell field="phone" header="Telefon" format={limitLength(30)} />
+		<TextCell field="name" header="Jméno" format={limitLength(30)} />
 		<TextCell field="expertise" header="Odbornost" format={limitLength(30)} />
 		<HasManyCell field="districts" entityList="District" hasOneField="district" header="Okresy">
 			<Field field="name" />
