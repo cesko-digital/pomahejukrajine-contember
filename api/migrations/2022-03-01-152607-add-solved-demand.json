@@ -1,0 +1,38 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createColumn",
+			"entityName": "Demand",
+			"field": {
+				"name": "solved",
+				"columnName": "solved",
+				"nullable": false,
+				"default": false,
+				"type": "Bool",
+				"columnType": "boolean"
+			},
+			"fillValue": false
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Demand/operations/create/solved",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Demand/operations/read/solved",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Demand/operations/update/solved",
+					"value": true
+				}
+			]
+		}
+	]
+}
