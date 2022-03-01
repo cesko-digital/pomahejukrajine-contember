@@ -9,8 +9,8 @@ import {
 	SelectField,
 	TextField
 } from "@contember/admin"
-import {Conditional} from "../components/Conditional";
-import {Language} from "../../api/model";
+import { Conditional } from "../components/Conditional"
+import { Language } from "../../api/model"
 
 export const districts = (
 	<MultiEditPage entities="Region" orderBy="name" rendererProps={{ title: "Kraje" }}>
@@ -44,6 +44,7 @@ export const offerTypes = (
 	<MultiEditPage entities="OfferType" rendererProps={{ sortableBy: "order", title: "Typy nabídek" }}>
 		<TextField field="name" label="Název" />
 		<TextField field="nameUK" label="Název v Ukrajinštině" />
+		<CheckboxField field="hideInDemand" label="Skrýt v žádostech" defaultValue={false} />
 		<TextField field="infoText" label="Doplňující informace" />
 		<CheckboxField field="needsVerification" label="Vyžaduje ověření" defaultValue={false} />
 		<Repeater field="questions" label="Otázky" sortableBy="order">

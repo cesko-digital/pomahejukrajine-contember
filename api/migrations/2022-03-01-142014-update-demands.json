@@ -1,0 +1,48 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createColumn",
+			"entityName": "OfferType",
+			"field": {
+				"name": "hideInDemand",
+				"columnName": "hide_in_demand",
+				"nullable": false,
+				"default": false,
+				"type": "Bool",
+				"columnType": "boolean"
+			},
+			"fillValue": false
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/create/hideInDemand",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/update/hideInDemand",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/read/hideInDemand",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/OfferType/operations/read/hideInDemand",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OfferType/operations/read/hideInDemand",
+					"value": true
+				}
+			]
+		}
+	]
+}

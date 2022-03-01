@@ -29,6 +29,7 @@ export class OfferType {
 
 	offers = def.oneHasMany(Offer, 'type')
 	demands = def.manyHasManyInverse(Demand, 'types')
+	hideInDemand = def.boolColumn().notNull().default(false)
 }
 
 export const QuestionType = def.createEnum('radio', 'checkbox', 'text', 'textarea', 'number', 'date', 'district')
