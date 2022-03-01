@@ -24,8 +24,11 @@ import {
 } from '@contember/admin'
 import * as React from 'react'
 import { useCallback } from 'react'
+import { CollaborationList } from '../components/CollaborationList'
 import { HasManyFilterCell } from '../components/HasManyFilterCell'
 import { OfferForm } from "../components/OfferForm"
+import { CurrentEntityKeyListener } from '../utils/collaboration/CurrentEntityKeyListener'
+import { CurrentEntitySharedKeyAcquirer } from '../utils/collaboration/CurrentEntitySharedKeyAcquirer'
 import './offer.sass'
 
 const limitLength = (maxLength: number) => (value: any) => {
@@ -36,7 +39,7 @@ const limitLength = (maxLength: number) => (value: any) => {
 		return <span title={value}>{value.substr(0, maxLength) + '…'}</span>
 	}
 	return value
-};
+}
 
 const LIST_QUESTION_QUERY = `
 	query ($id: UUID!) {
@@ -72,6 +75,11 @@ const OffersGrid = (
 						<LinkButton to="editOffer(id: $entity.id)">Otevřít</LinkButton>
 					</GenericCell>
 					<HasOneSelectCell field="assignee" header="Přiřazen" options={'OrganizationManager.name'} />
+					<GenericCell header="Prohlíží" shrunk>
+						<CurrentEntityKeyListener>
+							{(data) => (<CollaborationList emails={data?.keys?.map(key => key.client.email) ?? []} />)}
+						</CurrentEntityKeyListener>
+					</GenericCell>
 					{
 						query.data.listQuestion.map(question => {
 							if (["text", "radio", "textarea", "date"].includes(question.type)) {
@@ -206,6 +214,7 @@ export const editOffer = (
 			navigation: <NavigateBackButton to="offers(id: $entity.type.id)">Zpět na nabídky <Field field="type.name" /></NavigateBackButton>
 		}}
 	>
+		<CurrentEntitySharedKeyAcquirer />
 		<OfferManage />
 		<OfferForm />
 		<Section heading="Dobrovolník">

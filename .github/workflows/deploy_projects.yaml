@@ -20,8 +20,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Check that deploy branch is behind main
-        run: git merge-base --is-ancestor HEAD refs/remotes/origin/main
+      # - name: Check that deploy branch is behind main
+      #   run: git merge-base --is-ancestor HEAD refs/remotes/origin/main
 
       - name: Install dependencies
         run: npm ci --also=dev
