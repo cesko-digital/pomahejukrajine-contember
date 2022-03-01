@@ -171,7 +171,7 @@ export class Demand {
 	otherType = def.stringColumn()
 	contactHours = def.stringColumn().notNull().default('')
 	createdAt = def.dateTimeColumn().notNull().default('now')
-	// matches = def.oneHasMany(Match, 'demand')
+	solved = def.boolColumn().default(false).notNull()
 }
 
 // export class Match {
