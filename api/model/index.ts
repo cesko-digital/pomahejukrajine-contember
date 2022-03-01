@@ -1,5 +1,5 @@
 import { SchemaDefinition as def } from "@contember/schema-definition"
-import { Model } from "@contember/schema";
+import { Model } from "@contember/schema"
 
 export class Region { // Kraj
 	name = def.stringColumn().notNull().unique()
@@ -22,11 +22,13 @@ export class VolunteerTag {
 export class OfferType {
 	order = def.intColumn().notNull().default(0)
 	name = def.stringColumn().notNull().unique()
+	nameUK = def.stringColumn().notNull().default('')
 	infoText = def.stringColumn().notNull().default('')
 	questions = def.oneHasMany(Question, 'offerType').orderBy('order')
 	needsVerification = def.boolColumn().notNull().default(false) // vyžaduje ověření
 
 	offers = def.oneHasMany(Offer, 'type')
+	demands = def.manyHasManyInverse(Demand, 'types')
 }
 
 export const QuestionType = def.createEnum('radio', 'checkbox', 'text', 'textarea', 'number', 'date', 'district')
@@ -160,10 +162,16 @@ export class OrganizationManager {
 
 
 
-// export class Demand {
-// 	// TODO
-// 	matches = def.oneHasMany(Match, 'demand')
-// }
+export class Demand {
+	name = def.stringColumn().notNull()
+	email = def.stringColumn().notNull()
+	phone = def.stringColumn().default('')
+	types = def.manyHasMany(OfferType, 'demands')
+	otherType = def.stringColumn()
+	contactHours = def.stringColumn().notNull().default('')
+	createdAt = def.dateTimeColumn().notNull().default('now')
+	// matches = def.oneHasMany(Match, 'demand')
+}
 
 // export class Match {
 // 	demand = def.manyHasOne(Demand, 'matches').notNull()

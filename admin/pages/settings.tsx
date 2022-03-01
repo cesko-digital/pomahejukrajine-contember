@@ -43,6 +43,7 @@ export const languages = (
 export const offerTypes = (
 	<MultiEditPage entities="OfferType" rendererProps={{ sortableBy: "order", title: "Typy nabídek" }}>
 		<TextField field="name" label="Název" />
+		<TextField field="nameUK" label="Název v Ukrajinštině" />
 		<TextField field="infoText" label="Doplňující informace" />
 		<CheckboxField field="needsVerification" label="Vyžaduje ověření" defaultValue={false} />
 		<Repeater field="questions" label="Otázky" sortableBy="order">
