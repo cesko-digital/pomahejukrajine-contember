@@ -1,0 +1,231 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "Demand",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					}
+				},
+				"tableName": "demand"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferType",
+			"field": {
+				"name": "nameUK",
+				"columnName": "name_uk",
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Demand",
+			"field": {
+				"name": "name",
+				"columnName": "name",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Demand",
+			"field": {
+				"name": "email",
+				"columnName": "email",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Demand",
+			"field": {
+				"name": "phone",
+				"columnName": "phone",
+				"nullable": true,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Demand",
+			"field": {
+				"name": "otherType",
+				"columnName": "other_type",
+				"nullable": true,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Demand",
+			"field": {
+				"name": "contactHours",
+				"columnName": "contact_hours",
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Demand",
+			"field": {
+				"name": "createdAt",
+				"columnName": "created_at",
+				"nullable": false,
+				"default": "now",
+				"type": "DateTime",
+				"columnType": "timestamptz"
+			},
+			"fillValue": "now"
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "Demand",
+			"owningSide": {
+				"type": "ManyHasMany",
+				"name": "types",
+				"inversedBy": "demands",
+				"target": "OfferType",
+				"joiningTable": {
+					"tableName": "demand_types",
+					"joiningColumn": {
+						"columnName": "demand_id",
+						"onDelete": "cascade"
+					},
+					"inverseJoiningColumn": {
+						"columnName": "offer_type_id",
+						"onDelete": "cascade"
+					}
+				}
+			},
+			"inverseSide": {
+				"name": "demands",
+				"ownedBy": "types",
+				"target": "Demand",
+				"type": "ManyHasMany"
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Demand",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"create": {
+								"id": true,
+								"name": true,
+								"email": true,
+								"phone": true,
+								"types": true,
+								"otherType": true,
+								"contactHours": true,
+								"createdAt": true
+							},
+							"read": {
+								"id": true,
+								"name": true,
+								"email": true,
+								"phone": true,
+								"types": true,
+								"otherType": true,
+								"contactHours": true,
+								"createdAt": true
+							},
+							"update": {
+								"id": true,
+								"name": true,
+								"email": true,
+								"phone": true,
+								"types": true,
+								"otherType": true,
+								"contactHours": true,
+								"createdAt": true
+							},
+							"delete": true
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/create/demands",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/create/nameUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/update/demands",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/update/nameUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/read/demands",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/read/nameUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/OfferType/operations/read/demands",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/OfferType/operations/read/nameUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OfferType/operations/read/demands",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OfferType/operations/read/nameUK",
+					"value": true
+				}
+			]
+		}
+	]
+}
