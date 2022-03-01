@@ -39,7 +39,7 @@ const limitLength = (maxLength: number) => (value: any) => {
 		return <span title={value}>{value.substr(0, maxLength) + '…'}</span>
 	}
 	return value
-};
+}
 
 const LIST_QUESTION_QUERY = `
 	query ($id: UUID!) {
@@ -75,12 +75,9 @@ const OffersGrid = (
 						<LinkButton to="editOffer(id: $entity.id)">Otevřít</LinkButton>
 					</GenericCell>
 					<HasOneSelectCell field="assignee" header="Přiřazen" options={'OrganizationManager.name'} />
-					<GenericCell header="Prohlíží">
+					<GenericCell header="Prohlíží" shrunk>
 						<CurrentEntityKeyListener>
-							{(data) => {
-								console.log('data', data)
-								return (<CollaborationList emails={data?.keys?.map(key => key.client.email) ?? []} />)
-							}}
+							{(data) => (<CollaborationList emails={data?.keys?.map(key => key.client.email) ?? []} />)}
 						</CurrentEntityKeyListener>
 					</GenericCell>
 					{
