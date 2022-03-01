@@ -28,6 +28,7 @@ import { CollaborationList } from '../components/CollaborationList'
 import { HasManyFilterCell } from '../components/HasManyFilterCell'
 import { OfferForm } from "../components/OfferForm"
 import { CurrentEntityKeyListener } from '../utils/collaboration/CurrentEntityKeyListener'
+import { CurrentEntitySharedKeyAcquirer } from '../utils/collaboration/CurrentEntitySharedKeyAcquirer'
 import './offer.sass'
 
 const limitLength = (maxLength: number) => (value: any) => {
@@ -76,7 +77,10 @@ const OffersGrid = (
 					<HasOneSelectCell field="assignee" header="Přiřazen" options={'OrganizationManager.name'} />
 					<GenericCell header="Právě edituje">
 						<CurrentEntityKeyListener>
-							{(data) => <CollaborationList emails={data?.keys?.map(key => key.client.email) ?? []} />}
+							{(data) => {
+								console.log('data', data)
+								return (<CollaborationList emails={data?.keys?.map(key => key.client.email) ?? []} />)
+							}}
 						</CurrentEntityKeyListener>
 					</GenericCell>
 					{
@@ -213,6 +217,7 @@ export const editOffer = (
 			navigation: <NavigateBackButton to="offers(id: $entity.type.id)">Zpět na nabídky <Field field="type.name" /></NavigateBackButton>
 		}}
 	>
+		<CurrentEntitySharedKeyAcquirer />
 		<OfferManage />
 		<OfferForm />
 		<Section heading="Dobrovolník">

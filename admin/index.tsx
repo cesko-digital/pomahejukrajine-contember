@@ -25,16 +25,15 @@ if (window.location.hash === '#login') {
 			sessionToken={import.meta.env.VITE_CONTEMBER_ADMIN_SESSION_TOKEN}
 			project={import.meta.env.VITE_CONTEMBER_ADMIN_PROJECT_NAME}
 			stage="live"
-			children={
-				<CollaborationClientProvider>
-					<Pages
-						layout={Layout}
-						children={Object.assign({}, ...Object.values(import.meta.globEager('./pages/*.tsx')))}
-					/>
-				</CollaborationClientProvider>
-			}
 			defaultLocale={"cs-CZ"}
 			dictionaries={{ 'cs-CZ': csCZ }}
-		/>,
+		>
+			<CollaborationClientProvider>
+				<Pages
+					layout={Layout}
+					children={Object.assign({}, ...Object.values(import.meta.globEager('./pages/*.tsx')))}
+				/>
+			</CollaborationClientProvider>
+		</ApplicationEntrypoint>,
 	)
 }
