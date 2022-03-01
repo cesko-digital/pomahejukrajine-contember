@@ -75,7 +75,7 @@ const OffersGrid = (
 						<LinkButton to="editOffer(id: $entity.id)">Otevřít</LinkButton>
 					</GenericCell>
 					<HasOneSelectCell field="assignee" header="Přiřazen" options={'OrganizationManager.name'} />
-					<GenericCell header="Právě edituje">
+					<GenericCell header="Prohlíží">
 						<CurrentEntityKeyListener>
 							{(data) => {
 								console.log('data', data)
