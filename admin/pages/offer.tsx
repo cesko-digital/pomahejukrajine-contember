@@ -20,7 +20,8 @@ import {
 	useAuthedContentQuery,
 	useCurrentRequest,
 	useEntity, useEnvironment,
-	useIdentity, useRedirect
+	useIdentity, useRedirect,
+	NumberCell
 } from '@contember/admin'
 import * as React from 'react'
 import { useCallback } from 'react'
@@ -94,9 +95,9 @@ const OffersGrid = (
 								)
 							} else if (question.type === "number") {
 								return (
-									<TextCell
+									<NumberCell
 										key={question.id}
-										field={`parameters(question.id='${question.id}').value`}
+										field={`parameters(question.id='${question.id}').details.numericValue`}
 										header={question.label}
 									/>
 								)
