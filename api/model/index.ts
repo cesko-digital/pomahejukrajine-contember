@@ -122,6 +122,7 @@ export class OfferLog {
 	author = def.manyHasOne(OrganizationManager).notNull()
 }
 
+
 @def.Unique('offer', 'question')
 export class OfferParameter {
 	offer = def.manyHasOne(Offer, 'parameters').notNull().cascadeOnDelete()
@@ -129,6 +130,19 @@ export class OfferParameter {
 	value = def.stringColumn()
 	specification = def.stringColumn()
 	values = def.oneHasMany(OfferParameterValue, 'parameter')
+	details = def.oneHasOneInverse(OfferParameterDetails, 'offerParameter').notNull()
+}
+
+@def.View(`
+	SELECT
+		gen_random_uuid() AS id,
+		offer_parameter.id AS offer_parameter_id,
+		CASE WHEN value ~ '^[0-9]+$' THEN value::int ELSE null END AS numeric_value
+	FROM offer_parameter
+`)
+export class OfferParameterDetails {
+	numericValue = def.intColumn()
+	offerParameter = def.oneHasOne(OfferParameter, 'details').notNull()
 }
 
 export class OfferParameterValue {

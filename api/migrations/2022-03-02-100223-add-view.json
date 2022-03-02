@@ -1,0 +1,106 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createView",
+			"entity": {
+				"name": "OfferParameterDetails",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					},
+					"numericValue": {
+						"name": "numericValue",
+						"columnName": "numeric_value",
+						"nullable": true,
+						"type": "Integer",
+						"columnType": "integer"
+					},
+					"offerParameter": {
+						"name": "offerParameter",
+						"inversedBy": "details",
+						"nullable": false,
+						"type": "OneHasOne",
+						"target": "OfferParameter",
+						"joiningColumn": {
+							"columnName": "offer_parameter_id",
+							"onDelete": "restrict"
+						}
+					}
+				},
+				"tableName": "offer_parameter_details",
+				"view": {
+					"sql": "\n\tSELECT\n\t\tgen_random_uuid() AS id,\n\t\toffer_parameter.id AS offer_parameter_id,\n\t\tCASE WHEN value ~ '^[0-9]+$' THEN value::int ELSE null END AS numeric_value\n\tFROM offer_parameter\n"
+				}
+			}
+		},
+		{
+			"modification": "createRelationInverseSide",
+			"entityName": "OfferParameter",
+			"relation": {
+				"name": "details",
+				"ownedBy": "offerParameter",
+				"target": "OfferParameterDetails",
+				"type": "OneHasOne",
+				"nullable": false
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameterDetails",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"create": {
+								"id": true,
+								"numericValue": true,
+								"offerParameter": true
+							},
+							"read": {
+								"id": true,
+								"numericValue": true,
+								"offerParameter": true
+							},
+							"update": {
+								"id": true,
+								"numericValue": true,
+								"offerParameter": true
+							},
+							"delete": true
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameter/operations/create/details",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameter/operations/read/details",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameter/operations/update/details",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OfferParameter/operations/read/details",
+					"value": true
+				}
+			]
+		}
+	]
+}

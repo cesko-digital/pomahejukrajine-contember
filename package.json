@@ -8,8 +8,8 @@
 		"deploy": "docker-compose run -e CONTEMBER_TOKEN= contember-cli deploy"
   },
   "devDependencies": {
-    "@contember/admin": "^1.0.0-alpha.9",
-    "@contember/admin-i18n": "^1.0.0-alpha.9",
+    "@contember/admin": "^1.0.0-rc.11",
+    "@contember/admin-i18n": "^1.0.0-rc.11",
     "@contember/schema": "1.0.0-rc.2",
     "@contember/schema-definition": "1.0.0-rc.2",
     "@types/react": "^17",
