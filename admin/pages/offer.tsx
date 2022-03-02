@@ -92,6 +92,7 @@ const OffersGrid = (
 										header={question.label}
 										hidden={question.type === "textarea"}
 										format={limitLength(30)}
+										disableOrder
 									/>
 								)
 							} else if (question.type === "number") {
