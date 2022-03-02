@@ -81,6 +81,7 @@ const OffersGrid = (
 							{(data) => (<CollaborationList emails={data?.keys?.map(key => key.client.email) ?? []} />)}
 						</CurrentEntityKeyListener>
 					</GenericCell>
+					<HasManySelectCell field="volunteer.languages" options="VolunteerLanguage.language.name" header="Dobrovolník: Jazyky" />
 					{
 						query.data.listQuestion.map(question => {
 							if (["text", "radio", "textarea", "date"].includes(question.type)) {
