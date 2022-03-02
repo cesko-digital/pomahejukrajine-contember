@@ -137,7 +137,7 @@ export class OfferParameter {
 	SELECT
 		gen_random_uuid() AS id,
 		offer_parameter.id AS offer_parameter_id,
-		CASE WHEN value ~ '^[0-9]+$' THEN value::int ELSE null END AS numeric_value
+		CASE WHEN value ~ '^[0-9]{1,8}$' THEN value::int ELSE null END AS numeric_value
 	FROM offer_parameter
 `)
 export class OfferParameterDetails {
