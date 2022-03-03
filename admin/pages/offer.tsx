@@ -26,6 +26,7 @@ import {
 import * as React from 'react'
 import { useCallback } from 'react'
 import { CollaborationList } from '../components/CollaborationList'
+import { HasManyCell } from '../components/HasManyCell'
 import { HasManyFilterCell } from '../components/HasManyFilterCell'
 import { OfferForm } from "../components/OfferForm"
 import { CurrentEntityKeyListener } from '../utils/collaboration/CurrentEntityKeyListener'
@@ -81,7 +82,10 @@ const OffersGrid = (
 							{(data) => (<CollaborationList emails={data?.keys?.map(key => key.client.email) ?? []} />)}
 						</CurrentEntityKeyListener>
 					</GenericCell>
-					<HasManySelectCell field="volunteer.languages" options="VolunteerLanguage.language.name" header="Dobrovolník: Jazyky" />
+					{/* <HasManySelectCell field="volunteer.languages" options="VolunteerLanguage.language.name" header="Dobrovolník: Jazyky" /> */}
+					<HasManyCell field="volunteer.languages" entityList="Language" hasOneField="language" header="Dobrovolník: Jazyky">
+						<Field field="name" />
+					</HasManyCell>
 					{
 						query.data.listQuestion.map(question => {
 							if (["text", "radio", "textarea", "date"].includes(question.type)) {
