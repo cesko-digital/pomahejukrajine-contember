@@ -88,7 +88,9 @@ export const HasManyCell = Component<HasManyCellProps>(
 				{...props}
 				enableOrdering={false}
 				getNewFilter={(filter, { environment }) => {
-					if (filter === undefined || filter.ids.length === 0) {
+					console.log(filter)
+
+					if (filter === undefined || !('ids' in filter) || filter.ids.length === 0) {
 						return undefined
 					}
 
