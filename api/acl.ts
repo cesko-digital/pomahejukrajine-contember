@@ -159,6 +159,9 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 							email: 'isAssigned',
 							phone: 'isAssigned',
 						},
+						update: {
+							tags: true,
+						}
 					},
 				},
 				VolunteerDistrict: {

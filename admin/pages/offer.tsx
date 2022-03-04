@@ -21,7 +21,8 @@ import {
 	useCurrentRequest,
 	useEntity, useEnvironment,
 	useIdentity, useRedirect,
-	NumberCell
+	NumberCell,
+	MultiSelectField
 } from '@contember/admin'
 import * as React from 'react'
 import { useCallback } from 'react'
@@ -230,7 +231,8 @@ export const editOffer = (
 				Pro zobrazení konktaktních údajů musíte mít na sebe přiřazenou nabídku.
 			</div>
 			<div className="volunteer-wrapper">
-				<table>
+				<MultiSelectField label="Tagy dobrovolníka" field="volunteer.tags" options="VolunteerTag.name" />
+				<table style={{ marginTop: '10px' }}>
 					<tr>
 						<td>Jméno</td>
 						<td><Field field="volunteer.name" /></td>
