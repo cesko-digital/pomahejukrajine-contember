@@ -254,6 +254,7 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 						self: { offer: { volunteer: { id: 'volunteerId' } } },
 					},
 					operations: {
+						create: allField(model, 'OfferParameter', 'self'),
 						read: allField(model, 'OfferParameter', 'self'),
 						update: allField(model, 'OfferParameter', 'self'),
 						delete: 'self',
@@ -264,6 +265,7 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 						self: { parameter: { offer: { volunteer: { id: 'volunteerId' } } } },
 					},
 					operations: {
+						create: allField(model, 'OfferParameterValue', 'self'),
 						read: allField(model, 'OfferParameterValue', 'self'),
 						update: allField(model, 'OfferParameterValue', 'self'),
 						delete: 'self',
@@ -276,6 +278,14 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 					operations: {
 						read: allField(model, 'VolunteerLanguage', 'self'),
 						delete: 'self',
+					},
+				},
+				Question: {
+					predicates: {},
+					operations: {
+						update: {
+							offerParameters: true,
+						},
 					},
 				}
 			},
