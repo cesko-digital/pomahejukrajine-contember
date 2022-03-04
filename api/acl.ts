@@ -174,7 +174,12 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 				},
 				VolunteerTag: {
 					predicates: {},
-					operations: readOnly(model, 'VolunteerTag', true),
+					operations: {
+						read: allField(model, 'VolunteerTag', true),
+						update: allField(model, 'VolunteerTag', true),
+						create: allField(model, 'VolunteerTag', true),
+						delete: true,
+					}
 				},
 			},
 		},

@@ -1,0 +1,35 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/VolunteerTag/operations/update",
+					"value": {
+						"id": true,
+						"order": true,
+						"name": true,
+						"volunteers": true
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/VolunteerTag/operations/create",
+					"value": {
+						"id": true,
+						"order": true,
+						"name": true,
+						"volunteers": true
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/VolunteerTag/operations/delete",
+					"value": true
+				}
+			]
+		}
+	]
+}
