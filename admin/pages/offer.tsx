@@ -137,13 +137,13 @@ const OffersGrid = (
 							}
 						}).filter(item => item !== null)
 					}
-					<TextCell field="internalNote" header="Interní poznámka" hidden />
+					<TextCell field="internalNote" header="Interní poznámka" hidden format={limitLength(30)} />
 					<TextCell field="volunteer.email" header="Dobrovolník: Email" hidden />
 					<TextCell field="volunteer.phone" header="Dobrovolník: Telefon" hidden />
-					<TextCell field="volunteer.expertise" header="Dobrovolník: Odbornost" hidden />
+					<TextCell field="volunteer.expertise" header="Dobrovolník: Odbornost" hidden format={limitLength(30)} />
 					<HasManySelectCell field="volunteer.tags" options="VolunteerTag.name" header="Dobrovolník: Tagy" />
-					<TextCell field="volunteer.userNote" header="Dobrovolník: Poznámka uživatele" hidden />
-					<TextCell field="volunteer.internalNote" header="Dobrovolník: Interní poznámka" hidden />
+					<TextCell field="volunteer.userNote" header="Dobrovolník: Poznámka uživatele" hidden format={limitLength(30)} />
+					<TextCell field="volunteer.internalNote" header="Dobrovolník: Interní poznámka" hidden format={limitLength(30)} />
 					<DateCell field="volunteer.createdAt" header="Dobrovolník: Datum registrace" hidden />
 					<BooleanCell field="volunteer.createdInAdmin" header="Dobrovolník: Registrován administrátorem" hidden />
 					{/*<GenericCell canBeHidden={false} shrunk>*/}
