@@ -1,6 +1,6 @@
-import {PermissionsBuilder} from '@contember/schema-definition'
-import {Acl, Model} from '@contember/schema'
-import {OrganizationManager, VolunteerTag} from "./model";
+import { PermissionsBuilder } from '@contember/schema-definition'
+import { Acl, Model } from '@contember/schema'
+import { OrganizationManager, VolunteerTag } from "./model"
 
 const fieldNames = (model: Model.Schema, entity: string): string[] => {
 	return Object.keys(model.entities[entity].fields)
@@ -233,22 +233,51 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 			stages: '*',
 			entities: {
 				Volunteer: {
-					predicates: { self: { id: { eq: 'volunteerId' } } },
+					predicates: { self: { id: 'volunteerId' } },
 					operations: {
-						read: someFields('self', ['email', 'phone', 'userNote', 'expertise', 'districts', 'offers']),
+						read: allField(model, 'Volunteer', 'self'),
 						update: someFields('self', ['userNote', 'expertise', 'districts', 'offers']),
 					},
 				},
 				Offer: {
 					predicates: {
-						self: { volunteer: { id: { eq: 'volunteerId' }, }, },
+						self: { volunteer: { id: 'volunteerId' }, },
 					},
 					operations: {
-						read: someFields('self', ['type']),
-						// update: someFields('self', ['userNote']),
+						read: allField(model, 'Offer', 'self'),
+						update: allField(model, 'Offer', 'self'),
 						delete: 'self',
 					},
 				},
+				OfferParameter: {
+					predicates: {
+						self: { offer: { volunteer: { id: 'volunteerId' } } },
+					},
+					operations: {
+						read: allField(model, 'OfferParameter', 'self'),
+						update: allField(model, 'OfferParameter', 'self'),
+						delete: 'self',
+					},
+				},
+				OfferParameterValue: {
+					predicates: {
+						self: { parameter: { offer: { volunteer: { id: 'volunteerId' } } } },
+					},
+					operations: {
+						read: allField(model, 'OfferParameterValue', 'self'),
+						update: allField(model, 'OfferParameterValue', 'self'),
+						delete: 'self',
+					},
+				},
+				VolunteerLanguage: {
+					predicates: {
+						self: { volunteer: { id: 'volunteerId' } },
+					},
+					operations: {
+						read: allField(model, 'VolunteerLanguage', 'self'),
+						delete: 'self',
+					},
+				}
 			},
 		}
 	},

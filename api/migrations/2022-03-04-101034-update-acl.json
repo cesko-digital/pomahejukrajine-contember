@@ -1,0 +1,235 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameter",
+					"value": {
+						"predicates": {
+							"self": {
+								"offer": {
+									"volunteer": {
+										"id": "volunteerId"
+									}
+								}
+							}
+						},
+						"operations": {
+							"read": {
+								"id": "self",
+								"offer": "self",
+								"question": "self",
+								"value": "self",
+								"specification": "self",
+								"values": "self",
+								"details": "self"
+							},
+							"update": {
+								"id": "self",
+								"offer": "self",
+								"question": "self",
+								"value": "self",
+								"specification": "self",
+								"values": "self",
+								"details": "self"
+							},
+							"delete": "self"
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/VolunteerLanguage",
+					"value": {
+						"predicates": {
+							"self": {
+								"volunteer": {
+									"id": "volunteerId"
+								}
+							}
+						},
+						"operations": {
+							"read": {
+								"id": "self",
+								"volunteer": "self",
+								"language": "self"
+							},
+							"delete": "self"
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameterValue",
+					"value": {
+						"predicates": {
+							"self": {
+								"parameter": {
+									"offer": {
+										"volunteer": {
+											"id": "volunteerId"
+										}
+									}
+								}
+							}
+						},
+						"operations": {
+							"read": {
+								"id": "self",
+								"parameter": "self",
+								"value": "self",
+								"specification": "self"
+							},
+							"update": {
+								"id": "self",
+								"parameter": "self",
+								"value": "self",
+								"specification": "self"
+							},
+							"delete": "self"
+						}
+					}
+				},
+				{
+					"op": "replace",
+					"path": "/roles/volunteer/entities/Volunteer/predicates/self/id",
+					"value": "volunteerId"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Volunteer/operations/read/id",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Volunteer/operations/read/identityId",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Volunteer/operations/read/name",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Volunteer/operations/read/organization",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Volunteer/operations/read/contactHours",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Volunteer/operations/read/languages",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Volunteer/operations/read/verified",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Volunteer/operations/read/banned",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Volunteer/operations/read/secretCode",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Volunteer/operations/read/internalNote",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Volunteer/operations/read/tags",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Volunteer/operations/read/createdAt",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Volunteer/operations/read/createdInAdmin",
+					"value": "self"
+				},
+				{
+					"op": "replace",
+					"path": "/roles/volunteer/entities/Offer/predicates/self/volunteer/id",
+					"value": "volunteerId"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/update",
+					"value": {
+						"id": "self",
+						"volunteer": "self",
+						"type": "self",
+						"internalNote": "self",
+						"exhausted": "self",
+						"parameters": "self",
+						"reactions": "self",
+						"assignee": "self",
+						"status": "self",
+						"logs": "self"
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/read/id",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/read/volunteer",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/read/internalNote",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/read/exhausted",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/read/parameters",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/read/reactions",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/read/assignee",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/read/status",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/read/logs",
+					"value": "self"
+				}
+			]
+		}
+	]
+}
