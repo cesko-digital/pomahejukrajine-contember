@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Menu, EntityListSubTree, FieldView, DataBindingProvider, FeedbackRenderer } from '@contember/admin'
+import { Menu, EntityListSubTree, FieldView, DataBindingProvider, FeedbackRenderer, LogoutLink } from '@contember/admin'
 
 export const Navigation = () => (
 	<Menu>
@@ -33,6 +33,10 @@ export const Navigation = () => (
 			<Menu.Item title="Organizace" to="organizations" />
 			<Menu.Item title="Pracovníci" to="organizationManagerList" />
 			<Menu.Item title="Stavy" to="status" />
+		</Menu.Item>
+		<Menu.Item title="Uživatel">
+			<Menu.Item title="Změnit heslo" href="/_panel/security" />
+			<LogoutLink><Menu.Item title="Odhlásit se" /></LogoutLink>
 		</Menu.Item>
 	</Menu>
 )
