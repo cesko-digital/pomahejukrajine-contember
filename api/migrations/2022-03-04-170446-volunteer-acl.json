@@ -1,0 +1,45 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Question",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"update": {
+								"offerParameters": true
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameter/operations/create",
+					"value": {
+						"id": "self",
+						"offer": "self",
+						"question": "self",
+						"value": "self",
+						"specification": "self",
+						"values": "self",
+						"details": "self"
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameterValue/operations/create",
+					"value": {
+						"id": "self",
+						"parameter": "self",
+						"value": "self",
+						"specification": "self"
+					}
+				}
+			]
+		}
+	]
+}
