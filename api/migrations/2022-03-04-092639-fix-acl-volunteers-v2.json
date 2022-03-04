@@ -1,0 +1,15 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Offer/operations/update/volunteer",
+					"value": true
+				}
+			]
+		}
+	]
+}

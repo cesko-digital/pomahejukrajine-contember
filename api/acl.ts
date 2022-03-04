@@ -83,6 +83,7 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 							assignee: 'assignable',
 							logs: true,
 							status: true,
+							volunteer: true,
 						},
 					},
 				},
