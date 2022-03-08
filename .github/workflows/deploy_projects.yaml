@@ -30,7 +30,7 @@ jobs:
         run: node_modules/.bin/tsc
 
       - name: Validate Schema
-        uses: docker://contember/cli:1.0.0-rc.7
+        uses: docker://contember/cli:1.0.0-rc.15
         with:
           args: project:validate .
 
@@ -44,7 +44,7 @@ jobs:
 
       - name: Deploy Beta
         if: ${{ env.STAGE == 'beta' }}
-        uses: docker://contember/cli:1.0.0-rc.7
+        uses: docker://contember/cli:1.0.0-rc.15
         env:
           CONTEMBER_API_URL: https://api.ukrajina-beta.contember.cz
           CONTEMBER_API_TOKEN: ${{ secrets.CONTEMBER_BETA_API_TOKEN }}
@@ -54,7 +54,7 @@ jobs:
 
       - name: Deploy Prod
         if: ${{ env.STAGE == 'prod' }}
-        uses: docker://contember/cli:1.0.0-rc.7
+        uses: docker://contember/cli:1.0.0-rc.15
         env:
           CONTEMBER_API_URL: https://api.ukrajina.contember.cz
           CONTEMBER_API_TOKEN: ${{ secrets.CONTEMBER_PROD_API_TOKEN }}
