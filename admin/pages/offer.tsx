@@ -11,18 +11,21 @@ import {
 	GenericCell,
 	GenericPage,
 	HasMany,
-	HasManySelectCell, HasOneSelectCell,
+	HasManySelectCell,
+	HasOneSelectCell,
 	LinkButton,
+	MultiSelectField,
 	NavigateBackButton,
+	NumberCell,
 	Section,
 	TextCell,
 	useAuthedContentMutation,
 	useAuthedContentQuery,
 	useCurrentRequest,
-	useEntity, useEnvironment,
-	useIdentity, useRedirect,
-	NumberCell,
-	MultiSelectField
+	useEntity,
+	useEnvironment,
+	useIdentity,
+	useRedirect
 } from '@contember/admin'
 import * as React from 'react'
 import { useCallback } from 'react'
@@ -77,14 +80,15 @@ const OffersGrid = (
 					<GenericCell canBeHidden={false} shrunk>
 						<LinkButton to="editOffer(id: $entity.id)">Otevřít</LinkButton>
 					</GenericCell>
-					<HasOneSelectCell field="assignee" header="Přiřazen" options={'OrganizationManager.name'} />
+					<HasManySelectCell field="assignees" header="Přiřazen" options={'OrganizationManager.name'} />
 					<GenericCell header="Prohlíží" shrunk>
 						<CurrentEntityKeyListener>
 							{(data) => (<CollaborationList emails={data?.keys?.map(key => key.client.email) ?? []} />)}
 						</CurrentEntityKeyListener>
 					</GenericCell>
 					<HasOneSelectCell field="status" options="OfferStatus.name" header="Status" />
-					<HasManyCell field="volunteer.languages" entityList="Language" hasOneField="language" header="Dobrovolník: Jazyky">
+					<HasManyCell field="volunteer.languages" entityList="Language" hasOneField="language"
+											 header="Dobrovolník: Jazyky">
 						<Field field="name" />
 					</HasManyCell>
 					{
@@ -142,15 +146,17 @@ const OffersGrid = (
 					<TextCell field="volunteer.phone" header="Dobrovolník: Telefon" hidden />
 					<TextCell field="volunteer.expertise" header="Dobrovolník: Odbornost" hidden format={limitLength(30)} />
 					<HasManySelectCell field="volunteer.tags" options="VolunteerTag.name" header="Dobrovolník: Tagy" />
-					<TextCell field="volunteer.userNote" header="Dobrovolník: Poznámka uživatele" hidden format={limitLength(30)} />
-					<TextCell field="volunteer.internalNote" header="Dobrovolník: Interní poznámka" hidden format={limitLength(30)} />
+					<TextCell field="volunteer.userNote" header="Dobrovolník: Poznámka uživatele" hidden
+										format={limitLength(30)} />
+					<TextCell field="volunteer.internalNote" header="Dobrovolník: Interní poznámka" hidden
+										format={limitLength(30)} />
 					<DateCell field="volunteer.createdAt" header="Dobrovolník: Datum registrace" hidden />
 					<BooleanCell field="volunteer.createdInAdmin" header="Dobrovolník: Registrován administrátorem" hidden />
 					{/*<GenericCell canBeHidden={false} shrunk>*/}
 					{/*	<LinkButton to="editVolunteer(id: $entity.volunteer.id)">Dobrovolník</LinkButton>*/}
 					{/*</GenericCell>*/}
 				</DataGrid>
-			</DataBindingProvider >
+			</DataBindingProvider>
 		)
 	}
 )
@@ -163,7 +169,7 @@ export const offers = (
 
 const OfferManage = Component(() => {
 	const offer = useEntity()
-	const assignee = offer.getEntity('assignee')
+	const assignees = offer.getEntityList('assignees')
 	const identity = useIdentity()
 	const env = useEnvironment()
 	const [assignSelf] = useAuthedContentMutation<{
@@ -171,7 +177,7 @@ const OfferManage = Component(() => {
 		errorMessage?: string
 	}, { personId: string, offerId: string }>(`
 mutation($offerId: UUID!, $personId: UUID!) {
-	updateOffer(by: {id: $offerId}, data: {assignee: {connect: {personId: $personId}}}) {
+	updateOffer(by: {id: $offerId}, data: {assignees: {connect: {personId: $personId}}}) {
 		ok
 		errorMessage
 	}
@@ -186,33 +192,36 @@ mutation($offerId: UUID!, $personId: UUID!) {
 	const [unassignSelf] = useAuthedContentMutation<{
 		ok: boolean
 		errorMessage?: string
-	}, { offerId: string }>(`
-mutation($offerId: UUID!) {
-	updateOffer(by: {id: $offerId}, data: {assignee: {disconnect: true}}) {
+	}, { offerId: string, personId: string }>(`
+mutation($offerId: UUID!, $personId: UUID!) {
+	updateOffer(by: {id: $offerId}, data: {assignees: {disconnect: {personId: $personId}}}) {
 		ok
 		errorMessage
 	}
 }
 `)
 	const unassign = useCallback(async () => {
-		await unassignSelf({ offerId: offer.id })
+		await unassignSelf({ personId: identity.personId, offerId: offer.id })
 		redirect('editOffer(id: $entity.id)')
 	}, [assignSelf, redirect])
 
-	const assignedPerson = assignee.getField('personId').value
-	if (assignedPerson === identity.personId) {
-		return <>
-			<Button onClick={unassign}>Zrušit přiřazení</Button>
-		</> // todo: show detail
-	} else if (assignedPerson) {
-		return <>Přiřazen {assignee.getField('name').value}</>
-	}
-	return <Button onClick={assign}>Přiřadit se k nabídce</Button>
+	const assignedPersonIds = Array.from(assignees).map(it => it.getField('personId').value)
+	const assignedPersonNames = Array.from(assignees).map(it => it.getField('name').value)
+
+	return (
+		<>
+			<p>Přiřazen: {assignedPersonNames.length > 0 ? assignedPersonNames.join(', ') : 'nikdo'}</p>
+			{assignedPersonIds.includes(identity.personId)
+				? <Button onClick={unassign}>Odebrat sebe</Button>
+				: <Button onClick={assign}>Přiřadit se k nabídce</Button>
+			}
+		</>
+	)
 }, () => (
-	<>
-		<Field field={'assignee.personId'} />
-		<Field field={'assignee.name'} />
-	</>
+	<HasMany field={'assignees'}>
+		<Field field={'personId'} />
+		<Field field={'name'} />
+	</HasMany>
 ))
 
 export const editOffer = (
@@ -220,7 +229,8 @@ export const editOffer = (
 		entity="Offer(id=$id)"
 		rendererProps={{
 			title: <Field field="type.name" />,
-			navigation: <NavigateBackButton to="offers(id: $entity.type.id)">Zpět na nabídky <Field field="type.name" /></NavigateBackButton>
+			navigation: <NavigateBackButton to="offers(id: $entity.type.id)">Zpět na nabídky <Field
+				field="type.name" /></NavigateBackButton>
 		}}
 	>
 		<CurrentEntitySharedKeyAcquirer />
@@ -264,5 +274,5 @@ export const editOffer = (
 				</table>
 			</div>
 		</Section>
-	</EditPage >
+	</EditPage>
 )

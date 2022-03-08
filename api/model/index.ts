@@ -110,7 +110,7 @@ export class Offer {
 	exhausted = def.boolColumn().notNull().default(false)
 	parameters = def.oneHasMany(OfferParameter, 'offer')
 	reactions = def.oneHasMany(Reaction, 'offer')
-	assignee = def.manyHasOne(OrganizationManager, 'assignedOffers').setNullOnDelete()
+	assignees = def.manyHasMany(OrganizationManager, 'assignedOffers')
 	status = def.manyHasOne(OfferStatus, 'offers')
 	logs = def.oneHasMany(OfferLog, 'offer').orderBy('createdAt')
 }
@@ -172,7 +172,7 @@ export class OrganizationManager {
 	name = def.stringColumn().notNull()
 	email = def.stringColumn().notNull()
 	phone = def.stringColumn().notNull().default('')
-	assignedOffers = def.oneHasMany(Offer, 'assignee')
+	assignedOffers = def.manyHasManyInverse(Offer, 'assignees')
 }
 
 

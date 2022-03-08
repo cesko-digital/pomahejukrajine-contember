@@ -1,0 +1,33 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "convertOneHasManyToManyHasManyRelation",
+			"entityName": "Offer",
+			"fieldName": "assignee",
+			"owningSide": {
+				"type": "ManyHasMany",
+				"name": "assignees",
+				"inversedBy": "assignedOffers",
+				"target": "OrganizationManager",
+				"joiningTable": {
+					"tableName": "offer_assignees",
+					"joiningColumn": {
+						"columnName": "offer_id",
+						"onDelete": "cascade"
+					},
+					"inverseJoiningColumn": {
+						"columnName": "organization_manager_id",
+						"onDelete": "cascade"
+					}
+				}
+			},
+			"inverseSide": {
+				"name": "assignedOffers",
+				"ownedBy": "assignees",
+				"target": "Offer",
+				"type": "ManyHasMany"
+			}
+		}
+	]
+}

@@ -1,0 +1,31 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "remove",
+					"path": "/roles/organizationManager/entities/Offer/predicates/assignable"
+				},
+				{
+					"op": "replace",
+					"path": "/roles/organizationManager/entities/Offer/operations/update/assignees",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OrganizationManager/predicates/isMe",
+					"value": {
+						"personId": "personId"
+					}
+				},
+				{
+					"op": "replace",
+					"path": "/roles/organizationManager/entities/OrganizationManager/operations/update/assignedOffers",
+					"value": "isMe"
+				}
+			]
+		}
+	]
+}

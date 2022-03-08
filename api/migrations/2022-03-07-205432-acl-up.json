@@ -1,0 +1,17 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OrganizationManager/operations/update",
+					"value": {
+						"assignedOffers": true
+					}
+				}
+			]
+		}
+	]
+}

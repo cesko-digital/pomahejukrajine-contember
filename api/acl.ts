@@ -63,24 +63,11 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 					operations: readOnly(model, 'District', true),
 				},
 				Offer: {
-					predicates: {
-						assignable: {
-							assignee: {
-								or: [
-									{
-										personId: 'personId',
-									},
-									{
-										personId: { isNull: true },
-									}
-								],
-							},
-						},
-					},
+					predicates: {},
 					operations: {
 						read: allField(model, 'Offer', true),
 						update: {
-							assignee: 'assignable',
+							assignees: true,
 							logs: true,
 							status: true,
 							volunteer: true,
@@ -141,14 +128,23 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 					operations: readOnly(model, 'Organization', true),
 				},
 				OrganizationManager: {
-					predicates: {},
-					operations: readOnly(model, 'OrganizationManager', true),
+					predicates: {
+						isMe: {
+							personId: 'personId',
+						}
+					},
+					operations: {
+						read: allField(model, 'OrganizationManager', true),
+						update: {
+							assignedOffers: 'isMe',
+						},
+					},
 				},
 				Volunteer: {
 					predicates: {
 						isAssigned: {
 							offers: {
-								assignee: {
+								assignees: {
 									personId: 'personId',
 								}
 							}
