@@ -7,16 +7,16 @@ import {
 	HasOneSelectCell,
 	HiddenField,
 	LinkButton,
-	MultiEditPage,
 	SelectField,
 	TextCell,
 	TextField,
 	useProjectSlug,
-	useShowToast
+	useShowToast,
 } from "@contember/admin"
 import { useInvite } from "../hooks/useInvite"
 import * as React from "react"
 import { useCallback } from "react"
+import { ExportOrganizationManagers } from "../components/ExportOrganizationManagers"
 
 export const organizations = (
 	<DataGridPage entities="Organization" itemsPerPage={50} rendererProps={{ title: "Organizace", actions: <LinkButton to="organizationCreate">Přidat organizaci</LinkButton> }}>
@@ -31,8 +31,9 @@ export const organizationCreate = (
 )
 
 export const organizationManagerList = (
-	<DataGridPage entities={'OrganizationManager'} itemsPerPage={100} rendererProps={{
+	<DataGridPage entities="OrganizationManager" itemsPerPage={100} rendererProps={{
 		title: 'Pracovníci', actions: <>
+			<ExportOrganizationManagers />
 			<LinkButton to={'organizationManagerAdd'}>Pridat</LinkButton>
 		</>
 	}}>
@@ -43,7 +44,7 @@ export const organizationManagerList = (
 		<GenericCell canBeHidden={false} shrunk>
 			<LinkButton to="organizationManagerEdit(id: $entity.id)">Detail</LinkButton>
 		</GenericCell>
-	</DataGridPage>
+	</DataGridPage >
 )
 
 const useInviteManager = () => {
