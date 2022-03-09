@@ -9,11 +9,11 @@ const GridContent = Component(() => (
 		<GenericCell shrunk canBeHidden>
 			<LinkButton to="demandEdit(id: $entity.id)">Otevřít</LinkButton>
 		</GenericCell>
-		<GenericCell header="Prohlíží" shrunk>
+		{/* <GenericCell header="Prohlíží" shrunk>
 			<CurrentEntityKeyListener>
 				{(data) => (<CollaborationList emails={data?.keys?.map(key => key.client.email) ?? []} />)}
 			</CurrentEntityKeyListener>
-		</GenericCell>
+		</GenericCell> */}
 		<TextCell field="name" header="Jméno" />
 		<HasManySelectCell field="types" header="Typ pomoci" options="OfferType.name" />
 		<DateCell field="createdAt" header="Vytvořeno" initialOrder="desc" />
@@ -43,7 +43,7 @@ export const demandEdit = (
 		entity="Demand(id = $id)"
 		rendererProps={{ side: <CheckboxField field="solved" label="Vyřešeno" /> }}
 	>
-		<CurrentEntitySharedKeyAcquirer />
+		{/* <CurrentEntitySharedKeyAcquirer /> */}
 		<div className="volunteer-wrapper">
 			<table>
 				<tr>

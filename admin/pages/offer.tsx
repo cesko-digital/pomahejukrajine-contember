@@ -81,11 +81,11 @@ const OffersGrid = (
 						<LinkButton to="editOffer(id: $entity.id)">Otevřít</LinkButton>
 					</GenericCell>
 					<HasManySelectCell field="assignees" header="Přiřazen" options={'OrganizationManager.name'} />
-					<GenericCell header="Prohlíží" shrunk>
+					{/* <GenericCell header="Prohlíží" shrunk>
 						<CurrentEntityKeyListener>
 							{(data) => (<CollaborationList emails={data?.keys?.map(key => key.client.email) ?? []} />)}
 						</CurrentEntityKeyListener>
-					</GenericCell>
+					</GenericCell> */}
 					<HasOneSelectCell field="status" options="OfferStatus.name" header="Status" />
 					<HasManyCell field="volunteer.languages" entityList="Language" hasOneField="language"
 											 header="Dobrovolník: Jazyky">
@@ -233,7 +233,7 @@ export const editOffer = (
 				field="type.name" /></NavigateBackButton>
 		}}
 	>
-		<CurrentEntitySharedKeyAcquirer />
+		{/* <CurrentEntitySharedKeyAcquirer /> */}
 		<OfferManage />
 		<OfferForm />
 		<Section heading="Dobrovolník">

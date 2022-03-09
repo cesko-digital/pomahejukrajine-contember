@@ -13,15 +13,21 @@ import {
 	TextField,
 	useProjectSlug,
 	useShowToast
-} from "@contember/admin";
-import { useInvite } from "../hooks/useInvite";
-import * as React from "react";
-import { useCallback } from "react";
+} from "@contember/admin"
+import { useInvite } from "../hooks/useInvite"
+import * as React from "react"
+import { useCallback } from "react"
 
 export const organizations = (
-	<MultiEditPage entities="Organization" rendererProps={{ title: "Organizace" }}>
+	<DataGridPage entities="Organization" itemsPerPage={50} rendererProps={{ title: "Organizace", actions: <LinkButton to="organizationCreate">Přidat organizaci</LinkButton> }}>
+		<TextCell field="name" header="Název" />
+	</DataGridPage>
+)
+
+export const organizationCreate = (
+	<CreatePage entity="Organization" redirectOnSuccess="organizations">
 		<TextField field="name" label="Název" />
-	</MultiEditPage>
+	</CreatePage>
 )
 
 export const organizationManagerList = (
@@ -47,7 +53,7 @@ const useInviteManager = () => {
 
 	return useCallback(async (getAccessor: () => EntityAccessor) => {
 		const accessor = getAccessor()
-		const personId = accessor.getField('personId');
+		const personId = accessor.getField('personId')
 		if (personId.value) {
 			return
 		}
