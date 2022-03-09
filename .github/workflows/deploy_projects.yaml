@@ -40,6 +40,7 @@ jobs:
           VITE_USER_NODE_ENV: production
           VITE_CONTEMBER_ADMIN_API_BASE_URL: '/_api'
           VITE_CONTEMBER_ADMIN_SESSION_TOKEN: '__SESSION_TOKEN__'
+          VITE_CONTEMBER_ADMIN_SENTRY_DSN: ${{ secrets.ADMIN_SENTRY_DSN }}
         run: node_modules/.bin/vite build "admin" --base "/ukrajina/"
 
       - name: Deploy Beta

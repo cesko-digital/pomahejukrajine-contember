@@ -5,7 +5,7 @@
     "start-engine": "npm run contember migrations:execute . --yes && docker-compose up --detach",
     "start-admin": "vite admin --port 1480 --host 0.0.0.0",
     "build-admin": "tsc && vite build admin",
-		"deploy": "docker-compose run -e CONTEMBER_TOKEN= contember-cli deploy"
+    "deploy": "docker-compose run -e CONTEMBER_TOKEN= contember-cli deploy"
   },
   "devDependencies": {
     "@contember/admin": "^1.0.0-rc.11",
@@ -18,5 +18,9 @@
     "sass": "^1.49.9",
     "typescript": "^4.5",
     "vite": "^2.7"
+  },
+  "dependencies": {
+    "@sentry/browser": "^6.18.2",
+    "@sentry/integrations": "^6.18.2"
   }
 }

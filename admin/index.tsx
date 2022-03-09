@@ -4,8 +4,18 @@ import '@contember/admin/style.css'
 import { Layout } from './components/Layout'
 import { csCZ } from '@contember/admin-i18n'
 import { CollaborationClientProvider } from "./utils/collaboration/CollaborationClientProvider"
+import * as Sentry from "@sentry/browser";
+import { CaptureConsole as CaptureConsoleIntegration } from "@sentry/integrations";
 
-
+const sentryDsn = import.meta.env.VITE_CONTEMBER_ADMIN_SENTRY_DSN
+if (typeof sentryDsn === 'string') {
+	Sentry.init({
+		dsn: sentryDsn,
+		integrations: [new CaptureConsoleIntegration({
+			levels: ['error']
+		})]
+	});
+}
 const apiBaseUrl = import.meta.env.VITE_CONTEMBER_ADMIN_API_BASE_URL as string
 const loginTOken = import.meta.env.VITE_CONTEMBER_ADMIN_LOGIN_TOKEN as string
 if (window.location.hash === '#login') {
