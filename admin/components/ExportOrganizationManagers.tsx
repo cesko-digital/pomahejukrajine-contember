@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Button, Component, useAuthedContentQuery } from "@contember/admin"
+import { Button, Component, useCurrentContentGraphQlClient } from "@contember/admin"
 
 const LIST_ORGANIZATION_MANAGERS_QUERY = `
 	query {
@@ -20,21 +20,33 @@ type OrganizationManager = { id: string; name: string, email: string, phone: str
 
 export const ExportOrganizationManagers = Component(
 	() => {
-		const { state: query } = useAuthedContentQuery<ListOrganizationManagerQueryResult, {}>(LIST_ORGANIZATION_MANAGERS_QUERY, {})
+		const client = useCurrentContentGraphQlClient()
+		const [prepareDownload, setPrepareDownload] = React.useState<boolean>(false)
+		const [organizationManagers, setOrganizationManagers] = React.useState<any>(null)
+		const handler = React.useCallback(async () => {
+			return await client.sendRequest<ListOrganizationManagerQueryResult>(LIST_ORGANIZATION_MANAGERS_QUERY, {})
+		}, [client])
 
-		if (query.state !== 'success') {
-			return <></>
+		if (organizationManagers) {
+			const csv = organizationManagers.data?.listOrganizationManager?.map((manager: OrganizationManager) => {
+				return JSON.stringify([manager.name, manager.email, manager.phone])
+			}).join('\n').replace(/(^\[)|(\]$)/mg, '')
+			const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+			return <a href={URL.createObjectURL(blob)} download="organization-managers.csv"><Button distinction="outlined">Stáhnout</Button></a>
+		} else {
+			return (
+				<Button
+					onClick={async () => {
+						setPrepareDownload(true)
+						setTimeout(async () => setOrganizationManagers(await handler()), 1500)
+					}}
+					distinction="outlined"
+					isLoading={prepareDownload}
+				>
+					Export
+				</Button>
+			)
 		}
-
-		const csv = query.data?.listOrganizationManager?.map((manager: OrganizationManager) => {
-			return JSON.stringify([manager.name, manager.email, manager.phone])
-		})
-			.join('\n')
-			.replace(/(^\[)|(\]$)/mg, '')
-
-		const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
-
-		return <a href={URL.createObjectURL(blob)} download="organization-managers.csv"><Button distinction="seamless">Export</Button></a>
 	},
 	() => null,
 	'ExportOrganizationManagers'
