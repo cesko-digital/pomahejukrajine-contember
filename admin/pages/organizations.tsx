@@ -162,6 +162,6 @@ export const organizationManagerEdit = () => (
 		<TextField field={'name'} label={'Jméno'} />
 		<TextField field={'email'} label={'E-mail'} />
 		<TextField field={'phone'} label={'Telefon'} />
-		<EditUser />
+		{/* <EditUser /> */}
 	</EditPage>
 )
