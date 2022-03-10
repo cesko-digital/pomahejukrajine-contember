@@ -4,7 +4,7 @@ import {
 	DataGridPage,
 	EditIdentity,
 	EditPage,
-	EditUserInProject,
+	useAuthedTenantQuery,
 	EntityAccessor,
 	Field,
 	GenericCell,
@@ -91,6 +91,42 @@ export const organizationManagerAdd = () => (
 	</CreatePage>
 )
 
+const LIST_PROJECT_MEMBER_QUERY = `
+	{
+		projectBySlug(slug: "ukrajina") {
+			id
+			members {
+				identity {
+					id
+				}
+				memberships {
+					variables {
+						name
+						values
+					}
+				}
+			}
+		}
+	}
+`
+
+type ListProjectMembers = {
+	projectBySlug: {
+		id: string
+		members: {
+			identity: {
+				id: string
+			}
+			memberships: {
+				variables: {
+					name: string
+					values: string[]
+				}[]
+			}[]
+		}[]
+	}
+}
+
 const rolesConfig: RolesConfig = {
 	admin: {
 		name: 'organizationManager',
@@ -106,10 +142,19 @@ const EditUser = Component(
 	() => {
 		const project = useProjectSlug()
 		const personId = useField<string>('personId').value
-		if (!personId || !project) {
+		const { state: query } = useAuthedTenantQuery<ListProjectMembers, {}>(LIST_PROJECT_MEMBER_QUERY, {})
+
+		if (!personId || !project || query.state !== 'success') {
 			return null
 		}
-		return <EditIdentity project={project} rolesConfig={rolesConfig} identityId={personId} userListLink={'tenantUsers'} />
+
+		const currentMember = query.data.projectBySlug.members.filter((member) => member.memberships[0]?.variables.filter(variable => variable.name === 'personID')[0].values.includes(personId))[0]
+
+		if (!currentMember) {
+			return null
+		}
+
+		return <EditIdentity project={project} rolesConfig={rolesConfig} identityId={currentMember.identity.id} userListLink={'tenantUsers'} />
 	},
 	() => (
 		<Field field="personId" />
@@ -118,7 +163,7 @@ const EditUser = Component(
 )
 
 export const organizationManagerEdit = () => (
-	<EditPage entity={'OrganizationManager(id = $id)'} rendererProps={{title: 'Pracovník'}}>
+	<EditPage entity={'OrganizationManager(id = $id)'} rendererProps={{ title: 'Pracovník' }}>
 		<SelectField label={'Organizace'} options={'Organization.name'} field={'organization'} />
 		<TextField field={'name'} label={'Jméno'} />
 		<TextField field={'email'} label={'E-mail'} />
