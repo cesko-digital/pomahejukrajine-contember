@@ -93,36 +93,6 @@ export const organizationManagerAdd = () => (
 	</CreatePage>
 )
 
-const LIST_PROJECT_MEMBER_QUERY = `
-	query ListProjectMembers($projectSlug: String!) {
-		projectBySlug(slug: $projectSlug) {
-			id
-			members {
-				identity {
-					id
-					person {
-						id
-					}
-				}
-			}
-		}
-	}
-`
-
-type ListProjectMembers = {
-	projectBySlug: {
-		id: string
-		members: {
-			identity: {
-				id: string
-				person: {
-					id: string
-				} | null
-			}
-		}[]
-	}
-}
-
 const rolesConfig: RolesConfig = {
 	admin: {
 		name: 'organizationManager',
