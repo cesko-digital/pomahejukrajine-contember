@@ -1,0 +1,51 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createColumn",
+			"entityName": "OrganizationManager",
+			"field": {
+				"name": "identityId",
+				"columnName": "identity_id",
+				"nullable": true,
+				"type": "Uuid",
+				"columnType": "uuid"
+			}
+		},
+		{
+			"modification": "createUniqueConstraint",
+			"entityName": "OrganizationManager",
+			"unique": {
+				"fields": [
+					"identityId"
+				],
+				"name": "unique_OrganizationManager_identityId_7db648"
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OrganizationManager/operations/create/identityId",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OrganizationManager/operations/update/identityId",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OrganizationManager/operations/read/identityId",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OrganizationManager/operations/read/identityId",
+					"value": true
+				}
+			]
+		}
+	]
+}

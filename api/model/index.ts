@@ -169,14 +169,13 @@ export class Organization {
 
 export class OrganizationManager {
 	personId = def.column(Model.ColumnType.Uuid).unique().notNull()
+	identityId = def.column(Model.ColumnType.Uuid).unique()
 	organization = def.manyHasOne(Organization, 'managers').notNull().cascadeOnDelete()
 	name = def.stringColumn().notNull()
 	email = def.stringColumn().notNull()
 	phone = def.stringColumn().notNull().default('')
 	assignedOffers = def.manyHasManyInverse(Offer, 'assignees')
 }
-
-
 
 export class Demand {
 	name = def.stringColumn().notNull()
