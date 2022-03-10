@@ -1,15 +1,21 @@
 import {
+	Component,
 	CreatePage,
 	DataGridPage,
+	EditIdentity,
 	EditPage,
+	EditUserInProject,
 	EntityAccessor,
+	Field,
 	GenericCell,
 	HasOneSelectCell,
 	HiddenField,
 	LinkButton,
+	RolesConfig,
 	SelectField,
 	TextCell,
 	TextField,
+	useField,
 	useProjectSlug,
 	useShowToast,
 } from "@contember/admin"
@@ -85,12 +91,38 @@ export const organizationManagerAdd = () => (
 	</CreatePage>
 )
 
+const rolesConfig: RolesConfig = {
+	admin: {
+		name: 'organizationManager',
+		variables: {
+			$personID: {
+				render: () => null,
+			}
+		},
+	}
+}
+
+const EditUser = Component(
+	() => {
+		const project = useProjectSlug()
+		const personId = useField<string>('personId').value
+		if (!personId || !project) {
+			return null
+		}
+		return <EditIdentity project={project} rolesConfig={rolesConfig} identityId={personId} userListLink={'tenantUsers'} />
+	},
+	() => (
+		<Field field="personId" />
+	),
+	'EditUser'
+)
 
 export const organizationManagerEdit = () => (
-	<EditPage entity={'OrganizationManager(id = $id)'}>
+	<EditPage entity={'OrganizationManager(id = $id)'} rendererProps={{title: 'Pracovník'}}>
 		<SelectField label={'Organizace'} options={'Organization.name'} field={'organization'} />
 		<TextField field={'name'} label={'Jméno'} />
 		<TextField field={'email'} label={'E-mail'} />
 		<TextField field={'phone'} label={'Telefon'} />
+		<EditUser />
 	</EditPage>
 )
