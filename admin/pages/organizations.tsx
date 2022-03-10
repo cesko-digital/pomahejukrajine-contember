@@ -92,14 +92,15 @@ export const organizationManagerAdd = () => (
 )
 
 const LIST_PROJECT_MEMBER_QUERY = `
-	{
-		projectBySlug(slug: "ukrajina") {
+	query ListProjectMembers($projectSlug: String!) {
+		projectBySlug(slug: $projectSlug) {
 			id
 			members {
 				identity {
 					id
 				}
 				memberships {
+					role
 					variables {
 						name
 						values
@@ -118,6 +119,7 @@ type ListProjectMembers = {
 				id: string
 			}
 			memberships: {
+				role: string
 				variables: {
 					name: string
 					values: string[]
@@ -142,13 +144,13 @@ const EditUser = Component(
 	() => {
 		const project = useProjectSlug()
 		const personId = useField<string>('personId').value
-		const { state: query } = useAuthedTenantQuery<ListProjectMembers, {}>(LIST_PROJECT_MEMBER_QUERY, {})
+		const { state: query } = useAuthedTenantQuery<ListProjectMembers, {}>(LIST_PROJECT_MEMBER_QUERY, { projectSlug: project })
 
 		if (!personId || !project || query.state !== 'success') {
 			return null
 		}
 
-		const currentMember = query.data.projectBySlug.members.filter((member) => member.memberships[0]?.variables.filter(variable => variable.name === 'personID')[0].values.includes(personId))[0]
+		const currentMember = query.data.projectBySlug.members.find(member => member.memberships.find(membership => membership.role === 'organizationManager')?.variables.find(variable => variable.name === 'personID')?.values.includes(personId))
 
 		if (!currentMember) {
 			return null
