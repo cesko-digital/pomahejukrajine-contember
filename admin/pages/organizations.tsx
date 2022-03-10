@@ -98,12 +98,8 @@ const LIST_PROJECT_MEMBER_QUERY = `
 			members {
 				identity {
 					id
-				}
-				memberships {
-					role
-					variables {
-						name
-						values
+					person {
+						id
 					}
 				}
 			}
@@ -117,14 +113,10 @@ type ListProjectMembers = {
 		members: {
 			identity: {
 				id: string
+				person: {
+					id: string
+				}
 			}
-			memberships: {
-				role: string
-				variables: {
-					name: string
-					values: string[]
-				}[]
-			}[]
 		}[]
 	}
 }
@@ -133,7 +125,7 @@ const rolesConfig: RolesConfig = {
 	admin: {
 		name: 'organizationManager',
 		variables: {
-			$personID: {
+			personID: {
 				render: () => null,
 			}
 		},
@@ -150,7 +142,7 @@ const EditUser = Component(
 			return null
 		}
 
-		const currentMember = query.data.projectBySlug.members.find(member => member.memberships.find(membership => membership.role === 'organizationManager')?.variables.find(variable => variable.name === 'personId')?.values.includes(personId))
+		const currentMember = query.data.projectBySlug.members.find(member => member.identity?.person?.id === personId)
 
 		if (!currentMember) {
 			return null
