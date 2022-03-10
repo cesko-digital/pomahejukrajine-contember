@@ -104,6 +104,7 @@ export class VolunteerDistrict {
 }
 
 export class Offer {
+	code = def.stringColumn().unique()
 	volunteer = def.manyHasOne(Volunteer, 'offers').notNull()
 	type = def.manyHasOne(OfferType, 'offers').notNull()
 	internalNote = def.stringColumn().notNull().default('')

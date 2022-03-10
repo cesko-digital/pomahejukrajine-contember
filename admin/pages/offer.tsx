@@ -80,6 +80,7 @@ const OffersGrid = (
 					<GenericCell canBeHidden={false} shrunk>
 						<LinkButton to="editOffer(id: $entity.id)">Otevřít</LinkButton>
 					</GenericCell>
+					<TextCell field="code" header="Kód" />
 					<HasManySelectCell field="assignees" header="Přiřazen" options={'OrganizationManager.name'} />
 					{/* <GenericCell header="Prohlíží" shrunk>
 						<CurrentEntityKeyListener>

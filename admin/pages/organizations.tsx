@@ -1,22 +1,28 @@
 import {
+	Component,
 	CreatePage,
 	DataGridPage,
+	EditIdentity,
 	EditPage,
+	useAuthedTenantQuery,
 	EntityAccessor,
+	Field,
 	GenericCell,
 	HasOneSelectCell,
 	HiddenField,
 	LinkButton,
-	MultiEditPage,
+	RolesConfig,
 	SelectField,
 	TextCell,
 	TextField,
+	useField,
 	useProjectSlug,
-	useShowToast
+	useShowToast,
 } from "@contember/admin"
 import { useInvite } from "../hooks/useInvite"
 import * as React from "react"
 import { useCallback } from "react"
+import { ExportOrganizationManagers } from "../components/ExportOrganizationManagers"
 
 export const organizations = (
 	<DataGridPage entities="Organization" itemsPerPage={50} rendererProps={{ title: "Organizace", actions: <LinkButton to="organizationCreate">Přidat organizaci</LinkButton> }}>
@@ -31,8 +37,9 @@ export const organizationCreate = (
 )
 
 export const organizationManagerList = (
-	<DataGridPage entities={'OrganizationManager'} itemsPerPage={100} rendererProps={{
+	<DataGridPage entities="OrganizationManager" itemsPerPage={100} rendererProps={{
 		title: 'Pracovníci', actions: <>
+			<ExportOrganizationManagers />
 			<LinkButton to={'organizationManagerAdd'}>Pridat</LinkButton>
 		</>
 	}}>
@@ -43,7 +50,7 @@ export const organizationManagerList = (
 		<GenericCell canBeHidden={false} shrunk>
 			<LinkButton to="organizationManagerEdit(id: $entity.id)">Detail</LinkButton>
 		</GenericCell>
-	</DataGridPage>
+	</DataGridPage >
 )
 
 const useInviteManager = () => {
@@ -84,12 +91,77 @@ export const organizationManagerAdd = () => (
 	</CreatePage>
 )
 
+const LIST_PROJECT_MEMBER_QUERY = `
+	query ListProjectMembers($projectSlug: String!) {
+		projectBySlug(slug: $projectSlug) {
+			id
+			members {
+				identity {
+					id
+					person {
+						id
+					}
+				}
+			}
+		}
+	}
+`
+
+type ListProjectMembers = {
+	projectBySlug: {
+		id: string
+		members: {
+			identity: {
+				id: string
+				person: {
+					id: string
+				}
+			}
+		}[]
+	}
+}
+
+const rolesConfig: RolesConfig = {
+	admin: {
+		name: 'organizationManager',
+		variables: {
+			personID: {
+				render: () => null,
+			}
+		},
+	}
+}
+
+const EditUser = Component(
+	() => {
+		const project = useProjectSlug()
+		const personId = useField<string>('personId').value
+		const { state: query } = useAuthedTenantQuery<ListProjectMembers, {}>(LIST_PROJECT_MEMBER_QUERY, { projectSlug: project })
+
+		if (!personId || !project || query.state !== 'success') {
+			return null
+		}
+
+		const currentMember = query.data.projectBySlug.members.find(member => member.identity?.person?.id === personId)
+
+		if (!currentMember) {
+			return null
+		}
+
+		return <EditIdentity project={project} rolesConfig={rolesConfig} identityId={currentMember.identity.id} userListLink={'tenantUsers'} />
+	},
+	() => (
+		<Field field="personId" />
+	),
+	'EditUser'
+)
 
 export const organizationManagerEdit = () => (
-	<EditPage entity={'OrganizationManager(id = $id)'}>
+	<EditPage entity={'OrganizationManager(id = $id)'} rendererProps={{ title: 'Pracovník' }}>
 		<SelectField label={'Organizace'} options={'Organization.name'} field={'organization'} />
 		<TextField field={'name'} label={'Jméno'} />
 		<TextField field={'email'} label={'E-mail'} />
 		<TextField field={'phone'} label={'Telefon'} />
+		<EditUser />
 	</EditPage>
 )
