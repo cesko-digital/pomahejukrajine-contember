@@ -150,7 +150,7 @@ const EditUser = Component(
 			return null
 		}
 
-		const currentMember = query.data.projectBySlug.members.find(member => member.memberships.find(membership => membership.role === 'organizationManager')?.variables.find(variable => variable.name === 'personID')?.values.includes(personId))
+		const currentMember = query.data.projectBySlug.members.find(member => member.memberships.find(membership => membership.role === 'organizationManager')?.variables.find(variable => variable.name === 'personId')?.values.includes(personId))
 
 		if (!currentMember) {
 			return null
