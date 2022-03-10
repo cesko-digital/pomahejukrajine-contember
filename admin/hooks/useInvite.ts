@@ -1,4 +1,4 @@
-import { GQLVariable, MembershipInput, useSingleTenantMutation } from "@contember/admin";
+import { GQLVariable, MembershipInput, useSingleTenantMutation } from "@contember/admin"
 
 const INVITE_MUTATION = `
 	invite(
@@ -13,6 +13,9 @@ const INVITE_MUTATION = `
 		result {
 			person {
 				id
+				identity {
+					id
+				}
 			}
 		}
 	}
@@ -29,4 +32,4 @@ type InviteErrorCodes =
 	| 'ALREADY_MEMBER'
 	| 'INVALID_MEMBERSHIP'
 
-export const useInvite = () => useSingleTenantMutation<{ person: { id: string } }, InviteErrorCodes, typeof inviteVariables>(INVITE_MUTATION, inviteVariables)
+export const useInvite = () => useSingleTenantMutation<{ person: { id: string, identity: { id: string } } }, InviteErrorCodes, typeof inviteVariables>(INVITE_MUTATION, inviteVariables)

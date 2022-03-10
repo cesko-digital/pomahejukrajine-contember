@@ -61,6 +61,7 @@ const useInviteManager = () => {
 	return useCallback(async (getAccessor: () => EntityAccessor) => {
 		const accessor = getAccessor()
 		const personId = accessor.getField('personId')
+		const identityId = accessor.getField('identityId')
 		if (personId.value) {
 			return
 		}
@@ -79,6 +80,7 @@ const useInviteManager = () => {
 			return
 		}
 		personId.updateValue(result.result.person.id)
+		identityId.updateValue(result.result.person.identity.id)
 	}, [])
 }
 export const organizationManagerAdd = () => (
@@ -115,7 +117,7 @@ type ListProjectMembers = {
 				id: string
 				person: {
 					id: string
-				}
+				} | null
 			}
 		}[]
 	}
@@ -135,23 +137,16 @@ const rolesConfig: RolesConfig = {
 const EditUser = Component(
 	() => {
 		const project = useProjectSlug()
-		const personId = useField<string>('personId').value
-		const { state: query } = useAuthedTenantQuery<ListProjectMembers, {}>(LIST_PROJECT_MEMBER_QUERY, { projectSlug: project })
+		const identityId = useField<string>('identityId').value
 
-		if (!personId || !project || query.state !== 'success') {
+		if (!identityId || !project) {
 			return null
 		}
 
-		const currentMember = query.data.projectBySlug.members.find(member => member.identity?.person?.id === personId)
-
-		if (!currentMember) {
-			return null
-		}
-
-		return <EditIdentity project={project} rolesConfig={rolesConfig} identityId={currentMember.identity.id} userListLink={'tenantUsers'} />
+		return <EditIdentity project={project} rolesConfig={rolesConfig} identityId={identityId} userListLink={'tenantUsers'} />
 	},
 	() => (
-		<Field field="personId" />
+		<Field field="identityId" />
 	),
 	'EditUser'
 )
@@ -162,6 +157,6 @@ export const organizationManagerEdit = () => (
 		<TextField field={'name'} label={'Jméno'} />
 		<TextField field={'email'} label={'E-mail'} />
 		<TextField field={'phone'} label={'Telefon'} />
-		{/* <EditUser /> */}
+		<EditUser />
 	</EditPage>
 )
