@@ -86,6 +86,7 @@ const useInviteManager = () => {
 export const organizationManagerAdd = () => (
 	<CreatePage entity={'OrganizationManager'} onBeforePersist={useInviteManager()} redirectOnSuccess={'organizationManagerList'}>
 		<HiddenField field={'personId'} label={undefined} />
+		<HiddenField field={'identityId'} label={undefined} />
 		<SelectField label={'Organizace'} options={'Organization.name'} field={'organization'} />
 		<TextField field={'name'} label={'Jméno'} />
 		<TextField field={'email'} label={'E-mail'} />
