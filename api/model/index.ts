@@ -61,10 +61,12 @@ export class Language {
 	volunteers = def.oneHasMany(VolunteerLanguage, 'language')
 }
 
+export const OfferStatusEnum = def.createEnum('capacity_exhausted', 'bad_experience', 'outdated')
 export class OfferStatus {
 	order = def.intColumn().notNull().default(0)
 	name = def.stringColumn().notNull().unique()
 	offers = def.oneHasMany(Offer, 'status')
+	type = def.enumColumn(OfferStatusEnum).unique()
 }
 
 // ---

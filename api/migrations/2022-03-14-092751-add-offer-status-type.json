@@ -1,0 +1,60 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createEnum",
+			"enumName": "OfferStatusEnum",
+			"values": [
+				"capacity_exhausted",
+				"bad_experience",
+				"outdated"
+			]
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferStatus",
+			"field": {
+				"name": "type",
+				"columnName": "type",
+				"nullable": true,
+				"type": "Enum",
+				"columnType": "OfferStatusEnum"
+			}
+		},
+		{
+			"modification": "createUniqueConstraint",
+			"entityName": "OfferStatus",
+			"unique": {
+				"fields": [
+					"type"
+				],
+				"name": "unique_OfferStatus_type_92e12c"
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferStatus/operations/create/type",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferStatus/operations/update/type",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferStatus/operations/read/type",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OfferStatus/operations/read/type",
+					"value": true
+				}
+			]
+		}
+	]
+}
