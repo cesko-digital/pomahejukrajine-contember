@@ -42,7 +42,7 @@ const limitLength = (maxLength: number) => (value: any) => {
 		return value
 	}
 	if (value.length > maxLength) {
-		return <span title={value}>{value.substr(0, maxLength) + '…'}</span>
+		return <span style={{width: '300px', display: 'block', whiteSpace: 'normal', fontSize: '12px'}} title={value}>{value}</span>
 	}
 	return value
 }
