@@ -245,6 +245,12 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 						delete: 'self',
 					},
 				},
+				OfferStatus: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'OfferStatus', true),
+					},
+				},
 				OfferParameter: {
 					predicates: {
 						self: { offer: { volunteer: { id: 'volunteerId' } } },

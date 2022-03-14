@@ -1,0 +1,26 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferStatus",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"order": true,
+								"name": true,
+								"offers": true,
+								"type": true
+							}
+						}
+					}
+				}
+			]
+		}
+	]
+}
