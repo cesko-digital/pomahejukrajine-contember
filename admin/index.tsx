@@ -38,12 +38,12 @@ if (window.location.hash === '#login') {
 			defaultLocale={"cs-CZ"}
 			dictionaries={{ 'cs-CZ': csCZ }}
 		>
-			<CollaborationClientProvider>
+			{/* <CollaborationClientProvider> */}
 				<Pages
 					layout={Layout}
 					children={Object.assign({}, ...Object.values(import.meta.globEager('./pages/*.tsx')))}
 				/>
-			</CollaborationClientProvider>
+			{/* </CollaborationClientProvider> */}
 		</ApplicationEntrypoint>,
 	)
 }
