@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Button, Component, useCurrentContentGraphQlClient } from "@contember/admin"
+import Papa from "papaparse"
 
 const LIST_ORGANIZATION_MANAGERS_QUERY = `
 	query {
@@ -32,9 +33,10 @@ export const ExportOrganizationManagers = Component(
 
 		if (organizationManagers) {
 			const csv = organizationManagers.data?.listOrganizationManager?.map((manager: OrganizationManager) => {
-				return JSON.stringify([manager.name, manager.email, manager.phone, manager.organization?.name])
-			}).join('\n').replace(/(^\[)|(\]$)/mg, '')
-			const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+				return [manager.name, manager.email, manager.phone, manager.organization?.name]
+			})
+
+			const blob = new Blob([Papa.unparse(csv, { delimiter: ';' })], { type: 'text/csv;charset=utf-8;' })
 			return <a href={URL.createObjectURL(blob)} download="organization-managers.csv"><Button distinction="outlined">Stáhnout</Button></a>
 		} else {
 			return (
