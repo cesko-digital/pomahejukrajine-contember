@@ -9,6 +9,7 @@ on:
 
 jobs:
   build-api-docker:
+    if: github.repository == 'manGoweb/ukrajina-contember'
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -35,6 +36,7 @@ jobs:
             831119889470.dkr.ecr.eu-central-1.amazonaws.com/mangoweb/app/ukrajina/api:gh-${{ github.sha }}
 
   build-admin-docker:
+    if: github.repository == 'manGoweb/ukrajina-contember'
     runs-on: ubuntu-latest
     permissions:
       id-token: write
