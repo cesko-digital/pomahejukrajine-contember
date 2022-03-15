@@ -1,0 +1,24 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OfferParameterValueDetails",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"district": true,
+								"value": true
+							}
+						}
+					}
+				}
+			]
+		}
+	]
+}
