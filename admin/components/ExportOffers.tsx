@@ -31,9 +31,6 @@ const LIST_LIST_OFFER_QUERY = `
 					id
 				}
 				value
-				details {
-					numericValue
-				}
 				specification
 				values {
 					value
@@ -64,9 +61,6 @@ type Offer = {
 			id: string
 		}
 		value: string
-		details: {
-			numericValue: number
-		}
 		specification: string
 		values: { value: string, specification: string }[]
 	}[]
