@@ -83,6 +83,10 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 						// delete: true,
 					},
 				},
+				OfferParameterValueDetails: {
+					predicates: {},
+					operations: readOnly(model, 'OfferParameterValueDetails', true),
+				},
 				OfferParameterValue: {
 					predicates: {},
 					operations: readOnly(model, 'OfferParameterValue', true),
