@@ -78,42 +78,53 @@ export const ExportOffers = Component<{ dataGridProps: any, listQuestion: Questi
 		const client = useCurrentContentGraphQlClient()
 		const [prepareDownload, setPrepareDownload] = React.useState<boolean>(false)
 		const [offers, setOffers] = React.useState<any>(null)
+		const [objectUrl, setObjectUrl] = React.useState<string>()
 		const handler = React.useCallback(async () => {
 			return await client.sendRequest<ListOfferQueryResult>(LIST_LIST_OFFER_QUERY, { variables: { filter: { ...dataGridProps.entities.filter, ...dataGridProps.state.filter } } })
 		}, [client])
 
-		if (offers) {
-			const csv = offers.data?.listOffer?.map((offer: Offer) => {
-				return ([
-					offer.code,
-					offer.assignees.map((assignee: { name: string }) => assignee.name).join(', '),
-					offer.status?.name,
-					offer.volunteer.languages.map(((language) => language.language.name)).join(', '),
-					...listQuestion.map(question => {
-						if (["text", "textarea", "date", "radio", "number"].includes(question.type)) {
-							const parameter = offer.parameters.find(parameter => parameter.question.id === question.id)
-							return (
-								parameter?.value ? `${parameter} (${parameter.specification})` : parameter?.value
-							)
-						} else if (["checkbox"].includes(question.type)) {
-							return (
-								offer.parameters.find(parameter => parameter.question.id === question.id)?.values.map(value => value.specification ? `${value.value} (${value.specification})` : value.value).join(', ')
-							)
-						} else if (["district"].includes(question.type)) {
-							return (
-								offer.parameters.find(parameter => parameter.question.id === question.id)?.values.map(value => value.value).join(', ')
-							)
-						} else {
-							return null
-						}
-					}).filter(item => item !== null),
-				])
-			})
-			const myCsv = Papa.unparse(csv, { delimiter: ';' })
-			console.log('myCsv', myCsv)
+		React.useEffect(() => {
+			if (offers) {
+				const csv = offers.data?.listOffer?.map((offer: Offer) => {
+					return ([
+						offer.code,
+						offer.assignees.map((assignee: { name: string }) => assignee.name).join(', '),
+						offer.status?.name,
+						offer.volunteer.languages.map(((language) => language.language.name)).join(', '),
+						...listQuestion.map(question => {
+							if (["text", "textarea", "date", "radio", "number"].includes(question.type)) {
+								const parameter = offer.parameters.find(parameter => parameter.question.id === question.id)
+								return (
+									parameter?.value ? `${parameter} (${parameter.specification})` : parameter?.value
+								)
+							} else if (["checkbox"].includes(question.type)) {
+								return (
+									offer.parameters.find(parameter => parameter.question.id === question.id)?.values.map(value => value.specification ? `${value.value} (${value.specification})` : value.value).join(', ')
+								)
+							} else if (["district"].includes(question.type)) {
+								return (
+									offer.parameters.find(parameter => parameter.question.id === question.id)?.values.map(value => value.value).join(', ')
+								)
+							} else {
+								return null
+							}
+						}).filter(item => item !== null),
+					])
+				})
+				const myCsv = Papa.unparse(csv, { delimiter: ';' })
+				const blob = new Blob([myCsv], { type: 'text/csv;charset=utf-8;' })
+				const url = URL.createObjectURL(blob)
+				setObjectUrl(url)
+				return () => {
+					URL.revokeObjectURL(url)
+				}
+			}
+		}, [offers])
 
-			const blob = new Blob([myCsv], { type: 'text/csv;charset=utf-8;' })
-			return <a href={URL.createObjectURL(blob)} download="offers.csv"><Button distinction="outlined">Stáhnout</Button></a>
+		if (objectUrl) {
+			return (
+				<a href={objectUrl} download="offers.csv"><Button distinction="outlined">Stáhnout</Button></a>
+			)
 		} else {
 			return (
 				<Button
