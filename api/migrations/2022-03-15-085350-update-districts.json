@@ -1,0 +1,160 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createView",
+			"entity": {
+				"name": "OfferParameterValueDetails",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					},
+					"district": {
+						"name": "district",
+						"inversedBy": "offerParameterValues",
+						"nullable": true,
+						"type": "ManyHasOne",
+						"target": "District",
+						"joiningColumn": {
+							"columnName": "district_id",
+							"onDelete": "restrict"
+						}
+					},
+					"value": {
+						"name": "value",
+						"inversedBy": "details",
+						"nullable": false,
+						"type": "OneHasOne",
+						"target": "OfferParameterValue",
+						"joiningColumn": {
+							"columnName": "value_id",
+							"onDelete": "restrict"
+						}
+					}
+				},
+				"tableName": "offer_parameter_value_details",
+				"view": {
+					"sql": "\n\tSELECT\n\t\tgen_random_uuid() AS id,\n\t\tvalue.id AS value_id,\n\t\t(SELECT id FROM district WHERE district.name = value.value) AS district_id\n\tFROM offer_parameter_value value\n"
+				}
+			}
+		},
+		{
+			"modification": "createRelationInverseSide",
+			"entityName": "District",
+			"relation": {
+				"name": "offerParameterValues",
+				"ownedBy": "district",
+				"type": "OneHasMany",
+				"target": "OfferParameterValueDetails"
+			}
+		},
+		{
+			"modification": "createRelationInverseSide",
+			"entityName": "OfferParameterValue",
+			"relation": {
+				"name": "details",
+				"ownedBy": "value",
+				"target": "OfferParameterValueDetails",
+				"type": "OneHasOne",
+				"nullable": false
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameterValueDetails",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"create": {
+								"id": true,
+								"district": true,
+								"value": true
+							},
+							"read": {
+								"id": true,
+								"district": true,
+								"value": true
+							},
+							"update": {
+								"id": true,
+								"district": true,
+								"value": true
+							},
+							"delete": true
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/District/operations/create/offerParameterValues",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/District/operations/update/offerParameterValues",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/District/operations/read/offerParameterValues",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameterValue/operations/create/details",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameterValue/operations/update/details",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameterValue/operations/read/details",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/District/operations/read/offerParameterValues",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameterValue/operations/create/details",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameterValue/operations/update/details",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameterValue/operations/read/details",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/District/operations/read/offerParameterValues",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OfferParameterValue/operations/read/details",
+					"value": true
+				}
+			]
+		}
+	]
+}

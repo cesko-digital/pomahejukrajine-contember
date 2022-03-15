@@ -42,7 +42,7 @@ const limitLength = (maxLength: number) => (value: any) => {
 		return value
 	}
 	if (value.length > maxLength) {
-		return <span style={{width: '300px', display: 'block', whiteSpace: 'normal', fontSize: '12px'}} title={value}>{value}</span>
+		return <span style={{ width: '300px', display: 'block', whiteSpace: 'normal', fontSize: '12px' }} title={value}>{value}</span>
 	}
 	return value
 }
@@ -89,7 +89,7 @@ const OffersGrid = (
 					</GenericCell> */}
 					<HasOneSelectCell field="status" options="OfferStatus.name" header="Status" />
 					<HasManyCell field="volunteer.languages" entityList="Language" hasOneField="language"
-											 header="Dobrovolník: Jazyky">
+						header="Dobrovolník: Jazyky">
 						<Field field="name" />
 					</HasManyCell>
 					{
@@ -114,7 +114,7 @@ const OffersGrid = (
 										disableOrder
 									/>
 								)
-							} else if (["checkbox", "district"].includes(question.type)) {
+							} else if (["checkbox"].includes(question.type)) {
 								return (
 									<HasManyFilterCell
 										key={question.id}
@@ -137,6 +137,51 @@ const OffersGrid = (
 										<Field field={`value`} />
 									</HasManyFilterCell>
 								)
+							} else if (["district"].includes(question.type)) {
+								return (
+									<>
+										<HasManyFilterCell
+											key={question.id}
+											field={`parameters(question.id='${question.id}').values`}
+											header={question.label}
+											createWhere={(query) => ({
+												value: query,
+											})}
+											render={({ entities }) => (
+												<>
+													{entities.map((entity) => (
+														<React.Fragment key={entity.key}>
+															{entity.getField('value').value}
+															<br />
+														</React.Fragment>
+													))}
+												</>
+											)}
+										>
+											<Field field={`value`} />
+										</HasManyFilterCell>
+										<HasManyFilterCell
+											key={question.id}
+											field={`parameters(question.id='${question.id}').values`}
+											header={question.label === 'Okres' ? 'Kraj' : `${question.label} - Kraj`}
+											createWhere={(query) => ({
+												details: { district: { region: { name: query } } },
+											})}
+											render={({ entities }) => (
+												<>
+													{entities.map((entity) => (
+														<React.Fragment key={entity.key}>
+															{entity.getField('details.district.region.name').value}
+															<br />
+														</React.Fragment>
+													))}
+												</>
+											)}
+										>
+											<Field field={`details.district.region.name`} />
+										</HasManyFilterCell>
+									</>
+								)
 							} else {
 								return null
 							}
@@ -148,9 +193,9 @@ const OffersGrid = (
 					<TextCell field="volunteer.expertise" header="Dobrovolník: Odbornost" hidden format={limitLength(30)} />
 					<HasManySelectCell field="volunteer.tags" options="VolunteerTag.name" header="Dobrovolník: Tagy" />
 					<TextCell field="volunteer.userNote" header="Dobrovolník: Poznámka uživatele" hidden
-										format={limitLength(30)} />
+						format={limitLength(30)} />
 					<TextCell field="volunteer.internalNote" header="Dobrovolník: Interní poznámka" hidden
-										format={limitLength(30)} />
+						format={limitLength(30)} />
 					<DateCell field="volunteer.createdAt" header="Dobrovolník: Datum registrace" hidden />
 					<BooleanCell field="volunteer.createdInAdmin" header="Dobrovolník: Registrován administrátorem" hidden />
 					{/*<GenericCell canBeHidden={false} shrunk>*/}
