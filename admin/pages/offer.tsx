@@ -162,9 +162,9 @@ const OffersGrid = (
 										key={question.id}
 										field={`parameters(question.id='${question.id}').values`}
 										header={question.label === 'Okres' ? 'Kraj' : `${question.label} - Kraj`}
-										createWhere={(query) => ({
-											details: { district: { region: { name: query } } },
-										})}
+										// createWhere={(query) => ({
+										// 	details: { district: { region: { name: query } } },
+										// })}
 										render={({ entities }) => (
 											<>
 												{entities.map((entity) => (
