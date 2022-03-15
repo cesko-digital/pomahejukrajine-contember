@@ -8,6 +8,7 @@ on:
 
 jobs:
   deploy:
+    if: github.repository == 'manGoweb/ukrajina-contember'
     name: Deploy
     runs-on: ubuntu-latest
 
