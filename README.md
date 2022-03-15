@@ -25,6 +25,17 @@ Aplikace je rozdělena do následujících částí:
   - `OfferParameterValue`: Odpovědi na otázky u nabídky. V případě typů checkbox a district se hodnota uloží jako value v této entitě. Do fieldu specification se ukládá text z dodatečného políčka (u typu checkbox).
 
 
+## Přístupová oprávnění
+
+Přístupová oprávnění se řídí ACL pravidly Contemberu (viz soubor api/acl.ts, [obecná dokumentace](https://docs.contember.com/schema/acl)). Každý uživatel (administrátoři, pracovníci NGOs, dobrovolníci) má přiřazenou roli, která mu dává přístup (resp. create/read/update/delete práva) jen která má mít. 
+
+Existují následující role:
+- `admin`: Má neomezená práva (výchozí v administraci při lokálním spuštění Contemberu). Používá se i pro některé API klíče.
+- `organizationManager`: Má práva číst nabídky, ale kontakt jen když se k ní přiřadí.
+- `public`: Read-only role určená pro FE (s tím, že se API token s touto rolí může používat i na client-side)
+- `volunteer`: Dobrovolník. Má práva úprav na své nabídky. 
+
+
 ## Proces přidání nabídky
 
 1. Dobrovolník vyplní na FE nabídky pomoci (https://www.pomahejukrajine.cz/nabidka). Ta se odešle na API routu v next.js a tam se zvaliduje a uloží přes GraphQL Content API do Contemberu. 
@@ -37,4 +48,9 @@ Aplikace je rozdělena do následujících částí:
 Je potřeba spustit všechny části, které člověk potřebuje pro vývoj - prakticky vždy Contember a front-end, často i worker.
 
 Contember (tento repozitář) se spustí pomocí `npm install` a `npm start` (je potřeba `npm` verze 7+ a docker s docker-compose).
+
+---
+
+Soubor `admin.Dockerfile` používá admin-server, který není dostupný pod open source licencí, ale pod [Contember Enterprise Edition licencí](https://github.com/contember/admin/blob/main/ee/LICENSE). Pro produkční spuštění s admin-serverem je nutné získat licenci od společnosti Contember. Lokální vývoj, jak je popsán výše, admin-server nepoužívá a proto pro něj není tato licence nutná. 
+
 
