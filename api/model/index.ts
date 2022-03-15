@@ -10,6 +10,7 @@ export class District { // Okres
 	region = def.manyHasOne(Region, 'districts').notNull()
 	name = def.stringColumn().notNull().unique()
 	volunteers = def.oneHasMany(VolunteerDistrict, 'district')
+	offerParameterValues = def.oneHasMany(OfferParameterValueDetails, 'district')
 }
 
 export class VolunteerTag {
@@ -125,7 +126,6 @@ export class OfferLog {
 	author = def.manyHasOne(OrganizationManager).notNull()
 }
 
-
 @def.Unique('offer', 'question')
 export class OfferParameter {
 	offer = def.manyHasOne(Offer, 'parameters').notNull().cascadeOnDelete()
@@ -152,6 +152,19 @@ export class OfferParameterValue {
 	parameter = def.manyHasOne(OfferParameter, 'values').notNull().cascadeOnDelete()
 	value = def.stringColumn().notNull()
 	specification = def.stringColumn()
+	details = def.oneHasOneInverse(OfferParameterValueDetails, 'value').notNull()
+}
+
+@def.View(`
+	SELECT
+		gen_random_uuid() AS id,
+		value.id AS value_id,
+		(SELECT id FROM district WHERE district.name = value.value) AS district_id
+	FROM offer_parameter_value value
+`)
+export class OfferParameterValueDetails {
+	district = def.manyHasOne(District, 'offerParameterValues')
+	value = def.oneHasOne(OfferParameterValue, 'details').notNull()
 }
 
 export class Reaction {
