@@ -94,8 +94,11 @@ export const ExportOffers = Component<{ dataGridProps: any, listQuestion: Questi
 						...listQuestion.map(question => {
 							if (["text", "textarea", "date", "radio", "number"].includes(question.type)) {
 								const parameter = offer.parameters.find(parameter => parameter.question.id === question.id)
+								if (!parameter) {
+									return ''
+								}
 								return (
-									parameter?.value ? `${parameter} (${parameter.specification})` : parameter?.value
+									parameter.specification ? `${parameter.value} (${parameter.specification})` : parameter.value
 								)
 							} else if (["checkbox"].includes(question.type)) {
 								return (
