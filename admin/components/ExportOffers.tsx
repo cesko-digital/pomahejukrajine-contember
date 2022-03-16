@@ -81,6 +81,7 @@ export const ExportOffers = Component<{ dataGridProps: any, listQuestion: Questi
 			if (offers) {
 				const csv = offers.data?.listOffer?.map((offer: Offer) => {
 					return ([
+						offer.volunteer.email,
 						offer.code,
 						offer.assignees.map((assignee: { name: string }) => assignee.name).join(', '),
 						offer.status?.name,
