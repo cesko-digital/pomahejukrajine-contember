@@ -10,8 +10,8 @@
   "devDependencies": {
     "@contember/admin": "^1.0.0-rc.16",
     "@contember/admin-i18n": "^1.0.0-rc.16",
-    "@contember/schema": "1.0.0-rc.16",
-    "@contember/schema-definition": "1.0.0-rc.16",
+    "@contember/schema": "1.0.0-rc.15",
+    "@contember/schema-definition": "1.0.0-rc.15",
     "@types/papaparse": "^5.3.2",
     "@types/react": "^17",
     "papaparse": "^5.3.2",
