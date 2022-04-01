@@ -204,7 +204,7 @@ const OffersGrid = (
 
 		return (
 			<GenericPage title="Nabídky" actions={
-				<RoleConditional role="admin">
+				<RoleConditional role={['admin', 'organizationAdmin']}>
 					<ExportOffers dataGridProps={dataGridProps} listQuestion={query.data.listQuestion} />
 				</RoleConditional>
 			}>
