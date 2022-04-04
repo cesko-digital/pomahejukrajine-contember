@@ -182,6 +182,7 @@ export class Organization {
 	managers = def.oneHasMany(OrganizationManager, 'organization')
 }
 
+export const OrganizationManagerRoleEnum = def.createEnum('organizationManager', 'organizationAdmin')
 export class OrganizationManager {
 	personId = def.column(Model.ColumnType.Uuid).unique().notNull()
 	identityId = def.column(Model.ColumnType.Uuid).unique()
@@ -190,6 +191,7 @@ export class OrganizationManager {
 	email = def.stringColumn().notNull()
 	phone = def.stringColumn().notNull().default('')
 	assignedOffers = def.manyHasManyInverse(Offer, 'assignees')
+	role = def.enumColumn(OrganizationManagerRoleEnum).notNull().default('organizationManager')
 }
 
 export class Demand {

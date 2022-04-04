@@ -1,0 +1,153 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createEnum",
+			"enumName": "OrganizationManagerRoleEnum",
+			"values": [
+				"organizationManager",
+				"organizationAdmin"
+			]
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OrganizationManager",
+			"field": {
+				"name": "role",
+				"columnName": "role",
+				"nullable": false,
+				"default": "organizationManager",
+				"type": "Enum",
+				"columnType": "OrganizationManagerRoleEnum"
+			},
+			"fillValue": "organizationManager"
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin",
+					"value": {
+						"variables": {
+							"personId": {
+								"type": "predefined",
+								"value": "personID"
+							}
+						},
+						"stages": "*",
+						"inherits": [
+							"organizationManager"
+						],
+						"s3": {
+							"**": {
+								"upload": false,
+								"read": true
+							}
+						},
+						"entities": {
+							"Offer": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"code": true,
+										"volunteer": true,
+										"type": true,
+										"internalNote": true,
+										"exhausted": true,
+										"parameters": true,
+										"reactions": true,
+										"assignees": true,
+										"status": true,
+										"logs": true
+									},
+									"update": {
+										"id": true,
+										"code": true,
+										"volunteer": true,
+										"type": true,
+										"internalNote": true,
+										"exhausted": true,
+										"parameters": true,
+										"reactions": true,
+										"assignees": true,
+										"status": true,
+										"logs": true
+									}
+								}
+							},
+							"Volunteer": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"identityId": true,
+										"name": true,
+										"email": true,
+										"phone": true,
+										"organization": true,
+										"contactHours": true,
+										"languages": true,
+										"offers": true,
+										"verified": true,
+										"banned": true,
+										"secretCode": true,
+										"userNote": true,
+										"internalNote": true,
+										"expertise": true,
+										"districts": true,
+										"tags": true,
+										"createdAt": true,
+										"createdInAdmin": true
+									},
+									"update": {
+										"id": true,
+										"identityId": true,
+										"name": true,
+										"email": true,
+										"phone": true,
+										"organization": true,
+										"contactHours": true,
+										"languages": true,
+										"offers": true,
+										"verified": true,
+										"banned": true,
+										"secretCode": true,
+										"userNote": true,
+										"internalNote": true,
+										"expertise": true,
+										"districts": true,
+										"tags": true,
+										"createdAt": true,
+										"createdInAdmin": true
+									}
+								}
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OrganizationManager/operations/create/role",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OrganizationManager/operations/update/role",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OrganizationManager/operations/read/role",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OrganizationManager/operations/read/role",
+					"value": true
+				}
+			]
+		}
+	]
+}

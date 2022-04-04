@@ -184,6 +184,38 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 				},
 			},
 		},
+		organizationAdmin: {
+			variables: {
+				personId: {
+					type: Acl.VariableType.predefined,
+					value: 'personID',
+				}
+			},
+			stages: '*',
+			inherits: ['organizationManager'],
+			s3: {
+				'**': {
+					upload: false,
+					read: true,
+				},
+			},
+			entities: {
+				Offer: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'Offer', true),
+						update: allField(model, 'Offer', true),
+					},
+				},
+				Volunteer: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'Volunteer', true),
+						update: allField(model, 'Volunteer', true),
+					},
+				},
+			},
+		},
 		public: {
 			variables: {},
 			stages: '*',
