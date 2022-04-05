@@ -245,6 +245,20 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 						}
 					},
 				},
+				OfferParameterValue: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'OfferParameterValue', true),
+						update: allField(model, 'OfferParameterValue', true),
+					}
+				},
+				OfferParameter: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'OfferParameter', true),
+						update: allField(model, 'OfferParameter', true),
+					}
+				},
 			},
 		},
 		public: {
