@@ -10,6 +10,7 @@ import {
 	EditPage,
 	Field,
 	FieldContainer,
+	FieldView,
 	GenericCell,
 	HasManySelectCell,
 	HiddenField,
@@ -74,10 +75,20 @@ export const volunteersNotVerified = (
 	</DataGridPage>
 )
 
+const communicationWithVolunteerEnum = {
+	'not_set': 'Nenastaveno',
+	'active': 'Aktivní',
+	'does_not_exist': 'Neexistuje',
+	'unreachable': 'Nedovoláno',
+	'inactive': 'Neaktivní',
+	'verified': 'Ověřeno',
+}
+
 const VolunteerForm = Component(
 	() => (
 		<>
 			<MultiSelectField label="Tagy" field="tags" options="VolunteerTag.name" />
+			Komunikace s dobrovolníkem: <FieldView field="communicationWithVolunteer" render={(accessor) => accessor.value ? <>{communicationWithVolunteerEnum[accessor.value as keyof typeof communicationWithVolunteerEnum]}</> : ''} />
 			<hr />
 			<h3>Údaje o uživateli</h3>
 			<TextField field="name" label="Jméno" />

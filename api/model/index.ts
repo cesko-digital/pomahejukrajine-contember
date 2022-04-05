@@ -72,6 +72,7 @@ export class OfferStatus {
 
 // ---
 
+export const VolunteerCommunicationEnum = def.createEnum('not_set', 'active', 'does_not_exist', 'unreachable', 'inactive', 'verified')
 export class Volunteer {
 	identityId = def.stringColumn()
 	name = def.stringColumn().notNull()
@@ -92,6 +93,7 @@ export class Volunteer {
 	tags = def.manyHasMany(VolunteerTag, 'volunteers').orderBy('order')
 	createdAt = def.dateTimeColumn().notNull().default('now')
 	createdInAdmin = def.boolColumn().default(false).notNull()
+	communicationWithVolunteer = def.enumColumn(VolunteerCommunicationEnum).default('not_set')
 }
 
 @def.Unique('volunteer', 'language')
