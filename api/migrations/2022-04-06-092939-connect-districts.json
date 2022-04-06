@@ -176,6 +176,36 @@
 					"op": "add",
 					"path": "/roles/organizationManager/entities/OfferParameter/operations/read/numericValue",
 					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameterValue/operations/read/numericValue",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameterValue/operations/read/district",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameterValue/operations/update/numericValue",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameterValue/operations/update/district",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameter/operations/read/numericValue",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameter/operations/update/numericValue",
+					"value": true
 				}
 			]
 		}
