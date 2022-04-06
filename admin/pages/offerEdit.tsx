@@ -75,14 +75,13 @@ mutation($offerId: UUID!, $personId: UUID!) {
 	</HasMany>
 ))
 
-
-export const editOffer = (
+export default (
 	<EditPage
 		entity="Offer(id=$id)"
+		pageName="editOffer"
 		rendererProps={{
 			title: <Field field="type.name" />,
-			navigation: <NavigateBackButton to="offers(id: $entity.type.id)">Zpět na nabídky <Field
-				field="type.name" /></NavigateBackButton>
+			navigation: <NavigateBackButton to="offers(id: $entity.type.id)">Zpět na nabídky <Field field="type.name" /></NavigateBackButton>
 		}}
 	>
 		{/* <CurrentEntitySharedKeyAcquirer /> */}

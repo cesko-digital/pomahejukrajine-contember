@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { ApplicationEntrypoint, LoginEntrypoint, Pages, runReactApp } from '@contember/admin'
 import '@contember/admin/style.css'
-import './style.sass'
 import { Layout } from './components/Layout'
 import { csCZ } from '@contember/admin-i18n'
 import { CollaborationClientProvider } from "./utils/collaboration/CollaborationClientProvider"
