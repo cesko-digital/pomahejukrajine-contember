@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { ApplicationEntrypoint, LoginEntrypoint, Pages, runReactApp } from '@contember/admin'
 import '@contember/admin/style.css'
-import './style.sass'
 import { Layout } from './components/Layout'
 import { csCZ } from '@contember/admin-i18n'
 import { CollaborationClientProvider } from "./utils/collaboration/CollaborationClientProvider"
@@ -42,7 +41,7 @@ if (window.location.hash === '#login') {
 			{/* <CollaborationClientProvider> */}
 				<Pages
 					layout={Layout}
-					children={Object.assign({}, ...Object.values(import.meta.globEager('./pages/*.tsx')))}
+					children={import.meta.glob('./pages/**/*.tsx')}
 				/>
 			{/* </CollaborationClientProvider> */}
 		</ApplicationEntrypoint>,

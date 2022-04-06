@@ -1,7 +1,8 @@
-import * as React from "react"
-import { Button, Component, useCurrentContentGraphQlClient } from "@contember/admin"
-import Papa from "papaparse"
-import { QuestionQueryResult } from "../pages/offer"
+import * as React from 'react'
+import { Button, Component, useCurrentContentGraphQlClient } from '@contember/admin'
+import Papa from 'papaparse'
+import { QuestionQueryResult } from './OffersGrid'
+
 
 const LIST_LIST_OFFER_QUERY = `
 	query($filter: OfferWhere){
