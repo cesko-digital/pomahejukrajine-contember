@@ -50,7 +50,6 @@ export const OffersGrid = (
 									key={question.id}
 									field={`parameters(question.id='${question.id}').numericValue`}
 									header={question.label}
-									disableOrder
 								/>
 							)
 						} else if (["checkbox"].includes(question.type)) {
