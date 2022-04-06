@@ -48,7 +48,7 @@ export const OffersGrid = (
 							return (
 								<NumberCell
 									key={question.id}
-									field={`parameters(question.id='${question.id}').numericValue`}
+									field={`details.numericValue`}
 									header={question.label}
 								/>
 							)
