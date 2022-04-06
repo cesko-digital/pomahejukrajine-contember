@@ -1,0 +1,136 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createView",
+			"entity": {
+				"name": "OfferDetails",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					},
+					"numericValue": {
+						"name": "numericValue",
+						"columnName": "numeric_value",
+						"nullable": true,
+						"type": "Integer",
+						"columnType": "integer"
+					},
+					"offer": {
+						"name": "offer",
+						"inversedBy": "details",
+						"nullable": false,
+						"type": "OneHasOne",
+						"target": "Offer",
+						"joiningColumn": {
+							"columnName": "offer_id",
+							"onDelete": "restrict"
+						}
+					}
+				},
+				"tableName": "offer_details",
+				"view": {
+					"sql": "\n\tSELECT\n\t\tgen_random_uuid() AS id,\n\t  offer_id,\n\t\tnumeric_value AS numeric_value\n\tFROM offer_parameter\n\tJOIN question ON question.id = offer_parameter.question_id\n\tWHERE question.label = 'Počet'\n"
+				}
+			}
+		},
+		{
+			"modification": "createRelationInverseSide",
+			"entityName": "Offer",
+			"relation": {
+				"name": "details",
+				"ownedBy": "offer",
+				"target": "OfferDetails",
+				"type": "OneHasOne",
+				"nullable": true
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferDetails",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"create": {
+								"id": true,
+								"numericValue": true,
+								"offer": true
+							},
+							"update": {
+								"id": true,
+								"numericValue": true,
+								"offer": true
+							},
+							"read": {
+								"id": true,
+								"numericValue": true,
+								"offer": true
+							},
+							"delete": true
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/create/details",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/update/details",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/read/details",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/update/details",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/read/details",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Offer/operations/read/details",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Offer/operations/read/details",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Offer/operations/update/details",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/Offer/operations/read/details",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/Offer/operations/update/details",
+					"value": true
+				}
+			]
+		}
+	]
+}

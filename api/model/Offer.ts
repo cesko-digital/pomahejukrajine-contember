@@ -17,6 +17,21 @@ export class Offer {
 	assignees = def.manyHasMany(OrganizationManager, 'assignedOffers')
 	status = def.manyHasOne(OfferStatus, 'offers')
 	logs = def.oneHasMany(OfferLog, 'offer').orderBy('createdAt')
+	details = def.oneHasOneInverse(OfferDetails, 'offer')
+}
+
+@def.View(`
+	SELECT
+		gen_random_uuid() AS id,
+	  offer_id,
+		numeric_value AS numeric_value
+	FROM offer_parameter
+	JOIN question ON question.id = offer_parameter.question_id
+	WHERE question.label = 'Počet'
+`)
+export class OfferDetails {
+	numericValue = def.intColumn()
+	offer = def.oneHasOne(Offer, 'details').notNull()
 }
 
 // 'accomodation', 'transportation', 'interpretation', 'volunteering', 'materials'
@@ -32,6 +47,8 @@ export class OfferType {
 	demands = def.manyHasManyInverse(Demand, 'types')
 	hideInDemand = def.boolColumn().notNull().default(false)
 }
+
+
 
 export class OfferLog {
 	offer = def.manyHasOne(Offer, 'logs').notNull()
