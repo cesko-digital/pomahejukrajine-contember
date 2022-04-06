@@ -1,0 +1,213 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createColumn",
+			"entityName": "OfferParameter",
+			"field": {
+				"name": "numericValue",
+				"columnName": "numeric_value",
+				"nullable": true,
+				"type": "Integer",
+				"columnType": "integer"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferParameterValue",
+			"field": {
+				"name": "numericValue",
+				"columnName": "numeric_value",
+				"nullable": true,
+				"type": "Integer",
+				"columnType": "integer"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "OfferParameterValue",
+			"owningSide": {
+				"name": "district",
+				"inversedBy": "offers",
+				"nullable": true,
+				"type": "ManyHasOne",
+				"target": "District",
+				"joiningColumn": {
+					"columnName": "district_id",
+					"onDelete": "restrict"
+				}
+			},
+			"inverseSide": {
+				"name": "offers",
+				"ownedBy": "district",
+				"type": "OneHasMany",
+				"target": "OfferParameterValue"
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/District/operations/create/offers",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/District/operations/update/offers",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/District/operations/read/offers",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameter/operations/create/numericValue",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameter/operations/update/numericValue",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameter/operations/read/numericValue",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameterValue/operations/create/numericValue",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameterValue/operations/create/district",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameterValue/operations/update/numericValue",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameterValue/operations/update/district",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameterValue/operations/read/numericValue",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameterValue/operations/read/district",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/District/operations/read/offers",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameter/operations/create/numericValue",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameter/operations/update/numericValue",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameter/operations/read/numericValue",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameterValue/operations/create/numericValue",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameterValue/operations/create/district",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameterValue/operations/update/numericValue",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameterValue/operations/update/district",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameterValue/operations/read/numericValue",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameterValue/operations/read/district",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/District/operations/read/offers",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OfferParameterValue/operations/read/numericValue",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OfferParameterValue/operations/read/district",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OfferParameter/operations/read/numericValue",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameterValue/operations/read/numericValue",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameterValue/operations/read/district",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameterValue/operations/update/numericValue",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameterValue/operations/update/district",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameter/operations/read/numericValue",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameter/operations/update/numericValue",
+					"value": true
+				}
+			]
+		}
+	]
+}

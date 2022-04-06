@@ -1,0 +1,60 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameterValue",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"parameter": true,
+								"value": true,
+								"specification": true,
+								"details": true
+							},
+							"update": {
+								"id": true,
+								"parameter": true,
+								"value": true,
+								"specification": true,
+								"details": true
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameter",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"offer": true,
+								"question": true,
+								"value": true,
+								"specification": true,
+								"values": true,
+								"details": true
+							},
+							"update": {
+								"id": true,
+								"offer": true,
+								"question": true,
+								"value": true,
+								"specification": true,
+								"values": true,
+								"details": true
+							}
+						}
+					}
+				}
+			]
+		}
+	]
+}

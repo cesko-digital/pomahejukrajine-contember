@@ -216,6 +216,51 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 				},
 			},
 		},
+		callcenterAPI: {
+			variables: {},
+			stages: '*',
+			inherits: ['organizationManager'],
+			s3: {
+				'**': {
+					upload: false,
+					read: true,
+				},
+			},
+			entities: {
+				Offer: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'Offer', true),
+						update: allField(model, 'Offer', true),
+					},
+				},
+				Volunteer: {
+					predicates: {},
+					operations: {
+						read: {
+							...allField(model, 'Volunteer', true),
+						},
+						update: {
+							communicationWithVolunteer: true,
+						}
+					},
+				},
+				OfferParameterValue: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'OfferParameterValue', true),
+						update: allField(model, 'OfferParameterValue', true),
+					}
+				},
+				OfferParameter: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'OfferParameter', true),
+						update: allField(model, 'OfferParameter', true),
+					}
+				},
+			},
+		},
 		public: {
 			variables: {},
 			stages: '*',

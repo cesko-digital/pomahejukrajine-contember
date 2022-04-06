@@ -1,0 +1,150 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createEnum",
+			"enumName": "VolunteerCommunicationEnum",
+			"values": [
+				"not_set",
+				"active",
+				"does_not_exist",
+				"unreachable",
+				"inactive",
+				"verified"
+			]
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Volunteer",
+			"field": {
+				"name": "communicationWithVolunteer",
+				"columnName": "communication_with_volunteer",
+				"nullable": true,
+				"default": "not_set",
+				"type": "Enum",
+				"columnType": "VolunteerCommunicationEnum"
+			},
+			"fillValue": "not_set"
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI",
+					"value": {
+						"variables": {},
+						"stages": "*",
+						"inherits": [
+							"organizationManager"
+						],
+						"s3": {
+							"**": {
+								"upload": false,
+								"read": true
+							}
+						},
+						"entities": {
+							"Offer": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"code": true,
+										"volunteer": true,
+										"type": true,
+										"internalNote": true,
+										"exhausted": true,
+										"parameters": true,
+										"reactions": true,
+										"assignees": true,
+										"status": true,
+										"logs": true
+									},
+									"update": {
+										"id": true,
+										"code": true,
+										"volunteer": true,
+										"type": true,
+										"internalNote": true,
+										"exhausted": true,
+										"parameters": true,
+										"reactions": true,
+										"assignees": true,
+										"status": true,
+										"logs": true
+									}
+								}
+							},
+							"Volunteer": {
+								"predicates": {},
+								"operations": {
+									"read": {
+										"id": true,
+										"identityId": true,
+										"name": true,
+										"email": true,
+										"phone": true,
+										"organization": true,
+										"contactHours": true,
+										"languages": true,
+										"offers": true,
+										"verified": true,
+										"banned": true,
+										"secretCode": true,
+										"userNote": true,
+										"internalNote": true,
+										"expertise": true,
+										"districts": true,
+										"tags": true,
+										"createdAt": true,
+										"createdInAdmin": true,
+										"communicationWithVolunteer": true
+									},
+									"update": {
+										"communicationWithVolunteer": true
+									}
+								}
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Volunteer/operations/create/communicationWithVolunteer",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Volunteer/operations/update/communicationWithVolunteer",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Volunteer/operations/read/communicationWithVolunteer",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Volunteer/operations/read/communicationWithVolunteer",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Volunteer/operations/read/communicationWithVolunteer",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Volunteer/operations/read/communicationWithVolunteer",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Volunteer/operations/update/communicationWithVolunteer",
+					"value": true
+				}
+			]
+		}
+	]
+}
