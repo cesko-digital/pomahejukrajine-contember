@@ -41,7 +41,7 @@ if (window.location.hash === '#login') {
 			{/* <CollaborationClientProvider> */}
 				<Pages
 					layout={Layout}
-					children={Object.assign({}, ...Object.values(import.meta.globEager('./pages/*.tsx')))}
+					children={import.meta.glob('./pages/**/*.tsx')}
 				/>
 			{/* </CollaborationClientProvider> */}
 		</ApplicationEntrypoint>,
