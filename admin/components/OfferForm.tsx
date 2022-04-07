@@ -17,21 +17,26 @@ import {
 	Repeater,
 	Section,
 	TextAreaField,
-    useIdentity,
-    useEntityBeforePersist,
-    FieldView,
+	useIdentity,
+	useEntityBeforePersist,
+	FieldView,
+	HasOne,
+	useEntityListSubTree,
+	HiddenField,
 } from "@contember/admin"
 import { Conditional } from "./Conditional"
 import * as React from "react"
+import Select, { SelectInstance } from 'react-select'
 
 const OfferParametersForm = Component(
 	() => {
 		const parameters = useEntityList('parameters')
+		const districts = useEntityListSubTree('districts')
 
-		const setParameter = (question: EntityAccessor, value: string, field: 'value' | 'specification' = 'value') => {
+		const setParameter = (question: EntityAccessor, value: string | number, field: 'value' | 'specification' | 'numericValue' = 'value') => {
 			const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
 			if (parameter) {
-				parameter.getField<string>(field).updateValue(value)
+				parameter.getField<string | number>(field).updateValue(value)
 			} else {
 				parameters.createNewEntity((getAccessor) => {
 					getAccessor().connectEntityAtField('question', question)
@@ -47,8 +52,15 @@ const OfferParametersForm = Component(
 
 
 		const setParameters = (question: EntityAccessor, value: string[]) => {
-			const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
-			const optionsList = parameter?.getEntityList('options')
+			let parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
+			if (!parameter) {
+				parameters.createNewEntity((getAccessor) => {
+					getAccessor().connectEntityAtField('question', question)
+
+					parameter = getAccessor()
+				})
+			}
+			const optionsList = parameter?.getEntityList('values')
 			const options = Array.from(optionsList ?? [])
 			const staying = options.filter(option => value.includes(option.getField<string>('value').value ?? ''))
 			const remove = options.filter(option => !value.includes(option.getField<string>('value').value ?? ''))
@@ -59,6 +71,7 @@ const OfferParametersForm = Component(
 			for (const value of add) {
 				optionsList?.createNewEntity((getAccessor) => {
 					getAccessor().getField('value').updateValue(value)
+					getAccessor().connectEntityAtField('district', Array.from(districts).find(district => district.getField<string>('name').value === value)!)
 				})
 			}
 		}
@@ -114,7 +127,6 @@ const OfferParametersForm = Component(
 			const option = Array.from(parameter?.getEntityList('values') ?? []).find(option => option.getField<string>('value').value === value)
 			option?.getField<string>('specification').updateValue(specification)
 		}
-
 
 		return (
 			<>
@@ -183,8 +195,16 @@ const OfferParametersForm = Component(
 							<Conditional showIf={acc => acc.getField('type').value === 'number'}>
 								<EntityView
 									render={(entity) => (
-										<TextInput type="number" value={getParameter(entity)}
-											onChange={e => setParameter(entity, e.target.value)} />
+										<>
+											<TextInput
+												type="number"
+												value={getParameter(entity)}
+												onChange={e => {
+													setParameter(entity, e.target.value)
+													setParameter(entity, parseInt(e.target.value), 'numericValue')
+												}}
+											/>
+										</>
 									)}
 								/>
 							</Conditional>
@@ -249,11 +269,27 @@ const OfferParametersForm = Component(
 
 							<Conditional showIf={acc => acc.getField('type').value === 'district'}>
 								<EntityView
-									render={(entity) => (
-										<>
-											{getParameterValues(entity)}
-										</>
-									)}
+									render={(entity) => {
+										const options = Array.from(districts).map(district => ({
+											label: district.getField<string>('name').value!,
+											value: district.getField<string>('name').value!
+										}))
+
+										return (
+											<Select
+												isMulti
+												closeMenuOnSelect={false}
+												value={options.filter(it => {
+													return getParameterValues(entity).includes(it.value)
+												})}
+												onChange={(value) => {
+													setParameters(entity, value.map(it => it.value))
+
+												}}
+												options={options}
+											/>
+										)
+									}}
 								/>
 							</Conditional>
 						</FieldContainer>
@@ -264,6 +300,9 @@ const OfferParametersForm = Component(
 	},
 	() => (
 		<>
+			<EntityListSubTree entities="District" alias="districts" >
+				<Field field="name" />
+			</EntityListSubTree>
 			<SelectField
 				label="Typ nabídky"
 				field="type"
@@ -302,10 +341,14 @@ const OfferParametersForm = Component(
 			<HasMany field="parameters">
 				<Field field="question.id" />
 				<Field field="value" />
+				<Field field="numericValue" />
 				<Field field="specification" />
 				<HasMany field="values">
 					<Field field="value" />
 					<Field field="specification" />
+					<HasOne field="district">
+						<Field field="name" />
+					</HasOne>
 				</HasMany>
 			</HasMany>
 		</>
@@ -335,17 +378,17 @@ const LogForm = Component(
 
 		return (
 			<>
-			<div>Pokud s nabídkou jakkoli pracujete, zanechte prosím o tom zde v logu zprávu.</div>
-			<Repeater label="Log" field="logs" orderBy="createdAt" enableRemoving={false}>
-				<Conditional showIf={it => it.existsOnServer}>
-					<strong><FieldView field="createdAt" render={date => dateFormat.format(new Date(date.value as string))} />, <Field field="author.name" /> (<Field field="author.organization.name" />)</strong>
-					<p style={{ margin: 0 }}><Field field="text" format={it => (it as string)?.split('\n').map(it => <>{it}<br/></>)} /></p>
-				</Conditional>
-				<Conditional showIf={it => !it.existsOnServer}>
-					<TextAreaField field="text" label={undefined} />
-				</Conditional>
-			</Repeater>
-			<div>(Zpráva se neukládá automaticky, uložíte ji tlačítkem Save vpravo nahoře.)</div>
+				<div>Pokud s nabídkou jakkoli pracujete, zanechte prosím o tom zde v logu zprávu.</div>
+				<Repeater label="Log" field="logs" orderBy="createdAt" enableRemoving={false}>
+					<Conditional showIf={it => it.existsOnServer}>
+						<strong><FieldView field="createdAt" render={date => dateFormat.format(new Date(date.value as string))} />, <Field field="author.name" /> (<Field field="author.organization.name" />)</strong>
+						<p style={{ margin: 0 }}><Field field="text" format={it => (it as string)?.split('\n').map(it => <>{it}<br /></>)} /></p>
+					</Conditional>
+					<Conditional showIf={it => !it.existsOnServer}>
+						<TextAreaField field="text" label={undefined} />
+					</Conditional>
+				</Repeater>
+				<div>(Zpráva se neukládá automaticky, uložíte ji tlačítkem Save vpravo nahoře.)</div>
 			</>
 		)
 	},
