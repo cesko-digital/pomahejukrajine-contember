@@ -13,6 +13,7 @@ import {
 import * as React from 'react'
 import { Checkbox } from '@contember/admin'
 import { DataGridCellPublicProps, DataGridColumn, DataGridHeaderCellPublicProps } from '@contember/admin'
+import { closestBlockEntry } from '@contember/admin/dist/types/components/bindingFacade/richText/ContemberEditor/methods'
 
 export type HasManyCellProps = DataGridHeaderCellPublicProps &
 	DataGridCellPublicProps &
@@ -95,11 +96,12 @@ export const HasManyCell = Component<HasManyCellProps>(
 					}
 
 					const desugared = QueryLanguage.desugarRelativeEntityList(props, environment)
+					const desugeredHadOne = props.hasOneField ? QueryLanguage.desugarRelativeSingleEntity(props.hasOneField, environment) : undefined
 					return wrapFilterInHasOnes(desugared.hasOneRelationPath, {
 						[filter.combinator]: Array.from(filter.ids).map(id => ({
 							[desugared.hasManyRelation.field]: (
-								props.hasOneField
-									? { [props.hasOneField]: { id: { eq: id } } }
+								desugeredHadOne
+									? wrapFilterInHasOnes(desugeredHadOne.hasOneRelationPath, { id: { eq: id } })
 									: { id: { eq: id } }
 							)
 						})),

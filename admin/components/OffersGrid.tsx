@@ -98,26 +98,15 @@ export const OffersGrid = (
 									>
 										<Field field={`district.name`} />
 									</HasManyFilterCell>
-									<HasManyFilterCell
+									<HasManyCell
 										key={question.id}
 										field={`parameters(question.id='${question.id}').values`}
 										header={question.label === 'Okres' ? 'Kraj' : `${question.label} - Kraj`}
-										createWhere={(query) => ({
-											district: { region: { name: query } },
-										})}
-										render={({ entities }) => (
-											<>
-												{entities.map((entity) => (
-													<React.Fragment key={entity.key}>
-														{entity.getField('district.region.name').value}
-														<br />
-													</React.Fragment>
-												))}
-											</>
-										)}
+										entityList="Region"
+										hasOneField="district.region"
 									>
-										<Field field={`district.region.name`} />
-									</HasManyFilterCell>
+										<Field field={`name`} />
+									</HasManyCell>
 								</>
 							)
 						} else {
