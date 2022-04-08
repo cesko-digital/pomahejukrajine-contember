@@ -1,0 +1,33 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Offer/operations/create",
+					"value": {
+						"id": true,
+						"code": true,
+						"volunteer": true,
+						"type": true,
+						"internalNote": true,
+						"exhausted": true,
+						"parameters": true,
+						"reactions": true,
+						"assignees": true,
+						"status": true,
+						"logs": true,
+						"details": true
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Offer/operations/delete",
+					"value": true
+				}
+			]
+		}
+	]
+}
