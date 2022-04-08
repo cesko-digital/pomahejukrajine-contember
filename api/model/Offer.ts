@@ -18,6 +18,7 @@ export class Offer {
 	status = def.manyHasOne(OfferStatus, 'offers')
 	logs = def.oneHasMany(OfferLog, 'offer').orderBy('createdAt')
 	details = def.oneHasOneInverse(OfferDetails, 'offer')
+	isDeleted = def.boolColumn().notNull().default(false)
 }
 
 @def.View(`

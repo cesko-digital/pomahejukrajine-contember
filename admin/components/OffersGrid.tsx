@@ -13,14 +13,14 @@ export type QuestionQueryResult = {
 export const OffersGrid = (
 	({ query }: { query: { data: QuestionQueryResult } }) => {
 		const dataGridProps = useDataGrid({
-			entities: 'Offer[type.id=$id][volunteer.verified=true][volunteer.banned=false]',
+			entities: 'Offer[type.id=$id][isDeleted=false][volunteer.verified=true][volunteer.banned=false]',
 			itemsPerPage: 20,
 			children: React.useMemo(() => <>
 				<GenericCell canBeHidden={false} shrunk>
 					<LinkButton to="editOffer(id: $entity.id)">Otevřít</LinkButton>
 				</GenericCell>
 				<TextCell field="code" header="Kód" />
-				<HasManySelectCell field="assignees" header="Přiřazen" options={'OrganizationManager.name'} />
+				<HasManySelectCell field="assignees" header="Přiřazen" options={'OrganizationManager.name'} renderElements={els=><span>{els.map(el=><span style={{ display: 'block', fontSize: '9' }}>{el}</span>)}</span>} />
 				{/* <GenericCell header="Prohlíží" shrunk>
 					<CurrentEntityKeyListener>
 						{(data) => (<CollaborationList emails={data?.keys?.map(key => key.client.email) ?? []} />)}
@@ -138,7 +138,9 @@ export const OffersGrid = (
 				</RoleConditional>
 			}>
 				<DataBindingProvider stateComponent={FeedbackRenderer} refreshOnEnvironmentChange={false}>
-					<ControlledDataGrid {...dataGridProps} />
+					<div className='data-grid-container'>
+						<ControlledDataGrid {...dataGridProps} />
+					</div>
 				</DataBindingProvider>
 			</GenericPage>
 		)

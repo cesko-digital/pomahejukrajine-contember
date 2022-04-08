@@ -5,6 +5,7 @@ import { Layout } from './components/Layout'
 import { csCZ } from '@contember/admin-i18n'
 import { CollaborationClientProvider } from "./utils/collaboration/CollaborationClientProvider"
 import * as Sentry from "@sentry/browser";
+import "./styles/index.sass"
 import { CaptureConsole as CaptureConsoleIntegration } from "@sentry/integrations";
 
 const sentryDsn = import.meta.env.VITE_CONTEMBER_ADMIN_SENTRY_DSN
