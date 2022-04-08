@@ -9,6 +9,6 @@ export const limitLength = (maxLength: number, makeSmaller = false) => (value: a
 		if (typeof value === 'string' && value.length > maxLength) {
 			return <span title={value}>{value.substr(0, maxLength) + '…'}</span>
 		}
-		return value
 	}
+	return value
 }
