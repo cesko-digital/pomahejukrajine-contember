@@ -1,12 +1,13 @@
 import * as React from 'react'
-import { Menu, EntityListSubTree, FieldView, DataBindingProvider, FeedbackRenderer, LogoutLink } from '@contember/admin'
+import { Menu, EntityListSubTree, FieldView, DataBindingProvider, FeedbackRenderer, LogoutLink, UserMiniControl, useIdentity } from '@contember/admin'
 import { RoleConditional } from './RoleConditional'
+import { UserBox } from './userBox'
 
 export const Navigation = () => (
 	<Menu>
-		{/*<Menu.Item>*/}
-		{/*	<Menu.Item title="Dashboard" to="index" />*/}
-		{/*</Menu.Item>*/}
+		<Menu.Item>
+			<UserBox />
+		</Menu.Item>
 		<Menu.Item title="Dobrovolníci">
 			<Menu.Item title="Seznam" to="volunteers" />
 			<RoleConditional role={['admin', 'organizationAdmin']}>
