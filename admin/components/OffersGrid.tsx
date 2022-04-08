@@ -20,7 +20,7 @@ export const OffersGrid = (
 					<LinkButton to="editOffer(id: $entity.id)">Otevřít</LinkButton>
 				</GenericCell>
 				<TextCell field="code" header="Kód" />
-				<HasManySelectCell field="assignees" header="Přiřazen" options={'OrganizationManager.name'} renderElements={els=><span>{els.map(el=><span style={{ display: 'block', fontSize: '9' }}>{el}</span>)}</span>} />
+				<HasManySelectCell field="assignees" header="Přiřazen" options={'OrganizationManager.name'} renderElements={els=><span>{els.map(el=><span style={{ display: 'block', fontSize: '90%' }}>{el}</span>)}</span>} />
 				{/* <GenericCell header="Prohlíží" shrunk>
 					<CurrentEntityKeyListener>
 						{(data) => (<CollaborationList emails={data?.keys?.map(key => key.client.email) ?? []} />)}
