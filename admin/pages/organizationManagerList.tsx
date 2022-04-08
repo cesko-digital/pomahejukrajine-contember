@@ -13,7 +13,7 @@ export default (
 		<TextCell field="name" header="Jméno" />
 		<TextCell field="email" header="Email" />
 		<TextCell field="phone" header="Telefon" />
-		<EnumCell field="role" options={{ organizationManager: "Pracovník", organizationAdmin: "Admin" }} header={'Role'} />
+		<EnumCell field="role" options={{ organizationManager: "Pracovník", organizationAdmin: "Admin", admin: "Superadministrátor" }} header={'Role'} />
 		<GenericCell canBeHidden={false} shrunk>
 			<LinkButton to="organizationManagerEdit(id: $entity.id)">Detail</LinkButton>
 		</GenericCell>

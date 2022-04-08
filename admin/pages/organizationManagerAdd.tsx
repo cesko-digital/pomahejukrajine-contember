@@ -14,6 +14,6 @@ export default () => (
 		<TextField field={'name'} label={'Jméno'} />
 		<TextField field={'email'} label={'E-mail'} />
 		<TextField field={'phone'} label={'Telefon'} />
-		<RadioField field={'role'} label={'Role'} options={[{ value: 'organizationManager', label: 'Pracovník' }, { value: 'organizationAdmin', label: 'Admin' }]} />
+		<RadioField field={'role'} label={'Role'} options={[{ value: 'organizationManager', label: 'Pracovník' }, { value: 'organizationAdmin', label: 'Admin' }, { value: 'admin', label: 'Superadministrátor' }]} />
 	</CreatePage>
 )
