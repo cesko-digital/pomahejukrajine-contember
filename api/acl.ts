@@ -210,7 +210,6 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 						create: allField(model, 'Offer', true),
 						read: allField(model, 'Offer', true),
 						update: allField(model, 'Offer', true),
-						delete: true,
 					},
 				},
 				Volunteer: {

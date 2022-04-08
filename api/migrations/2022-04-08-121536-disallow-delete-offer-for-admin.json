@@ -1,0 +1,14 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "remove",
+					"path": "/roles/organizationAdmin/entities/Offer/operations/delete"
+				}
+			]
+		}
+	]
+}
