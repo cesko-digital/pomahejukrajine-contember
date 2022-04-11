@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { BooleanCell, ControlledDataGrid, DataBindingProvider, DateCell, FeedbackRenderer, Field, GenericCell, GenericPage, HasManySelectCell, HasOneSelectCell, LinkButton, NumberCell, TextCell, useDataGrid } from '@contember/admin'
+import { BooleanCell, ControlledDataGrid, DataBindingProvider, DateCell, FeedbackRenderer, Field, FieldView, GenericCell, GenericPage, HasManySelectCell, HasOneSelectCell, LinkButton, NumberCell, RichTextField, TextCell, useDataGrid } from '@contember/admin'
 import { limitLength } from '../utils/limitLength'
 import { ExportOffers } from './ExportOffers'
 import { HasManyCell } from './HasManyCell'
@@ -8,6 +8,19 @@ import { RoleConditional } from './RoleConditional'
 
 export type QuestionQueryResult = {
 	listQuestion: { id: string; label: string, type: string, options: { label: string, value: string }[] }[]
+}
+
+function parseJSON(json: string) {
+	try {
+		var parsedText = ''
+		var parsedJSON = JSON.parse(json)
+		for (var text in parsedJSON.children) {
+			parsedText += parsedJSON.children[text].text ? parsedJSON.children[text].text : ''
+		}
+		return parsedText
+	} catch (e) {
+		return null
+	}
 }
 
 export const OffersGrid = (
@@ -114,7 +127,9 @@ export const OffersGrid = (
 						}
 					}).filter(item => item !== null)
 				}
-				<TextCell field="internalNote" header="Interní poznámka" hidden format={limitLength(30, true)} />
+				<GenericCell header="Interní poznámka" hidden>
+					<FieldView field="internalNote" render={(accessor) => <span style={{ width: '300px', display: 'block', whiteSpace: 'normal', fontSize: '12px' }}>{parseJSON(accessor.value as string)}</span>} />
+				</GenericCell>
 				<TextCell field="volunteer.email" header="Dobrovolník: Email" hidden />
 				<TextCell field="volunteer.phone" header="Dobrovolník: Telefon" hidden />
 				<TextCell field="volunteer.expertise" header="Dobrovolník: Odbornost" hidden format={limitLength(30, true)} />
