@@ -1,0 +1,14 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "updateEnum",
+			"enumName": "OrganizationManagerRoleEnum",
+			"values": [
+				"organizationManager",
+				"organizationAdmin",
+				"volunteer"
+			]
+		}
+	]
+}
