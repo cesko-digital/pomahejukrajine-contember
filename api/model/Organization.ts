@@ -7,7 +7,7 @@ export class Organization {
 	managers = def.oneHasMany(OrganizationManager, 'organization')
 }
 
-export const OrganizationManagerRoleEnum = def.createEnum('organizationManager', 'organizationAdmin')
+export const OrganizationManagerRoleEnum = def.createEnum('organizationManager', 'organizationAdmin', 'volunteer')
 export class OrganizationManager {
 	personId = def.column(Model.ColumnType.Uuid).unique().notNull()
 	identityId = def.column(Model.ColumnType.Uuid).unique()

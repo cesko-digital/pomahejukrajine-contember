@@ -22,6 +22,9 @@ export const RoleConditional = Component<RoleConditionalProps>(
 			&& (_onlyRole !== undefined ? Array.from(roles).every(it => _onlyRole.includes(it)) : true)
 			&& (_notRole !== undefined ? _notRole.every(it => !roles.has(it)) : true)
 			&& (_notOtherRole !== undefined ? !Array.from(roles).every(it => _notOtherRole.includes(it)) : true)
+
+		console.log('roles', roles)
+
 		if (show) {
 			return <>{children}</>
 		} else {

@@ -1,0 +1,20 @@
+.side-menu-toggle
+	position: fixed
+	z-index: 1000
+	top: 0
+	left: -2px
+	height: 100vh
+	border: none
+	padding: 0 7px
+	background: transparent
+
+	span.hidden
+		display: none
+
+	&:hover
+		span.hidden
+			display: inline-block
+
+@media (max-width: 767.98px)
+	.side-menu-toggle
+		display: none
