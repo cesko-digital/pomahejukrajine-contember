@@ -13,7 +13,7 @@ export const Layout = (props: { children?: ReactNode }) => {
 			children={
 				<>
 					<button onClick={() => setIsNavigationOpen(!isNavigationOpen)} className="side-menu-toggle">
-						{isNavigationOpen ? <span><span>{'<'}</span> <span className="hidden">hide menu</span></span> : <span><span>{'>'}</span> <span className="hidden">show menu</span></span> }
+						{isNavigationOpen ? <span><span>{'←'}</span> <span className="hidden">hide menu</span></span> : <span><span>{'→'}</span> <span className="hidden">show menu</span></span> }
 					</button>
 					{props.children}
 				</>
