@@ -1,4 +1,4 @@
-import { Button, EditPage, EntityView, Field, HasMany, MultiSelectField, NavigateBackButton, PersistButton, RichTextField, Section } from '@contember/admin'
+import { Button, EditPage, EntityView, Field, HasMany, LinkButton, MultiSelectField, NavigateBackButton, PersistButton, RichTextField, Section, SelectField } from '@contember/admin'
 import * as React from 'react'
 import { Conditional } from '../components/Conditional'
 import { OfferForm } from "../components/OfferForm"
@@ -41,6 +41,7 @@ export default (
 		</RoleConditional>
 		<OfferManage />
 		<RichTextField field="internalNote" label="Interní poznámka" />
+		<LinkButton to="offerMove(id: $entity.id)">Přesunout nabídku do jiné kategorie</LinkButton>
 		<OfferForm />
 		<Section heading="Dobrovolník">
 			<div>
