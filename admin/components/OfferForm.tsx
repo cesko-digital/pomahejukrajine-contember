@@ -22,14 +22,44 @@ import {
 	FieldView,
 	HasOne,
 	useEntityListSubTree,
-	HiddenField,
+	EntitySubTree,
 } from "@contember/admin"
 import { Conditional } from "./Conditional"
 import * as React from "react"
 import Select, { SelectInstance } from 'react-select'
 
-const OfferParametersForm = Component(
-	() => {
+type OfferParametersFormProps = {
+	currentType?: boolean
+}
+
+type CurrentTypeProps = {
+	currentType?: boolean
+	children: React.ReactNode
+}
+
+
+const CurrentType = Component<CurrentTypeProps>(
+	props => {
+		if (props.currentType) {
+			return (
+				<EntitySubTree entity={`OfferType(offers.id = $id)`}>
+					<HasMany field="questions" orderBy="order">
+						{props.children}
+					</HasMany>
+				</EntitySubTree>
+			)
+		}
+		return (
+			<HasMany field="type.questions" orderBy="order">
+				{props.children}
+			</HasMany>
+		)
+	},
+	'CurrentType',
+)
+
+export const OfferParametersForm = Component<OfferParametersFormProps>(
+	({ currentType }) => {
 		const parameters = useEntityList('parameters')
 		const districts = useEntityListSubTree('districts')
 
@@ -130,7 +160,7 @@ const OfferParametersForm = Component(
 
 		return (
 			<>
-				<SelectField
+				{!currentType && <SelectField
 					label="Typ nabídky"
 					field="type"
 					options="OfferType"
@@ -154,8 +184,9 @@ const OfferParametersForm = Component(
 						</>
 					)}
 				/>
+				}
 				<Conditional showIf={acc => acc.getEntity('type').existsOnServer}>
-					<HasMany field="type.questions" orderBy="order">
+					<CurrentType currentType={currentType}>
 						<FieldContainer
 							useLabelElement={false}
 							label={(
@@ -192,7 +223,7 @@ const OfferParametersForm = Component(
 								/>
 							</Conditional>
 
-							<Conditional showIf={acc => acc.getField('type').value === 'number'}>
+							<Conditional showIf={acc => { console.log(currentType, acc.getField('type').value); return acc.getField('type').value === 'number' }}>
 								<EntityView
 									render={(entity) => (
 										<>
@@ -293,7 +324,7 @@ const OfferParametersForm = Component(
 								/>
 							</Conditional>
 						</FieldContainer>
-					</HasMany>
+					</CurrentType>
 				</Conditional>
 			</>
 		)
@@ -303,6 +334,18 @@ const OfferParametersForm = Component(
 			<EntityListSubTree entities="District" alias="districts" >
 				<Field field="name" />
 			</EntityListSubTree>
+			<EntitySubTree entity={`OfferType(offers.id = $id)`}>
+				<HasMany field="questions" orderBy="order">
+					<Field field="question" />
+					<Field field="required" />
+					<Field field="type" />
+					<HasMany field="options">
+						<Field field="label" />
+						<Field field="value" />
+						<Field field="requireSpecification" />
+					</HasMany>
+				</HasMany>
+			</EntitySubTree>
 			<SelectField
 				label="Typ nabídky"
 				field="type"
@@ -420,7 +463,6 @@ export const OfferForm = Component(
 				<SelectField label="Stav nabídky" options="OfferStatus.name" field="status" allowNull />
 				<LogForm />
 				<Section heading="Nabídka">
-					<div>(V současné chvíli mohou nabídku upravovat pouze superadministrátoři.)</div>
 					<OfferParametersForm />
 				</Section>
 			</>
