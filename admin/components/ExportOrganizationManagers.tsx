@@ -12,6 +12,7 @@ const LIST_ORGANIZATION_MANAGERS_QUERY = `
 			organization {
 				name
 			}
+			role
 		}
 	}
 `
@@ -20,7 +21,7 @@ type ListOrganizationManagerQueryResult = {
 	listOrganizationManager: OrganizationManager[]
 }
 
-type OrganizationManager = { id: string; name: string, email: string, phone: string, organization: { name: string } }
+type OrganizationManager = { id: string; name: string, email: string, phone: string, organization: { name: string }, role: string }
 
 export const ExportOrganizationManagers = Component(
 	() => {
@@ -33,7 +34,7 @@ export const ExportOrganizationManagers = Component(
 
 		if (organizationManagers) {
 			const csv = organizationManagers.data?.listOrganizationManager?.map((manager: OrganizationManager) => {
-				return [manager.name, manager.email, manager.phone, manager.organization?.name]
+				return [manager.name, manager.email, manager.phone, manager.organization?.name, manager.role]
 			})
 
 			const blob = new Blob([Papa.unparse(csv, { delimiter: ';' })], { type: 'text/csv;charset=utf-8;' })
