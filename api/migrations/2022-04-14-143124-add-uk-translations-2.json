@@ -1,0 +1,86 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createColumn",
+			"entityName": "Question",
+			"field": {
+				"name": "questionUK",
+				"columnName": "question_uk",
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "QuestionOption",
+			"field": {
+				"name": "labelUK",
+				"columnName": "label_uk",
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Question/operations/create/questionUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Question/operations/update/questionUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Question/operations/read/questionUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/QuestionOption/operations/create/labelUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/QuestionOption/operations/update/labelUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/QuestionOption/operations/read/labelUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/Question/operations/read/questionUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/QuestionOption/operations/read/labelUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Question/operations/read/questionUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/QuestionOption/operations/read/labelUK",
+					"value": true
+				}
+			]
+		}
+	]
+}

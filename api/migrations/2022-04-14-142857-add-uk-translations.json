@@ -1,0 +1,58 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createColumn",
+			"entityName": "OfferType",
+			"field": {
+				"name": "infoTextUK",
+				"columnName": "info_text_uk",
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/create/infoTextUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/update/infoTextUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferType/operations/read/infoTextUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/OfferType/operations/read/infoTextUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OfferType/operations/read/infoTextUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferType/operations/read/infoTextUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferType/operations/update/infoTextUK",
+					"value": true
+				}
+			]
+		}
+	]
+}

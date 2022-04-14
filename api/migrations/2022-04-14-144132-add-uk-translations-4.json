@@ -1,0 +1,48 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createColumn",
+			"entityName": "Region",
+			"field": {
+				"name": "nameUK",
+				"columnName": "name_uk",
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Region/operations/create/nameUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Region/operations/update/nameUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Region/operations/read/nameUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/Region/operations/read/nameUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Region/operations/read/nameUK",
+					"value": true
+				}
+			]
+		}
+	]
+}

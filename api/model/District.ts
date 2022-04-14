@@ -6,6 +6,7 @@ import { VolunteerDistrict } from './Volunteer'
 export class District { // Okres
 	region = def.manyHasOne(Region, 'districts').notNull()
 	name = def.stringColumn().notNull().unique()
+	nameUK = def.stringColumn().notNull().default('')
 	volunteers = def.oneHasMany(VolunteerDistrict, 'district')
 	offerParameterValues = def.oneHasMany(OfferParameterValueDetails, 'district')
 	offers = def.oneHasMany(OfferParameterValue, 'district')

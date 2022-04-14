@@ -5,13 +5,21 @@ import { Conditional } from '../components/Conditional'
 export const OfferTypeForms = Component(
 	() => (
 		<>
-			<TextField field="name" label="Název" />
-			<TextField field="nameUK" label="Název v Ukrajinštině" />
+			<div className="translatedFields">
+				<TextField field="name" label="Název" />
+				<TextField field="nameUK" label="Název v Ukrajinštině" />
+			</div>
 			<CheckboxField field="hideInDemand" label="Skrýt v žádostech" defaultValue={false} />
-			<TextField field="infoText" label="Doplňující informace" />
+			<div className="translatedFields">
+				<TextField field="infoText" label="Doplňující informace" />
+				<TextField field="infoTextUK" label="Doplňující informace v Ukrajinštině" />
+			</div>
 			<CheckboxField field="needsVerification" label="Pouze pro administrátory" defaultValue={false} />
 			<Repeater field="questions" label="Otázky" sortableBy="order">
-				<TextField field="question" label="Otázka (pro web)" />
+				<div className="translatedFields">
+					<TextField field="question" label="Otázka (pro web)" />
+					<TextField field="questionUK" label="Otázka (pro web) v Ukrajinštině" />
+				</div>
 				<TextField field="label" label="Popisek (pro administraci)" />
 				<DerivedFieldLink sourceField="question" derivedField="label" />
 				<CheckboxField field="required" label="Povinná" defaultValue={true} />
@@ -31,7 +39,10 @@ export const OfferTypeForms = Component(
 				/>
 				<Conditional showIf={acc => ['radio', 'checkbox'].includes(acc.getField<string>('type').value ?? '')}>
 					<Repeater field="options" label="Možnosti" sortableBy="order">
-						<TextField field="label" label="Popisek (pro web)" />
+						<div className="translatedFields">
+							<TextField field="label" label="Popisek (pro web)" />
+							<TextField field="labelUK" label="Popisek (pro web) v Ukrajinštině" />
+						</div>
 						<TextField field="value" label="Hodnota (pro administraci)" />
 						<DerivedFieldLink sourceField="label" derivedField="value" />
 						<CheckboxField field="requireSpecification" label="Požadovat dovysvětlení (textové pole)" defaultValue={false} />

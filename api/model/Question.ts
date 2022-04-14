@@ -8,6 +8,7 @@ export class Question {
 	order = def.intColumn().notNull().default(0)
 	label = def.stringColumn().notNull()
 	question = def.stringColumn().notNull()
+	questionUK = def.stringColumn().notNull().default('')
 	type = def.enumColumn(QuestionType).notNull()
 	options = def.oneHasMany(QuestionOption, 'question').orderBy('order')
 	required = def.boolColumn().default(false).notNull()
@@ -21,5 +22,6 @@ export class QuestionOption {
 	order = def.intColumn().notNull().default(0)
 	value = def.stringColumn().notNull()
 	label = def.stringColumn().notNull()
+	labelUK = def.stringColumn().notNull().default('')
 	requireSpecification = def.boolColumn().default(false).notNull()
 }

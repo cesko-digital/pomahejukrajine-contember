@@ -41,6 +41,7 @@ export class OfferType {
 	name = def.stringColumn().notNull().unique()
 	nameUK = def.stringColumn().notNull().default('')
 	infoText = def.stringColumn().notNull().default('')
+	infoTextUK = def.stringColumn().notNull().default('')
 	questions = def.oneHasMany(Question, 'offerType').orderBy('order')
 	needsVerification = def.boolColumn().notNull().default(false) // vyžaduje ověření
 

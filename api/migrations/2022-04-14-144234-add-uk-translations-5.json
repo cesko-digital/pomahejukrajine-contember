@@ -1,0 +1,48 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createColumn",
+			"entityName": "Language",
+			"field": {
+				"name": "nameUK",
+				"columnName": "name_uk",
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Language/operations/create/nameUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Language/operations/update/nameUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Language/operations/read/nameUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/Language/operations/read/nameUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Language/operations/read/nameUK",
+					"value": true
+				}
+			]
+		}
+	]
+}
