@@ -219,6 +219,61 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 						update: allField(model, 'Volunteer', true),
 					},
 				},
+				OfferType: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'OfferType', true),
+						update: allField(model, 'OfferType', true),
+					},
+				},
+				OfferParameterValueDetails: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'OfferParameterValueDetails', true),
+						update: allField(model, 'OfferParameterValueDetails', true),
+						create: allField(model, 'OfferParameterValueDetails', true),
+					}
+				},
+				OfferParameterValue: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'OfferParameterValue', true),
+						update: allField(model, 'OfferParameterValue', true),
+						create: allField(model, 'OfferParameterValue', true),
+					}
+				},
+				OfferStatus: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'OfferStatus', true),
+						update: allField(model, 'OfferStatus', true),
+						create: allField(model, 'OfferStatus', true),
+					}
+				},
+				OfferParameter: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'OfferParameter', true),
+						update: allField(model, 'OfferParameter', true),
+						create: allField(model, 'OfferParameter', true),
+					}
+				},
+				OfferParameterDetails: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'OfferParameterDetails', true),
+						update: allField(model, 'OfferParameterDetails', true),
+						create: allField(model, 'OfferParameterDetails', true),
+					}
+				},
+				OfferDetails: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'OfferDetails', true),
+						update: allField(model, 'OfferDetails', true),
+						create: allField(model, 'OfferDetails', true),
+					}
+				},
 			},
 		},
 		callcenterAPI: {

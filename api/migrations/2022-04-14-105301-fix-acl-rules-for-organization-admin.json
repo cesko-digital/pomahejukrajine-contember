@@ -1,0 +1,220 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferType",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"order": true,
+								"name": true,
+								"nameUK": true,
+								"infoText": true,
+								"questions": true,
+								"needsVerification": true,
+								"offers": true,
+								"demands": true,
+								"hideInDemand": true
+							},
+							"update": {
+								"id": true,
+								"order": true,
+								"name": true,
+								"nameUK": true,
+								"infoText": true,
+								"questions": true,
+								"needsVerification": true,
+								"offers": true,
+								"demands": true,
+								"hideInDemand": true
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferParameterValueDetails",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"district": true,
+								"value": true
+							},
+							"update": {
+								"id": true,
+								"district": true,
+								"value": true
+							},
+							"create": {
+								"id": true,
+								"district": true,
+								"value": true
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferParameterValue",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"parameter": true,
+								"value": true,
+								"specification": true,
+								"numericValue": true,
+								"district": true,
+								"details": true
+							},
+							"update": {
+								"id": true,
+								"parameter": true,
+								"value": true,
+								"specification": true,
+								"numericValue": true,
+								"district": true,
+								"details": true
+							},
+							"create": {
+								"id": true,
+								"parameter": true,
+								"value": true,
+								"specification": true,
+								"numericValue": true,
+								"district": true,
+								"details": true
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferStatus",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"order": true,
+								"name": true,
+								"offers": true,
+								"type": true
+							},
+							"update": {
+								"id": true,
+								"order": true,
+								"name": true,
+								"offers": true,
+								"type": true
+							},
+							"create": {
+								"id": true,
+								"order": true,
+								"name": true,
+								"offers": true,
+								"type": true
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferParameter",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"offer": true,
+								"question": true,
+								"value": true,
+								"numericValue": true,
+								"specification": true,
+								"values": true,
+								"details": true
+							},
+							"update": {
+								"id": true,
+								"offer": true,
+								"question": true,
+								"value": true,
+								"numericValue": true,
+								"specification": true,
+								"values": true,
+								"details": true
+							},
+							"create": {
+								"id": true,
+								"offer": true,
+								"question": true,
+								"value": true,
+								"numericValue": true,
+								"specification": true,
+								"values": true,
+								"details": true
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferParameterDetails",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"numericValue": true,
+								"offerParameter": true
+							},
+							"update": {
+								"id": true,
+								"numericValue": true,
+								"offerParameter": true
+							},
+							"create": {
+								"id": true,
+								"numericValue": true,
+								"offerParameter": true
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferDetails",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"numericValue": true,
+								"offer": true
+							},
+							"update": {
+								"id": true,
+								"numericValue": true,
+								"offer": true
+							},
+							"create": {
+								"id": true,
+								"numericValue": true,
+								"offer": true
+							}
+						}
+					}
+				}
+			]
+		}
+	]
+}
