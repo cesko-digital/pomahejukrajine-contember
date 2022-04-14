@@ -27,6 +27,7 @@ import {
 import { Conditional } from "./Conditional"
 import * as React from "react"
 import Select, { SelectInstance } from 'react-select'
+import offers from "../pages/offers"
 
 type OfferParametersFormProps = {
 	currentType?: boolean
@@ -329,11 +330,12 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 			</>
 		)
 	},
-	() => (
+	({currentType}) => (
 		<>
 			<EntityListSubTree entities="District" alias="districts" >
 				<Field field="name" />
 			</EntityListSubTree>
+			{currentType && (
 			<EntitySubTree entity={`OfferType(offers.id = $id)`}>
 				<HasMany field="questions" orderBy="order">
 					<Field field="question" />
@@ -346,6 +348,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 					</HasMany>
 				</HasMany>
 			</EntitySubTree>
+			)}
 			<SelectField
 				label="Typ nabídky"
 				field="type"
