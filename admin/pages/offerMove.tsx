@@ -13,13 +13,15 @@ export default (
 		}}
 	>
 		<Section heading="Nabídka">
-			<div>(V současné chvíli mohou nabídku upravovat pouze superadministrátoři.)</div>
 			<div style={{ display: 'flex', gap: '30px' }}>
 				<Stack direction={'vertical'} style={{ backgroundColor: 'var(--cui-background-color--above)', padding: '10px' }}>
-					<h4>Předchozí hodnoty</h4>
+					<h4 style={{ color: '#000', fontSize: '120%', margin: '0' }}>Aktuální hodnoty</h4>
+					<p style={{ marginTop: '0' }}>Doporučujeme neměnit, pak se můžete snadno vrátit k původní nabídce.</p>
 					<OfferParametersForm currentType />
 				</Stack>
 				<Stack direction={'vertical'}>
+					<h4 style={{ color: '#000', fontSize: '120%', margin: '0' }}>Nové hodnoty</h4>
+					<p style={{ marginTop: '0' }}>Začněte tím, že změníte typ nabídky a následně doplňte potřebná pole.</p>
 					<OfferParametersForm />
 				</Stack>
 			</div>

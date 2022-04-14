@@ -41,8 +41,10 @@ export default (
 		</RoleConditional>
 		<OfferManage />
 		<RichTextField field="internalNote" label="Interní poznámka" />
-		<LinkButton to="offerMove(id: $entity.id)">Přesunout nabídku do jiné kategorie</LinkButton>
 		<OfferForm />
+		<RoleConditional role={['admin', 'organizationAdmin']}>
+			<LinkButton to="offerMove(id: $entity.id)">Přesunout nabídku do jiné kategorie</LinkButton>
+		</RoleConditional>
 		<Section heading="Dobrovolník">
 			<div>
 				Pro zobrazení konktaktních údajů musíte mít na sebe přiřazenou nabídku.

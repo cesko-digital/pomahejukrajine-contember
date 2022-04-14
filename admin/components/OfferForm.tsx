@@ -463,7 +463,6 @@ export const OfferForm = Component(
 				<SelectField label="Stav nabídky" options="OfferStatus.name" field="status" allowNull />
 				<LogForm />
 				<Section heading="Nabídka">
-					<div>(V současné chvíli mohou nabídku upravovat pouze superadministrátoři.)</div>
 					<OfferParametersForm />
 				</Section>
 			</>
