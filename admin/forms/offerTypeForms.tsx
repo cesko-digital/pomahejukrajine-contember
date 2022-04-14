@@ -9,7 +9,7 @@ export const OfferTypeForms = Component(
 			<TextField field="nameUK" label="Název v Ukrajinštině" />
 			<CheckboxField field="hideInDemand" label="Skrýt v žádostech" defaultValue={false} />
 			<TextField field="infoText" label="Doplňující informace" />
-			<CheckboxField field="needsVerification" label="Vyžaduje ověření" defaultValue={false} />
+			<CheckboxField field="needsVerification" label="Pouze pro administrátory" defaultValue={false} />
 			<Repeater field="questions" label="Otázky" sortableBy="order">
 				<TextField field="question" label="Otázka (pro web)" />
 				<TextField field="label" label="Popisek (pro administraci)" />
@@ -42,4 +42,3 @@ export const OfferTypeForms = Component(
 	),
 	'OfferTypeForms',
 )
-
