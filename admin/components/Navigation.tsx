@@ -8,7 +8,7 @@ export const Navigation = () => (
 		<Menu.Item>
 			<UserBox />
 		</Menu.Item>
-		<RoleConditional notRole={['volunteer']}>
+		<RoleConditional notOtherRole={['volunteer']}>
 			<Menu.Item title="Dobrovolníci">
 				<Menu.Item title="Seznam" to="volunteers" />
 				<RoleConditional role={['admin', 'organizationAdmin']}>
