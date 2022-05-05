@@ -1,0 +1,352 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createEnum",
+			"enumName": "OrganizationTypeEnum",
+			"values": [
+				"collegeInitiative",
+				"researchAndUniversitySector",
+				"governmentOrganization",
+				"privateOrganization",
+				"other",
+				"osvcPerson",
+				"municipality",
+				"nonprofit",
+				"foundation",
+				"media",
+				"church",
+				"volunteerInitiative"
+			]
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Organization",
+			"field": {
+				"name": "address",
+				"columnName": "address",
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Organization",
+			"field": {
+				"name": "identificationNumber",
+				"columnName": "identification_number",
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Organization",
+			"field": {
+				"name": "website",
+				"columnName": "website",
+				"nullable": false,
+				"default": "",
+				"type": "String",
+				"columnType": "text"
+			},
+			"fillValue": ""
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Organization",
+			"field": {
+				"name": "note",
+				"columnName": "note",
+				"nullable": true,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Organization",
+			"field": {
+				"name": "parentOrganization",
+				"columnName": "parent_organization",
+				"nullable": true,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Organization",
+			"field": {
+				"name": "organizationType",
+				"columnName": "organization_type",
+				"nullable": true,
+				"type": "Enum",
+				"columnType": "OrganizationTypeEnum"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "Organization",
+			"owningSide": {
+				"name": "district",
+				"inversedBy": "organizations",
+				"nullable": true,
+				"type": "ManyHasOne",
+				"target": "District",
+				"joiningColumn": {
+					"columnName": "district_id",
+					"onDelete": "restrict"
+				}
+			},
+			"inverseSide": {
+				"name": "organizations",
+				"ownedBy": "district",
+				"type": "OneHasMany",
+				"target": "Organization"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "Organization",
+			"owningSide": {
+				"name": "region",
+				"inversedBy": "organizations",
+				"nullable": true,
+				"type": "ManyHasOne",
+				"target": "Region",
+				"joiningColumn": {
+					"columnName": "region_id",
+					"onDelete": "restrict"
+				}
+			},
+			"inverseSide": {
+				"name": "organizations",
+				"ownedBy": "region",
+				"type": "OneHasMany",
+				"target": "Organization"
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Region/operations/create/organizations",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Region/operations/update/organizations",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Region/operations/read/organizations",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/District/operations/create/organizations",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/District/operations/update/organizations",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/District/operations/read/organizations",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/create/address",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/create/district",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/create/region",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/create/identificationNumber",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/create/website",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/create/note",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/create/parentOrganization",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/create/organizationType",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/update/address",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/update/district",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/update/region",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/update/identificationNumber",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/update/website",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/update/note",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/update/parentOrganization",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/update/organizationType",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/read/address",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/read/district",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/read/region",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/read/identificationNumber",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/read/website",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/read/note",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/read/parentOrganization",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/read/organizationType",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/Region/operations/read/organizations",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/District/operations/read/organizations",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Region/operations/read/organizations",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/District/operations/read/organizations",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Organization/operations/read/address",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Organization/operations/read/district",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Organization/operations/read/region",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Organization/operations/read/identificationNumber",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Organization/operations/read/website",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Organization/operations/read/note",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Organization/operations/read/parentOrganization",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Organization/operations/read/organizationType",
+					"value": true
+				}
+			]
+		}
+	]
+}

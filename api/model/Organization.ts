@@ -2,6 +2,7 @@ import { SchemaDefinition as def } from '@contember/schema-definition'
 import { Model } from '@contember/schema'
 import { Offer } from './Offer'
 import { District } from './District'
+import { Region } from './Region'
 
 export const OrganizationTypeEnum = def.createEnum(
 	'collegeInitiative',
@@ -17,14 +18,14 @@ export const OrganizationTypeEnum = def.createEnum(
 	'church',
 	'volunteerInitiative'
 )
-
-// TODO: okres, kraj
 export class Organization {
-	name = def.stringColumn().notNull()
-	address = def.stringColumn().notNull()
-	identificationNumber = def.stringColumn().notNull()
-	website = def.stringColumn().notNull()
-	note = def.stringColumn().nullable()
+		name = def.stringColumn().notNull()
+		address = def.stringColumn().notNull().default('')
+		district = def.manyHasOne(District, 'organizations')
+		region = def.manyHasOne(Region, 'organizations')
+		identificationNumber = def.stringColumn().notNull().default('')
+		website = def.stringColumn().notNull().default('')
+		note = def.stringColumn().nullable()
 	parentOrganization = def.stringColumn().nullable()
 	managers = def.oneHasMany(OrganizationManager, 'organization')
 	organizationType = def.enumColumn(OrganizationTypeEnum).nullable()

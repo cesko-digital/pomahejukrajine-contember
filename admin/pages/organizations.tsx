@@ -1,5 +1,5 @@
 import * as React from "react"
-import {DataGridPage, EnumCell, LinkButton, TextCell} from "@contember/admin"
+import {DataGridPage, EnumCell, GenericCell, LinkButton, TextCell} from "@contember/admin"
 
 export default (
 	<DataGridPage entities="Organization" itemsPerPage={50} rendererProps={{ title: "Organizace", actions: <LinkButton to="organizationCreate">Přidat organizaci</LinkButton> }}>
@@ -22,5 +22,8 @@ export default (
 									volunteerInitiative: 'Dobrovolnická iniciativa',
 								}}
 							header="Typ organizace" />
+		<GenericCell shrunk>
+			<LinkButton to="organizationEdit(id: $entity.id)">Upravit</LinkButton>
+		</GenericCell>
 	</DataGridPage>
 )
