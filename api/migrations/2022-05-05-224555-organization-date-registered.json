@@ -1,0 +1,58 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createColumn",
+			"entityName": "Organization",
+			"field": {
+				"name": "dateRegistered",
+				"columnName": "date_registered",
+				"nullable": false,
+				"default": "now",
+				"type": "DateTime",
+				"columnType": "timestamptz"
+			},
+			"fillValue": "now"
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/create/dateRegistered",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/update/dateRegistered",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/read/dateRegistered",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Organization/operations/read/dateRegistered",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Organization/operations/read/dateRegistered",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Organization/operations/update/dateRegistered",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Organization/operations/create/dateRegistered",
+					"value": true
+				}
+			]
+		}
+	]
+}

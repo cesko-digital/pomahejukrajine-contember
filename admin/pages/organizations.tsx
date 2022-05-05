@@ -1,10 +1,11 @@
 import * as React from "react"
-import {DataGridPage, EnumCell, GenericCell, LinkButton, TextCell} from "@contember/admin"
+import {DataGridPage, EnumCell, GenericCell, LinkButton, TextCell, DateCell} from "@contember/admin"
 
 export default (
 	<DataGridPage entities="Organization" itemsPerPage={50} rendererProps={{ title: "Organizace", actions: <LinkButton to="organizationCreate">Přidat organizaci</LinkButton> }}>
 		<TextCell field="name" header="Název" />
 		<TextCell field="parentOrganization" header="Mateřská organizace" />
+        <DateCell field="dateRegistered" header="Datum Registrace" />
 		<EnumCell field="organizationType"
 							options=
 								{{
