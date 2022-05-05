@@ -1,0 +1,121 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createEnum",
+			"enumName": "TypesenseSearchTokenUnique",
+			"values": [
+				"One"
+			]
+		},
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "TypesenseSearchToken",
+				"primary": "id",
+				"primaryColumn": "id",
+				"unique": {},
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"nullable": false,
+						"type": "Uuid",
+						"columnType": "uuid"
+					}
+				},
+				"tableName": "typesense_search_token"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "TypesenseSearchToken",
+			"field": {
+				"name": "unique",
+				"columnName": "unique",
+				"nullable": false,
+				"type": "Enum",
+				"columnType": "TypesenseSearchTokenUnique"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "TypesenseSearchToken",
+			"field": {
+				"name": "token",
+				"columnName": "token",
+				"nullable": false,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "createUniqueConstraint",
+			"entityName": "TypesenseSearchToken",
+			"unique": {
+				"fields": [
+					"unique"
+				],
+				"name": "unique_TypesenseSearchToken_unique_4fe69b"
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/TypesenseSearchToken",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"create": {
+								"id": true,
+								"unique": true,
+								"token": true
+							},
+							"read": {
+								"id": true,
+								"unique": true,
+								"token": true
+							},
+							"update": {
+								"id": true,
+								"unique": true,
+								"token": true
+							},
+							"delete": true
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/TypesenseSearchToken",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"unique": true,
+								"token": true
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/TypesenseSearchToken",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"unique": true,
+								"token": true
+							}
+						}
+					}
+				}
+			]
+		}
+	]
+}

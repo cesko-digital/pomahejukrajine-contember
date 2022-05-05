@@ -35,6 +35,11 @@ if (window.location.hash === '#login') {
 			apiBaseUrl={import.meta.env.VITE_CONTEMBER_ADMIN_API_BASE_URL}
 			sessionToken={import.meta.env.VITE_CONTEMBER_ADMIN_SESSION_TOKEN}
 			project={import.meta.env.VITE_CONTEMBER_ADMIN_PROJECT_NAME}
+			envVariables={{
+				TYPESENSE_HOST: import.meta.env.VITE_CONTEMBER_ADMIN_TYPESENSE_HOST as string,
+				TYPESENSE_PORT: import.meta.env.VITE_CONTEMBER_ADMIN_TYPESENSE_PORT as string,
+				TYPESENSE_PROTOCOL: import.meta.env.VITE_CONTEMBER_ADMIN_TYPESENSE_PROTOCOL as string,
+			}}
 			stage="live"
 			defaultLocale={"cs-CZ"}
 			dictionaries={{ 'cs-CZ': csCZ }}

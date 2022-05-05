@@ -23,7 +23,7 @@ export default () => {
 	if (query.state !== 'success') {
 		return <></>
 	} else {
-		return <OffersGrid query={query} />
+		return <OffersGrid query={query} offerTypeId={id} />
 	}
 }
 

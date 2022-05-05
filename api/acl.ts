@@ -1,6 +1,6 @@
 import { PermissionsBuilder } from '@contember/schema-definition'
 import { Acl, Model } from '@contember/schema'
-import { OrganizationManager, VolunteerTag } from "./model"
+import {OrganizationManager, TypesenseSearchToken, VolunteerTag} from "./model"
 
 const fieldNames = (model: Model.Schema, entity: string): string[] => {
 	return Object.keys(model.entities[entity].fields)
@@ -54,6 +54,10 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 			},
 			stages: '*',
 			entities: {
+				TypesenseSearchToken: {
+					predicates: {},
+					operations: readOnly(model, 'TypesenseSearchToken', true),
+				},
 				Region: {
 					predicates: {},
 					operations: readOnly(model, 'Region', true),
@@ -204,6 +208,10 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 				},
 			},
 			entities: {
+				TypesenseSearchToken: {
+					predicates: {},
+					operations: readOnly(model, 'TypesenseSearchToken', true),
+				},
 				Offer: {
 					predicates: {},
 					operations: {

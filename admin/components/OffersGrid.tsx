@@ -24,7 +24,7 @@ function parseJSON(json: string) {
 }
 
 export const OffersGrid = (
-	({ query }: { query: { data: QuestionQueryResult } }) => {
+	({ query, offerTypeId }: { query: { data: QuestionQueryResult }, offerTypeId: string }) => {
 		const dataGridProps = useDataGrid({
 			entities: 'Offer[type.id=$id][isDeleted=false][volunteer.verified=true][volunteer.banned=false]',
 			itemsPerPage: 20,
@@ -148,9 +148,12 @@ export const OffersGrid = (
 
 		return (
 			<GenericPage title="Nabídky" actions={
-				<RoleConditional role={['admin', 'organizationAdmin']}>
-					<ExportOffers dataGridProps={dataGridProps} listQuestion={query.data.listQuestion} />
-				</RoleConditional>
+				<>
+					<LinkButton to={`offersSearch(id:'${offerTypeId}')`} distinction="outlined">Hledat</LinkButton>
+					<RoleConditional role={['admin', 'organizationAdmin']}>
+						<ExportOffers dataGridProps={dataGridProps} listQuestion={query.data.listQuestion} />
+					</RoleConditional>
+				</>
 			}>
 				<DataBindingProvider stateComponent={FeedbackRenderer} refreshOnEnvironmentChange={false}>
 					<div className='data-grid-container'>

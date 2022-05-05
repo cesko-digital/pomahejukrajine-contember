@@ -6,6 +6,7 @@ export * from './Organization'
 export * from './Question'
 export * from './Reaction'
 export * from './Region'
+export * from './TypesenseSearchToken'
 export * from './Volunteer'
 
 // export class Match {
