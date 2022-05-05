@@ -40,7 +40,7 @@ export default () => {
 	const env = useEnvironment()
 
 	const req = useCurrentRequest()
-	const offerTypeId = req?.parameters.id
+	const offerTypeId = req?.parameters.id as string
 	const { state: query } = useAuthedContentQuery<QuestionQueryResult, { id: string }>(LIST_QUESTION_QUERY, { id: offerTypeId })
 
 	const searchClient = React.useMemo(() => {
