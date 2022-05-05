@@ -81,7 +81,7 @@ export default () => {
 			<div style={{ display: "flex", flexDirection: "column", gap: "1em" }}>
 				<InstantSearch searchClient={searchClient} indexName={`offers_${offerTypeId}`}>
 					<SearchBox translations={{ placeholder: "Hledat nabídky" }} />
-					<CurrentRefinements transformItems={it => it.map(refinement => ({...refinement, label: query.data.listQuestion.find(it => it.id === parseIdFromFacetName(refinement.attribute))?.label ?? refinement.label }))} />
+					<CurrentRefinements transformItems={(it: any[]) => it.map(refinement => ({...refinement, label: query.data.listQuestion.find(it => it.id === parseIdFromFacetName(refinement.attribute))?.label ?? refinement.label }))} />
 					<div className="refinements">
 						{query.data.listQuestion.filter(it => ['checkbox', 'radio', 'district'].includes(it.type)).map(question => (
 							<details>
