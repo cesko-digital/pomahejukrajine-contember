@@ -75,6 +75,7 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 							logs: true,
 							status: true,
 							volunteer: true,
+							internalNote: true,
 						},
 					},
 				},
