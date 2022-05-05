@@ -282,6 +282,14 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 						create: allField(model, 'OfferDetails', true),
 					}
 				},
+				Organization: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'Organization', true),
+						update: allField(model, 'Organization', true),
+						create: allField(model, 'Organization', true),
+					}
+				},
 			},
 		},
 		callcenterAPI: {

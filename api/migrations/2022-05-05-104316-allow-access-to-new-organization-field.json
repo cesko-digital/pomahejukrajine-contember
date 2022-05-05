@@ -1,0 +1,58 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Organization",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"name": true,
+								"address": true,
+								"district": true,
+								"region": true,
+								"identificationNumber": true,
+								"website": true,
+								"note": true,
+								"parentOrganization": true,
+								"managers": true,
+								"organizationType": true
+							},
+							"update": {
+								"id": true,
+								"name": true,
+								"address": true,
+								"district": true,
+								"region": true,
+								"identificationNumber": true,
+								"website": true,
+								"note": true,
+								"parentOrganization": true,
+								"managers": true,
+								"organizationType": true
+							},
+							"create": {
+								"id": true,
+								"name": true,
+								"address": true,
+								"district": true,
+								"region": true,
+								"identificationNumber": true,
+								"website": true,
+								"note": true,
+								"parentOrganization": true,
+								"managers": true,
+								"organizationType": true
+							}
+						}
+					}
+				}
+			]
+		}
+	]
+}
