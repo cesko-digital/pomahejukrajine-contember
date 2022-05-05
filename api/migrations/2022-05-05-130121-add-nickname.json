@@ -1,0 +1,56 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createColumn",
+			"entityName": "Organization",
+			"field": {
+				"name": "nickname",
+				"columnName": "nickname",
+				"nullable": true,
+				"type": "String",
+				"columnType": "text"
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/create/nickname",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/update/nickname",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/read/nickname",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Organization/operations/read/nickname",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Organization/operations/read/nickname",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Organization/operations/update/nickname",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Organization/operations/create/nickname",
+					"value": true
+				}
+			]
+		}
+	]
+}
