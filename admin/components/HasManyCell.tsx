@@ -1,19 +1,22 @@
 import {
 	Button,
+	Checkbox,
 	Component,
+	DataGridCellPublicProps,
+	DataGridColumn,
+	DataGridHeaderCellPublicProps,
 	Entity,
 	EntityListSubTree,
+	FieldContainer,
 	HasMany,
 	HasOne,
 	QueryLanguage,
 	StaticRender,
-	SugaredRelativeEntityList, useEntityListSubTree,
-	wrapFilterInHasOnes,
+	SugaredRelativeEntityList,
+	useEntityListSubTree,
+	wrapFilterInHasOnes
 } from '@contember/admin'
 import * as React from 'react'
-import { Checkbox } from '@contember/admin'
-import { DataGridCellPublicProps, DataGridColumn, DataGridHeaderCellPublicProps } from '@contember/admin'
-import { closestBlockEntry } from '@contember/admin/dist/types/components/bindingFacade/richText/ContemberEditor/methods'
 
 export type HasManyCellProps = DataGridHeaderCellPublicProps &
 	DataGridCellPublicProps &
@@ -59,23 +62,25 @@ const HasManyCellFilter = React.memo<HasManyCellFilter>(({ setFilter, filter, en
 
 		<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '.5em' }}>
 			{Array.from(list).filter(it => it.existsOnServer).map(accessor => {
-				return <Checkbox
+				return <FieldContainer
 					key={accessor.key}
-					value={ids?.has(accessor.id!) ?? false}
-					onChange={checked => {
-						const newSet = new Set(ids)
-						if (checked) {
-							newSet.add(accessor.id!)
-						} else {
-							newSet.delete(accessor.id!)
-						}
-						setFilter({ ...filter, ids: Array.from(newSet) })
-					}}
+					label={<Entity accessor={accessor}>{children}</Entity>}
+					labelPosition="labelInlineRight"
 				>
-					<Entity accessor={accessor}>
-						{children}
-					</Entity>
-				</Checkbox>
+					<Checkbox
+						notNull
+						value={ids?.has(accessor.id!) ?? false}
+						onChange={checked => {
+							const newSet = new Set(ids)
+							if (checked) {
+								newSet.add(accessor.id!)
+							} else {
+								newSet.delete(accessor.id!)
+							}
+							setFilter({ ...filter, ids: Array.from(newSet) })
+						}}
+					/>
+				</FieldContainer>
 			})}
 		</div>
 	</>
