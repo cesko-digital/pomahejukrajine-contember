@@ -1,5 +1,6 @@
 import { SchemaDefinition as def } from '@contember/schema-definition'
 import { OfferParameterValue, OfferParameterValueDetails } from './Offer'
+import { Organization } from './Organization'
 import { Region } from './Region'
 import { VolunteerDistrict } from './Volunteer'
 
@@ -10,4 +11,5 @@ export class District { // Okres
 	volunteers = def.oneHasMany(VolunteerDistrict, 'district')
 	offerParameterValues = def.oneHasMany(OfferParameterValueDetails, 'district')
 	offers = def.oneHasMany(OfferParameterValue, 'district')
+	organizations = def.oneHasMany(Organization, 'district')
 }
