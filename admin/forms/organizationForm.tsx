@@ -5,7 +5,7 @@ export const OrganizationForm = Component(
 	() => (
 		<>
 			<TextField field="name" label="Název" />
-			<TextField field="parentOrganization" label="Mateřská organizace" />
+			<TextField field="nickname" label="Zkratka" />
 			<TextAreaField field="address" label="Adresa" />
 			<SelectField field="region" label="Kraj" options="Region.name" />
 			<SelectField field="district" label="Okres" options="District.name" />
