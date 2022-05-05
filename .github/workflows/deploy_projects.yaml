@@ -42,6 +42,9 @@ jobs:
           VITE_CONTEMBER_ADMIN_API_BASE_URL: '/_api'
           VITE_CONTEMBER_ADMIN_SESSION_TOKEN: '__SESSION_TOKEN__'
           VITE_CONTEMBER_ADMIN_SENTRY_DSN: ${{ secrets.ADMIN_SENTRY_DSN }}
+          VITE_CONTEMBER_ADMIN_TYPESENSE_HOST: u1pwsqakrc6h89f2p-1.a1.typesense.net
+          VITE_CONTEMBER_ADMIN_TYPESENSE_PORT: 443
+          VITE_CONTEMBER_ADMIN_TYPESENSE_PROTOCOL: https
         run: node_modules/.bin/vite build "admin" --base "/ukrajina/"
 
       - name: Deploy Beta
