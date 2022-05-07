@@ -1,0 +1,29 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/public/entities/Organization",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"name": true,
+								"address": true,
+								"district": true,
+								"region": true,
+								"identificationNumber": true,
+								"website": true,
+								"parentOrganization": true,
+								"organizationType": true
+							}
+						}
+					}
+				}
+			]
+		}
+	]
+}

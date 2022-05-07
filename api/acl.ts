@@ -374,6 +374,21 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 						read: allField(model, 'Language', true),
 					},
 				},
+				Organization: {
+					predicates: {},
+					operations: {
+						read: {
+							name: true,
+							address: true,
+							district: true,
+							region: true,
+							identificationNumber: true,
+							website: true,
+							parentOrganization: true,
+							organizationType: true,
+						},
+					},
+				},
 			},
 		},
 		volunteer: {

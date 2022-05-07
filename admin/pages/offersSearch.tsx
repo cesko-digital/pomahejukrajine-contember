@@ -64,8 +64,7 @@ export default () => {
 					"volunteer_email",
 					"volunteer_phone",
 					"volunteer_name",
-					"logs",
-					...query.data.listQuestion.map(question => `parameter_${question.id}`),
+					...query.data.listQuestion.filter(question => !["07d4ee81-3fa1-41df-a5f3-7a1e4c91777f", "8958a3e0-ef6f-4a51-9139-c26b7de8e8ef"].includes(question.id)).map(question => `parameter_${question.id}`),
 				].join(',')
 			} as any
 		});
