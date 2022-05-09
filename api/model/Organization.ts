@@ -30,6 +30,7 @@ export class Organization {
 	parentOrganization = def.stringColumn().nullable()
 	managers = def.oneHasMany(OrganizationManager, 'organization')
 	organizationType = def.enumColumn(OrganizationTypeEnum).nullable()
+	dateRegistered = def.dateTimeColumn().notNull().default('now')
 }
 
 export const OrganizationManagerRoleEnum = def.createEnum('organizationManager', 'organizationAdmin', 'volunteer')
