@@ -1,1 +1,1 @@
-FROM contember/engine:1.0.2
+FROM contember/engine:1.1.0-beta.2
