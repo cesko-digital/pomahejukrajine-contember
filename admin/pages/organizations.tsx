@@ -5,7 +5,6 @@ export default (
 	<DataGridPage entities="Organization" itemsPerPage={50} rendererProps={{ title: "Organizace", actions: <LinkButton to="organizationCreate">Přidat organizaci</LinkButton> }}>
 		<TextCell field="name" header="Název" />
 		<TextCell field="parentOrganization" header="Mateřská organizace" />
-		<DateCell field="dateRegistered" header="Datum Registrace" />
 		<EnumCell field="organizationType"
 							options=
 								{{
@@ -30,6 +29,7 @@ export default (
 		<TextCell header="Web" field="website" hidden />
 		<TextCell header="Zkratka" field="nickname" hidden />
 		<TextCell header="Poznámka" field="note" hidden />
+		<DateCell field="dateRegistered" header="Datum Registrace" />
 		<GenericCell shrunk>
 			<LinkButton to="organizationEdit(id: $entity.id)">Upravit</LinkButton>
 		</GenericCell>
