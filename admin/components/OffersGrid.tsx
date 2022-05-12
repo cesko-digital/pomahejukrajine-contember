@@ -10,6 +10,10 @@ export type QuestionQueryResult = {
 	listQuestion: { id: string; label: string, type: string, options: { label: string, value: string }[] }[]
 }
 
+export type OfferNameResult = {
+	getOfferType: { name: string }
+}
+
 function parseJSON(json: string) {
 	try {
 		var parsedText = ''
@@ -24,7 +28,7 @@ function parseJSON(json: string) {
 }
 
 export const OffersGrid = (
-	({ query, offerTypeId }: { query: { data: QuestionQueryResult }, offerTypeId: string }) => {
+	({ query, offerTypeId, offerTypeName }: { query: { data: QuestionQueryResult }, offerTypeId: string, offerTypeName:{ data: OfferNameResult }, }) => {
 		const dataGridProps = useDataGrid({
 			entities: 'Offer[type.id=$id][isDeleted=false][volunteer.verified=true][volunteer.banned=false]',
 			itemsPerPage: 20,
@@ -147,7 +151,7 @@ export const OffersGrid = (
 		})
 
 		return (
-			<GenericPage title="Nabídky" actions={
+			<GenericPage title={offerTypeName?.data?.getOfferType?.name} actions={
 				<>
 					<LinkButton to={`offersSearch(id:'${offerTypeId}')`} distinction="outlined">Hledat</LinkButton>
 					<RoleConditional role={['admin', 'organizationAdmin']}>
