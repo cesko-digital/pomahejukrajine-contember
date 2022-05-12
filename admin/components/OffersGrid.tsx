@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { BooleanCell, ControlledDataGrid, DataBindingProvider, DateCell, FeedbackRenderer, Field, FieldView, GenericCell, GenericPage, HasManySelectCell, HasOneSelectCell, LinkButton, NumberCell, RichTextField, TextCell, useDataGrid } from '@contember/admin'
+import { BooleanCell, ControlledDataGrid, DataBindingProvider, DateCell, Entity, FeedbackRenderer, Field, FieldView, GenericCell, GenericPage, HasManySelectCell, HasOneSelectCell, LinkButton, NumberCell, RichTextField, TextCell, useDataGrid } from '@contember/admin'
 import { limitLength } from '../utils/limitLength'
 import { ExportOffers } from './ExportOffers'
 import { HasManyCell } from './HasManyCell'
@@ -8,10 +8,6 @@ import { RoleConditional } from './RoleConditional'
 
 export type QuestionQueryResult = {
 	listQuestion: { id: string; label: string, type: string, options: { label: string, value: string }[] }[]
-}
-
-export type OfferNameResult = {
-	getOfferType: { name: string }
 }
 
 function parseJSON(json: string) {
@@ -28,7 +24,7 @@ function parseJSON(json: string) {
 }
 
 export const OffersGrid = (
-	({ query, offerTypeId, offerTypeName }: { query: { data: QuestionQueryResult }, offerTypeId: string, offerTypeName:{ data: OfferNameResult }, }) => {
+	({ query, offerTypeId, offerTypeName }: { query: { data: QuestionQueryResult }, offerTypeId: string, offerTypeName: string }) => {
 		const dataGridProps = useDataGrid({
 			entities: 'Offer[type.id=$id][isDeleted=false][volunteer.verified=true][volunteer.banned=false]',
 			itemsPerPage: 20,
@@ -151,7 +147,7 @@ export const OffersGrid = (
 		})
 
 		return (
-			<GenericPage title={offerTypeName?.data?.getOfferType?.name} actions={
+			<GenericPage title={offerTypeName} actions={
 				<>
 					<LinkButton to={`offersSearch(id:'${offerTypeId}')`} distinction="outlined">Hledat</LinkButton>
 					<RoleConditional role={['admin', 'organizationAdmin']}>

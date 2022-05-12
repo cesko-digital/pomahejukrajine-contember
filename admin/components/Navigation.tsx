@@ -21,7 +21,7 @@ export const Navigation = () => (
 						<FieldView
 							fields={["name", "id"]}
 							render={({ value: name }, { value: id }) => (
-								<Menu.Item title={name} to={{ pageName: "offers", parameters: { id } }} />
+								<Menu.Item title={name} to={{ pageName: "offers", parameters: { id, name } }} />
 							)}
 						/>
 					</EntityListSubTree>

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useCurrentRequest, useAuthedContentQuery } from '@contember/admin'
-import { OffersGrid, QuestionQueryResult, OfferNameResult } from '../components/OffersGrid'
+import { OffersGrid, QuestionQueryResult } from '../components/OffersGrid'
 
 const LIST_QUESTION_QUERY = `
 	query ($id: UUID!) {
@@ -16,17 +16,9 @@ const LIST_QUESTION_QUERY = `
 	}
 `
 
-const OFFER_NAME = `
-	query ($id: UUID!) {
-		getOfferType(by: {id: $id} ) {
-				name
-		}
-	}
-`
-
 export default () => {
 	const id = useCurrentRequest()!.parameters.id as string
-	const { state: name } = useAuthedContentQuery<OfferNameResult, { id: string }>(OFFER_NAME, { id })
+	const name = useCurrentRequest()!.parameters.name as string
 	const { state: query } = useAuthedContentQuery<QuestionQueryResult, { id: string }>(LIST_QUESTION_QUERY, { id })
 
 	if (query.state !== 'success') {
