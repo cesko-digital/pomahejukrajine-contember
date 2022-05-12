@@ -134,11 +134,11 @@ export const HasManyFilterCell: FunctionComponent<HasManyFilterCellProps> = Comp
 					value: TextFilterArtifacts['mode']
 					label: string
 				}> = [
-					{ value: 'matches', label: 'Contains' },
-					{ value: 'doesNotMatch', label: "Doesn't contain" },
-					{ value: 'matchesExactly', label: 'Matches exactly' },
-					{ value: 'startsWith', label: 'Starts with' },
-					{ value: 'endsWith', label: 'Ends with' },
+					{ value: 'matches', label: 'Obsahuje' },
+					{ value: 'doesNotMatch', label: "Neobsahuje" },
+					{ value: 'matchesExactly', label: 'Přesná shoda' },
+					{ value: 'startsWith', label: 'Začíná na' },
+					{ value: 'endsWith', label: 'Končí na' },
 				]
 				return (
 					<>
@@ -146,7 +146,7 @@ export const HasManyFilterCell: FunctionComponent<HasManyFilterCellProps> = Comp
 							value={filter.onlyHasNone}
 							onChange={(checked) => setFilter({ ...filter, onlyHasNone: checked })}
 						>
-							Only without any
+							Zahrnout prázdné
 						</Checkbox>
 
 						<div style={{ display: 'flex', gap: '0.5em', alignItems: 'center', marginTop: '1em' }}>
