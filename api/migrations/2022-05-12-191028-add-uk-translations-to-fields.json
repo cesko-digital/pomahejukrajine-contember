@@ -1,0 +1,294 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createColumn",
+			"entityName": "OfferParameter",
+			"field": {
+				"name": "valueUK",
+				"columnName": "value_uk",
+				"columnType": "text",
+				"nullable": true,
+				"type": "String"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferParameter",
+			"field": {
+				"name": "specificationUK",
+				"columnName": "specification_uk",
+				"columnType": "text",
+				"nullable": true,
+				"type": "String"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferParameterValue",
+			"field": {
+				"name": "valueUK",
+				"columnName": "value_uk",
+				"columnType": "text",
+				"nullable": true,
+				"type": "String"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferParameterValue",
+			"field": {
+				"name": "specificationUK",
+				"columnName": "specification_uk",
+				"columnType": "text",
+				"nullable": true,
+				"type": "String"
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameter/operations/create/valueUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameter/operations/create/specificationUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameter/operations/update/valueUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameter/operations/update/specificationUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameter/operations/read/valueUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameter/operations/read/specificationUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameterValue/operations/create/valueUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameterValue/operations/create/specificationUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameterValue/operations/update/valueUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameterValue/operations/update/specificationUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameterValue/operations/read/valueUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferParameterValue/operations/read/specificationUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameter/operations/create/valueUK",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameter/operations/create/specificationUK",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameter/operations/update/valueUK",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameter/operations/update/specificationUK",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameter/operations/read/valueUK",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameter/operations/read/specificationUK",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameterValue/operations/create/valueUK",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameterValue/operations/create/specificationUK",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameterValue/operations/update/valueUK",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameterValue/operations/update/specificationUK",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameterValue/operations/read/valueUK",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/OfferParameterValue/operations/read/specificationUK",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OfferParameterValue/operations/read/valueUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OfferParameterValue/operations/read/specificationUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OfferParameter/operations/read/valueUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OfferParameter/operations/read/specificationUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferParameterValue/operations/read/valueUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferParameterValue/operations/read/specificationUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferParameterValue/operations/update/valueUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferParameterValue/operations/update/specificationUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferParameterValue/operations/create/valueUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferParameterValue/operations/create/specificationUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferParameter/operations/read/valueUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferParameter/operations/read/specificationUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferParameter/operations/update/valueUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferParameter/operations/update/specificationUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferParameter/operations/create/valueUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferParameter/operations/create/specificationUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameterValue/operations/read/valueUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameterValue/operations/read/specificationUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameterValue/operations/update/valueUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameterValue/operations/update/specificationUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameter/operations/read/valueUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameter/operations/read/specificationUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameter/operations/update/valueUK",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/OfferParameter/operations/update/specificationUK",
+					"value": true
+				}
+			]
+		}
+	]
+}

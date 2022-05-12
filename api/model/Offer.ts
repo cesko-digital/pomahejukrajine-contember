@@ -64,8 +64,10 @@ export class OfferParameter {
 	offer = def.manyHasOne(Offer, 'parameters').notNull().cascadeOnDelete()
 	question = def.manyHasOne(Question, 'offerParameters').notNull()
 	value = def.stringColumn()
+	valueUK = def.stringColumn()
 	numericValue = def.intColumn()
 	specification = def.stringColumn()
+	specificationUK = def.stringColumn()
 	values = def.oneHasMany(OfferParameterValue, 'parameter')
 	details = def.oneHasOneInverse(OfferParameterDetails, 'offerParameter').notNull()
 }
@@ -85,7 +87,9 @@ export class OfferParameterDetails {
 export class OfferParameterValue {
 	parameter = def.manyHasOne(OfferParameter, 'values').notNull().cascadeOnDelete()
 	value = def.stringColumn().notNull()
+	valueUK = def.stringColumn()
 	specification = def.stringColumn()
+	specificationUK = def.stringColumn()
 	numericValue = def.intColumn()
 	district = def.manyHasOne(District, 'offers')
 	details = def.oneHasOneInverse(OfferParameterValueDetails, 'value').notNull()
