@@ -26,6 +26,7 @@ export default (
 		<TextCell field="internalNote" header="Interní poznámka" hidden format={limitLength(30)} />
 		<DateCell field="createdAt" header="Datum registrace" hidden />
 		<BooleanCell field="createdInAdmin" header="Registrován administrátorem" hidden />
+		<HasManySelectCell field="offers" options="Offer.type.name" header="Nabídky" />
 		<GenericCell canBeHidden={false} shrunk>
 			<LinkButton to="editVolunteer(id: $entity.id)">Detail</LinkButton>
 		</GenericCell>
