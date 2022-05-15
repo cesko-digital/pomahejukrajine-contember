@@ -19,6 +19,7 @@ export class Offer {
 	logs = def.oneHasMany(OfferLog, 'offer').orderBy('createdAt')
 	details = def.oneHasOneInverse(OfferDetails, 'offer')
 	isDeleted = def.boolColumn().notNull().default(false)
+	createdAt = def.dateTimeColumn().notNull().default('now')
 }
 
 @def.View(`
