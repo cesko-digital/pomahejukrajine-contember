@@ -393,7 +393,8 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 					predicates: {},
 					operations: {
 						read: {
-							code: true
+							code: true,
+							type: true
 						}
 					}
 				}
