@@ -1,0 +1,22 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/public/entities/Offer",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"code": true
+							}
+						}
+					}
+				}
+			]
+		}
+	]
+}

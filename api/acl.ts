@@ -389,6 +389,14 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 						},
 					},
 				},
+				Offer: {
+					predicates: {},
+					operations: {
+						read: {
+							code: true
+						}
+					}
+				}
 			},
 		},
 		volunteer: {
