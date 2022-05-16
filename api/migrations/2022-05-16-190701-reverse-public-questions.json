@@ -1,0 +1,69 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "remove",
+					"path": "/roles/public/entities/Question/predicates/isPublic"
+				},
+				{
+					"op": "replace",
+					"path": "/roles/public/entities/Question/operations/read/id",
+					"value": true
+				},
+				{
+					"op": "replace",
+					"path": "/roles/public/entities/Question/operations/read/offerType",
+					"value": true
+				},
+				{
+					"op": "replace",
+					"path": "/roles/public/entities/Question/operations/read/order",
+					"value": true
+				},
+				{
+					"op": "replace",
+					"path": "/roles/public/entities/Question/operations/read/label",
+					"value": true
+				},
+				{
+					"op": "replace",
+					"path": "/roles/public/entities/Question/operations/read/question",
+					"value": true
+				},
+				{
+					"op": "replace",
+					"path": "/roles/public/entities/Question/operations/read/type",
+					"value": true
+				},
+				{
+					"op": "replace",
+					"path": "/roles/public/entities/Question/operations/read/options",
+					"value": true
+				},
+				{
+					"op": "replace",
+					"path": "/roles/public/entities/Question/operations/read/required",
+					"value": true
+				},
+				{
+					"op": "replace",
+					"path": "/roles/public/entities/Question/operations/read/offerParameters",
+					"value": true
+				},
+				{
+					"op": "replace",
+					"path": "/roles/public/entities/Question/operations/read/public",
+					"value": true
+				},
+				{
+					"op": "replace",
+					"path": "/roles/public/entities/Question/operations/read/questionUK",
+					"value": true
+				}
+			]
+		}
+	]
+}
