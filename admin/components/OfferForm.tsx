@@ -157,6 +157,12 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 			return option?.getField<string>('specification').value ?? ''
 		}
 
+		const getParametersSpecificationUK = (question: EntityAccessor, value: string): string => {
+			const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
+			const option = Array.from(parameter?.getEntityList('values') ?? []).find(option => option.getField<string>('value').value === value)
+			return option?.getField<string>('specificationUK').value ?? ''
+		}
+
 		const setParametersSpecification = (question: EntityAccessor, value: string, specification: string) => {
 			const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
 			const option = Array.from(parameter?.getEntityList('values') ?? []).find(option => option.getField<string>('value').value === value)
@@ -207,7 +213,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 									render={(entity) => (
 										<>
 											<TextInput value={getParameter(entity)} onChange={e => setParameter(entity, e.target.value)} />
-											<TextInput value={getUKParameter(entity)} onChange={e => setParameter(entity, e.target.value)} />
+											{/* <TextInput value={getUKParameter(entity)} onChange={e => setParameter(entity, e.target.value)} /> */}
 										</>
 									)}
 								/>
@@ -218,7 +224,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 									render={(entity) => (
 										<>
 											<TextInput allowNewlines value={getParameter(entity)} onChange={e => setParameter(entity, e.target.value)} />
-											<TextInput allowNewlines value={getUKParameter(entity)} onChange={e => setParameter(entity, e.target.value)} />
+											{/* <TextInput allowNewlines value={getUKParameter(entity)} onChange={e => setParameter(entity, e.target.value)} /> */}
 										</>
 									)}
 								/>
@@ -294,10 +300,10 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 															<Field field="label" />
 														</Checkbox>
 														{optionEntity.getField<boolean>('requireSpecification').value && (
-															<TextInput
-																value={getParametersSpecification(questionEntity, value)}
-																onChange={e => setParametersSpecification(questionEntity, value, e.target.value)}
-															/>
+															<>
+																<TextInput value={getParametersSpecification(questionEntity, value)} onChange={e => setParametersSpecification(questionEntity, value, e.target.value)} />
+																<TextInput value={getParametersSpecificationUK(questionEntity, value)} onChange={e => setParametersSpecification(questionEntity, value, e.target.value)} />
+															</>
 														)}
 													</Entity>
 												)
@@ -398,10 +404,12 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 				<Field field="valueUK" />
 				<Field field="numericValue" />
 				<Field field="specification" />
+				<Field field="specificationUK" />
 				<HasMany field="values">
 					<Field field="value" />
 					<Field field="valueUK" />
 					<Field field="specification" />
+					<Field field="specificationUK" />
 					<HasOne field="district">
 						<Field field="name" />
 					</HasOne>
