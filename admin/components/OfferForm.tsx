@@ -464,6 +464,9 @@ export const OfferForm = Component(
 		return (
 			<>
 				<SelectField label="Stav nabídky" options="OfferStatus.name" field="status" allowNull />
+				<FieldContainer label="Datum vložení nabídky">
+					<FieldView field="createdAt" render={date => dateFormat.format(new Date(date.value as string))} />
+				</FieldContainer>
 				<LogForm />
 				<Section heading="Nabídka">
 					<OfferParametersForm />
