@@ -75,6 +75,17 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 				})
 			}
 		}
+		const setUKParameter = (question: EntityAccessor, value: string | number, field: 'valueUK' | 'specification' | 'numericValue' = 'valueUK') => {
+			const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
+			if (parameter) {
+				parameter.getField<string | number>(field).updateValue(value)
+			} else {
+				parameters.createNewEntity((getAccessor) => {
+					getAccessor().connectEntityAtField('question', question)
+					getAccessor().getField(field).updateValue(value)
+				})
+			}
+		}
 
 		const getParameter = (question: EntityAccessor, field: 'value' | 'specification' = 'value'): string => {
 			const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
@@ -169,6 +180,12 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 			option?.getField<string>('specification').updateValue(specification)
 		}
 
+		const setParametersSpecificationUK = (question: EntityAccessor, value: string, specification: string) => {
+			const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
+			const option = Array.from(parameter?.getEntityList('values') ?? []).find(option => option.getField<string>('value').value === value)
+			option?.getField<string>('specificationUK').updateValue(specification)
+		}
+
 		return (
 			<>
 				{!currentType && <SelectField
@@ -213,7 +230,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 									render={(entity) => (
 										<>
 											<TextInput value={getParameter(entity)} onChange={e => setParameter(entity, e.target.value)} />
-											<TextInput value={getUKParameter(entity)} onChange={e => setParameter(entity, e.target.value)} />
+											<TextInput value={getUKParameter(entity)} onChange={e => setUKParameter(entity, e.target.value)} />
 										</>
 									)}
 								/>
@@ -224,7 +241,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 									render={(entity) => (
 										<>
 											<TextInput allowNewlines value={getParameter(entity)} onChange={e => setParameter(entity, e.target.value)} />
-											<TextInput allowNewlines value={getUKParameter(entity)} onChange={e => setParameter(entity, e.target.value)} />
+											<TextInput allowNewlines value={getUKParameter(entity)} onChange={e => setUKParameter(entity, e.target.value)} />
 										</>
 									)}
 								/>
@@ -302,7 +319,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 														{optionEntity.getField<boolean>('requireSpecification').value && (
 															<>
 																<TextInput value={getParametersSpecification(questionEntity, value)} onChange={e => setParametersSpecification(questionEntity, value, e.target.value)} />
-																<TextInput value={getParametersSpecificationUK(questionEntity, value)} onChange={e => setParametersSpecification(questionEntity, value, e.target.value)} />
+																<TextInput value={getParametersSpecificationUK(questionEntity, value)} onChange={e => setParametersSpecificationUK(questionEntity, value, e.target.value)} />
 															</>
 														)}
 													</Entity>
