@@ -5,7 +5,6 @@ import {
 	SearchBox,
 	Hits,
 	Highlight,
-	DynamicWidgets,
 	RefinementList,
 	CurrentRefinements, Pagination, Stats
 } from 'react-instantsearch-dom';
