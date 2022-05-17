@@ -81,6 +81,10 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 			return parameter?.getField<string>(field).value ?? ''
 		}
 
+		const getUKParameter = (question: EntityAccessor, field: 'valueUK' | 'specification' = 'valueUK'): string => {
+			const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
+			return parameter?.getField<string>(field).value ?? ''
+		}
 
 		const setParameters = (question: EntityAccessor, value: string[]) => {
 			let parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
@@ -201,7 +205,10 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 							<Conditional showIf={acc => acc.getField('type').value === 'text'}>
 								<EntityView
 									render={(entity) => (
-										<TextInput value={getParameter(entity)} onChange={e => setParameter(entity, e.target.value)} />
+										<>
+											<TextInput value={getParameter(entity)} onChange={e => setParameter(entity, e.target.value)} />
+											<TextInput value={getUKParameter(entity)} onChange={e => setParameter(entity, e.target.value)} />
+										</>
 									)}
 								/>
 							</Conditional>
@@ -209,8 +216,10 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 							<Conditional showIf={acc => acc.getField('type').value === 'textarea'}>
 								<EntityView
 									render={(entity) => (
-										<TextInput allowNewlines value={getParameter(entity)}
-											onChange={e => setParameter(entity, e.target.value)} />
+										<>
+											<TextInput allowNewlines value={getParameter(entity)} onChange={e => setParameter(entity, e.target.value)} />
+											<TextInput allowNewlines value={getUKParameter(entity)} onChange={e => setParameter(entity, e.target.value)} />
+										</>
 									)}
 								/>
 							</Conditional>
@@ -218,8 +227,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 							<Conditional showIf={acc => acc.getField('type').value === 'date'}>
 								<EntityView
 									render={(entity) => (
-										<DateTimeInput type="date" value={getParameter(entity)}
-											onChange={value => setParameter(entity, value ?? '')} />
+										<DateTimeInput type="date" value={getParameter(entity)} onChange={value => setParameter(entity, value ?? '')} />
 									)}
 								/>
 							</Conditional>
@@ -330,24 +338,24 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 			</>
 		)
 	},
-	({currentType}) => (
+	({ currentType }) => (
 		<>
 			<EntityListSubTree entities="District" alias="districts" >
 				<Field field="name" />
 			</EntityListSubTree>
 			{currentType && (
-			<EntitySubTree entity={`OfferType(offers.id = $id)`}>
-				<HasMany field="questions" orderBy="order">
-					<Field field="question" />
-					<Field field="required" />
-					<Field field="type" />
-					<HasMany field="options">
-						<Field field="label" />
-						<Field field="value" />
-						<Field field="requireSpecification" />
+				<EntitySubTree entity={`OfferType(offers.id = $id)`}>
+					<HasMany field="questions" orderBy="order">
+						<Field field="question" />
+						<Field field="required" />
+						<Field field="type" />
+						<HasMany field="options">
+							<Field field="label" />
+							<Field field="value" />
+							<Field field="requireSpecification" />
+						</HasMany>
 					</HasMany>
-				</HasMany>
-			</EntitySubTree>
+				</EntitySubTree>
 			)}
 			<SelectField
 				label="Typ nabídky"
@@ -387,10 +395,12 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 			<HasMany field="parameters">
 				<Field field="question.id" />
 				<Field field="value" />
+				<Field field="valueUK" />
 				<Field field="numericValue" />
 				<Field field="specification" />
 				<HasMany field="values">
 					<Field field="value" />
+					<Field field="valueUK" />
 					<Field field="specification" />
 					<HasOne field="district">
 						<Field field="name" />
