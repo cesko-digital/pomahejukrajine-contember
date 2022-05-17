@@ -213,7 +213,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 									render={(entity) => (
 										<>
 											<TextInput value={getParameter(entity)} onChange={e => setParameter(entity, e.target.value)} />
-											{/* <TextInput value={getUKParameter(entity)} onChange={e => setParameter(entity, e.target.value)} /> */}
+											<TextInput value={getUKParameter(entity)} onChange={e => setParameter(entity, e.target.value)} />
 										</>
 									)}
 								/>
@@ -224,7 +224,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 									render={(entity) => (
 										<>
 											<TextInput allowNewlines value={getParameter(entity)} onChange={e => setParameter(entity, e.target.value)} />
-											{/* <TextInput allowNewlines value={getUKParameter(entity)} onChange={e => setParameter(entity, e.target.value)} /> */}
+											<TextInput allowNewlines value={getUKParameter(entity)} onChange={e => setParameter(entity, e.target.value)} />
 										</>
 									)}
 								/>
