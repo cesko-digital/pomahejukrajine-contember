@@ -1,0 +1,30 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/create",
+					"value": {
+						"id": "self",
+						"code": "self",
+						"volunteer": "self",
+						"type": "self",
+						"internalNote": "self",
+						"exhausted": "self",
+						"parameters": "self",
+						"reactions": "self",
+						"assignees": "self",
+						"status": "self",
+						"logs": "self",
+						"details": "self",
+						"isDeleted": "self",
+						"createdAt": "self"
+					}
+				}
+			]
+		}
+	]
+}
