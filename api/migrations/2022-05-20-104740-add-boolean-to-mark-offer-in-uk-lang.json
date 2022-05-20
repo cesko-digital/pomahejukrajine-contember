@@ -1,0 +1,83 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createColumn",
+			"entityName": "Offer",
+			"field": {
+				"name": "isUKLanguage",
+				"columnName": "is_uklanguage",
+				"columnType": "boolean",
+				"nullable": false,
+				"type": "Bool",
+				"default": false
+			},
+			"fillValue": false
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/create/isUKLanguage",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/update/isUKLanguage",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/read/isUKLanguage",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/update/isUKLanguage",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/read/isUKLanguage",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/create/isUKLanguage",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Offer/operations/read/isUKLanguage",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Offer/operations/read/isUKLanguage",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Offer/operations/update/isUKLanguage",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Offer/operations/create/isUKLanguage",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/Offer/operations/read/isUKLanguage",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/Offer/operations/update/isUKLanguage",
+					"value": true
+				}
+			]
+		}
+	]
+}

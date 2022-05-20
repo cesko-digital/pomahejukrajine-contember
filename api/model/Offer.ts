@@ -20,6 +20,7 @@ export class Offer {
 	details = def.oneHasOneInverse(OfferDetails, 'offer')
 	isDeleted = def.boolColumn().notNull().default(false)
 	createdAt = def.dateTimeColumn().notNull().default('now')
+	isUKLanguage = def.boolColumn().notNull().default(false)
 }
 
 @def.View(`
