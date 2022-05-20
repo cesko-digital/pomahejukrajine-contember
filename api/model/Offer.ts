@@ -10,6 +10,8 @@ export class Offer {
 	code = def.stringColumn().unique()
 	volunteer = def.manyHasOne(Volunteer, 'offers').notNull()
 	type = def.manyHasOne(OfferType, 'offers').notNull()
+	name = def.stringColumn()
+	nameUK = def.stringColumn()
 	internalNote = def.stringColumn().notNull().default('')
 	exhausted = def.boolColumn().notNull().default(false)
 	parameters = def.oneHasMany(OfferParameter, 'offer')
