@@ -1,5 +1,5 @@
 import * as React from "react"
-import { DataGridPage, DeleteEntityButton, EnumCell, GenericCell, HasOneSelectCell, LinkButton, TextCell } from "@contember/admin"
+import { DataGridPage, DeleteEntityButton, EnumCell, GenericCell, HasOneSelectCell, LinkButton, NumberCell, TextCell } from "@contember/admin"
 import { ExportOrganizationManagers } from "../components/ExportOrganizationManagers"
 
 export default (

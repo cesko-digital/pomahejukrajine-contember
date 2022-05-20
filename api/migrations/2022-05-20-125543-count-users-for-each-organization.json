@@ -1,0 +1,124 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createView",
+			"entity": {
+				"name": "OrganizationStats",
+				"primary": "id",
+				"primaryColumn": "id",
+				"tableName": "organization_stats",
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"columnType": "uuid",
+						"nullable": false,
+						"type": "Uuid"
+					},
+					"organization": {
+						"type": "OneHasOne",
+						"name": "organization",
+						"target": "Organization",
+						"joiningColumn": {
+							"columnName": "organization_id",
+							"onDelete": "restrict"
+						},
+						"nullable": false,
+						"inversedBy": "stats"
+					},
+					"userscount": {
+						"name": "userscount",
+						"columnName": "userscount",
+						"columnType": "integer",
+						"nullable": false,
+						"type": "Integer"
+					}
+				},
+				"unique": {},
+				"eventLog": {
+					"enabled": true
+				},
+				"view": {
+					"sql": "\n\tSELECT\n\t\tgen_random_uuid() AS id,\n\t\torganization.id AS organization_id,\n\t\t(SELECT COUNT(*) FROM organization_manager WHERE organization_manager.organization_id = organization.id) AS userscount\n\tFROM organization\n"
+				}
+			}
+		},
+		{
+			"modification": "createRelationInverseSide",
+			"entityName": "Organization",
+			"relation": {
+				"type": "OneHasOne",
+				"name": "stats",
+				"target": "OrganizationStats",
+				"ownedBy": "organization",
+				"nullable": true
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OrganizationStats",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"organization": true,
+								"userscount": true
+							},
+							"create": {
+								"id": true,
+								"organization": true,
+								"userscount": true
+							},
+							"update": {
+								"id": true,
+								"organization": true,
+								"userscount": true
+							},
+							"delete": true
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/create/stats",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/update/stats",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Organization/operations/read/stats",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Organization/operations/read/stats",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Organization/operations/read/stats",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Organization/operations/update/stats",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Organization/operations/create/stats",
+					"value": true
+				}
+			]
+		}
+	]
+}

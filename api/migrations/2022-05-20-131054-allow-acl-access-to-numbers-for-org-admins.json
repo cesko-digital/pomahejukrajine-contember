@@ -1,0 +1,24 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OrganizationStats",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"organization": true,
+								"userscount": true
+							}
+						}
+					}
+				}
+			]
+		}
+	]
+}

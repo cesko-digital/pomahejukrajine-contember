@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Component, SelectField, TextAreaField, TextField } from '@contember/admin'
+import { Component, DeleteEntityButton, SelectField, TextAreaField, TextField } from '@contember/admin'
 
 export const OrganizationForm = Component(
 	() => (

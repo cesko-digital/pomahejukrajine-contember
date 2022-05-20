@@ -31,6 +31,19 @@ export class Organization {
 	managers = def.oneHasMany(OrganizationManager, 'organization')
 	organizationType = def.enumColumn(OrganizationTypeEnum).nullable()
 	dateRegistered = def.dateTimeColumn().notNull().default('now')
+	stats = def.oneHasOneInverse(OrganizationStats, 'organization')
+}
+
+@def.View(`
+	SELECT
+		gen_random_uuid() AS id,
+		organization.id AS organization_id,
+		(SELECT COUNT(*) FROM organization_manager WHERE organization_manager.organization_id = organization.id) AS userscount
+	FROM organization
+`)
+export class OrganizationStats {
+	organization = def.oneHasOne(Organization, 'stats').notNull()
+	userscount = def.intColumn().notNull()
 }
 
 export const OrganizationManagerRoleEnum = def.createEnum('organizationManager', 'organizationAdmin', 'volunteer')
