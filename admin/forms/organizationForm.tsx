@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { CheckboxField, Component, DateField, FieldView, MultiSelectField, Repeater, SelectField, TextAreaField, TextField } from '@contember/admin'
+import { Component, SelectField, TextAreaField, TextField } from '@contember/admin'
 
 export const OrganizationForm = Component(
 	() => (
@@ -27,7 +27,6 @@ export const OrganizationForm = Component(
 			<TextField field="website" label="Web" />
 			<TextField field="parentOrganization" label="Mateřská organizace" />
 			<TextAreaField field="note" label="Poznámka" />
-			<DateField field="dateRegistered" label="Datum Registrace" />
 		</>
 	),
 	'VolunteerForm',
