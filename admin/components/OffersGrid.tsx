@@ -79,6 +79,7 @@ export const OffersGrid = (
 											{entities.map((entity) => (
 												<React.Fragment key={entity.key}>
 													{entity.getField('value').value}
+													{' '}<span style={{ fontSize: '90%' }}>({entity.getField('specification').value})</span>
 													<br />
 												</React.Fragment>
 											))}
@@ -86,6 +87,7 @@ export const OffersGrid = (
 									)}
 								>
 									<Field field={`value`} />
+									<Field field={`specification`} />
 								</HasManyFilterCell>
 							)
 						} else if (["district"].includes(question.type)) {
