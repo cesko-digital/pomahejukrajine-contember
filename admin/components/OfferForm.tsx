@@ -23,6 +23,7 @@ import {
 	HasOne,
 	useEntityListSubTree,
 	EntitySubTree,
+	TextField,
 } from "@contember/admin"
 import { Conditional } from "./Conditional"
 import * as React from "react"
@@ -504,6 +505,10 @@ export const OfferForm = Component(
 				</FieldContainer>
 				<LogForm />
 				<Section heading="Nabídka">
+					<Stack direction="horizontal">
+						<TextField label="Název nabídky" field="name" />
+						<TextField label="Název nabídky v Ukrajinštině" field="nameUK" />
+					</Stack>
 					<OfferParametersForm />
 				</Section>
 			</>
