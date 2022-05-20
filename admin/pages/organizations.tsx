@@ -1,9 +1,15 @@
 import * as React from "react"
 import {DataGridPage, DateCell, DeleteEntityButton, EnumCell, Field, GenericCell, HasOneSelectCell, LinkButton, NumberCell, TextCell} from "@contember/admin"
 import { Conditional } from "../components/Conditional"
+import { ExportOrganization } from "../components/ExportOrganizations"
 
 export default (
-	<DataGridPage entities="Organization" itemsPerPage={50} rendererProps={{ title: "Organizace", actions: <LinkButton to="organizationCreate">Přidat organizaci</LinkButton> }}>
+	<DataGridPage entities="Organization" itemsPerPage={50} rendererProps={{ title: "Organizace", actions:
+		<>
+			<ExportOrganization />
+			<LinkButton to="organizationCreate">Přidat organizaci</LinkButton>
+		</>
+		}}>
 		<TextCell field="name" header="Název" />
 		<NumberCell field="stats.userscount" header="Počet manažerů" />
 		<TextCell field="parentOrganization" header="Mateřská organizace" />
