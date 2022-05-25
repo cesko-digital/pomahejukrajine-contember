@@ -6,9 +6,8 @@ import { SchemaDefinition as def } from '@contember/schema-definition'
  */
 export class FrequentlyAskedQuestion {
     order = def.intColumn().notNull().default(0)
-	question = def.stringColumn().notNull().unique()
-	questionUA = def.stringColumn().notNull()
-
-	answer = def.stringColumn().notNull()
-	answerUA = def.stringColumn().notNull()
+    question = def.stringColumn().notNull().unique()
+    questionUA = def.stringColumn().notNull()
+    answer = def.stringColumn().notNull()
+    answerUA = def.stringColumn().notNull()
 }
