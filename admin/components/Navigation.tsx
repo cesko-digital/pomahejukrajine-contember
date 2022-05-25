@@ -39,6 +39,9 @@ export const Navigation = () => (
 					<Menu.Item title="Organizace" to="organizations" />
 					<Menu.Item title="Pracovníci" to="organizationManagerList" />
 					<Menu.Item title="Stavy" to="status" />
+					<RoleConditional role={['admin']}>
+						<Menu.Item title="Často kladené otázky" to="faqList" />
+					</RoleConditional>
 				</Menu.Item>
 			</RoleConditional>
 		</RoleConditional>

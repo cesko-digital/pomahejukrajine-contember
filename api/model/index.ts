@@ -8,6 +8,7 @@ export * from './Reaction'
 export * from './Region'
 export * from './TypesenseSearchToken'
 export * from './Volunteer'
+export * from './FrequentlyAskedQuestion'
 
 // export class Match {
 // 	demand = def.manyHasOne(Demand, 'matches').notNull()
