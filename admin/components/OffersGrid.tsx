@@ -79,7 +79,7 @@ export const OffersGrid = (
 											{entities.map((entity) => (
 												<React.Fragment key={entity.key}>
 													{entity.getField('value').value}
-													{' '}<span style={{ fontSize: '90%' }}>({entity.getField('specification').value})</span>
+													{' '}<span style={{ fontSize: '90%' }}>({entity.getField<string>('specification').value?.substr(0, 100)})</span>
 													<br />
 												</React.Fragment>
 											))}
@@ -119,8 +119,9 @@ export const OffersGrid = (
 										header={question.label === 'Okres' ? 'Kraj' : `${question.label} - Kraj`}
 										entityList="Region"
 										hasOneField="district.region"
+										separator=""
 									>
-										<Field field={`name`} />
+										<Field field={`name`} /><br/>
 									</HasManyCell>
 								</>
 							)
