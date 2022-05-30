@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { BooleanCell, ControlledDataGrid, DataBindingProvider, DateCell, Entity, FeedbackRenderer, Field, FieldView, GenericCell, GenericPage, HasManySelectCell, HasOneSelectCell, LinkButton, NumberCell, RichTextField, TextCell, useDataGrid } from '@contember/admin'
+import { BooleanCell, Component, ControlledDataGrid, DataBindingProvider, DateCell, Entity, FeedbackRenderer, Field, FieldView, GenericCell, GenericPage, HasManySelectCell, HasOneSelectCell, LinkButton, NumberCell, RichTextField, TextCell, useDataGrid, useField } from '@contember/admin'
 import { limitLength } from '../utils/limitLength'
 import { ExportOffers } from './ExportOffers'
 import { HasManyCell } from './HasManyCell'
@@ -21,6 +21,20 @@ function parseJSON(json: string) {
 	} catch (e) {
 		return null
 	}
+}
+
+const SpecificationValue = ({ entity } : any ) => {
+	const specification = entity.getField('specification').value
+	if (specification && specification.length > 30) {
+		return (
+			<span style={{ fontSize: '90%' }}>({specification.substr(0, 30) + '…'})</span>
+		)
+	} else if (specification) {
+		return (
+			<span style={{ fontSize: '90%' }}>({specification})</span>
+		)
+	}
+	return null
 }
 
 export const OffersGrid = (
@@ -79,7 +93,7 @@ export const OffersGrid = (
 											{entities.map((entity) => (
 												<React.Fragment key={entity.key}>
 													{entity.getField('value').value}
-													{' '}<span style={{ fontSize: '90%' }}>({entity.getField<string>('specification').value?.substr(0, 100)})</span>
+													{' '}<SpecificationValue entity={entity} />
 													<br />
 												</React.Fragment>
 											))}
