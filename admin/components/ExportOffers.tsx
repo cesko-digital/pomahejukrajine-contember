@@ -8,6 +8,7 @@ const LIST_LIST_OFFER_QUERY = `
 	query($filter: OfferWhere){
 		listOffer(filter: $filter, orderBy: { volunteer: { createdAt: desc } }) {
 			code
+			createdAt
 			assignees {
 				name
 			}
@@ -48,6 +49,7 @@ type ListOfferQueryResult = {
 
 type Offer = {
 	code: string
+	createdAt: Date
 	assignees: { name: string }[]
 	status: { name: string }
 	type: { name: string }
@@ -84,6 +86,7 @@ export const ExportOffers = Component<{ dataGridProps: any, listQuestion: Questi
 					return ([
 						offer.volunteer.email,
 						offer.code,
+						offer.createdAt,
 						offer.assignees.map((assignee: { name: string }) => assignee.name).join(', '),
 						offer.status?.name,
 						offer.volunteer.languages.map(((language) => language.language.name)).join(', '),
