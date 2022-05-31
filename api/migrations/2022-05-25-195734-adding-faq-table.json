@@ -1,0 +1,133 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "FrequentlyAskedQuestion",
+				"primary": "id",
+				"primaryColumn": "id",
+				"tableName": "frequently_asked_question",
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"columnType": "uuid",
+						"nullable": false,
+						"type": "Uuid"
+					}
+				},
+				"unique": {},
+				"eventLog": {
+					"enabled": true
+				}
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "FrequentlyAskedQuestion",
+			"field": {
+				"name": "order",
+				"columnName": "order",
+				"columnType": "integer",
+				"nullable": false,
+				"type": "Integer",
+				"default": 0
+			},
+			"fillValue": 0
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "FrequentlyAskedQuestion",
+			"field": {
+				"name": "question",
+				"columnName": "question",
+				"columnType": "text",
+				"nullable": false,
+				"type": "String"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "FrequentlyAskedQuestion",
+			"field": {
+				"name": "questionUA",
+				"columnName": "question_ua",
+				"columnType": "text",
+				"nullable": false,
+				"type": "String"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "FrequentlyAskedQuestion",
+			"field": {
+				"name": "answer",
+				"columnName": "answer",
+				"columnType": "text",
+				"nullable": false,
+				"type": "String"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "FrequentlyAskedQuestion",
+			"field": {
+				"name": "answerUA",
+				"columnName": "answer_ua",
+				"columnType": "text",
+				"nullable": false,
+				"type": "String"
+			}
+		},
+		{
+			"modification": "createUniqueConstraint",
+			"entityName": "FrequentlyAskedQuestion",
+			"unique": {
+				"fields": [
+					"question"
+				],
+				"name": "unique_FrequentlyAskedQuestion_question_b47a0a"
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/FrequentlyAskedQuestion",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"order": true,
+								"question": true,
+								"questionUA": true,
+								"answer": true,
+								"answerUA": true
+							},
+							"create": {
+								"id": true,
+								"order": true,
+								"question": true,
+								"questionUA": true,
+								"answer": true,
+								"answerUA": true
+							},
+							"update": {
+								"id": true,
+								"order": true,
+								"question": true,
+								"questionUA": true,
+								"answer": true,
+								"answerUA": true
+							},
+							"delete": true
+						}
+					}
+				}
+			]
+		}
+	]
+}

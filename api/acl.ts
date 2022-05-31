@@ -403,7 +403,13 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 							type: true
 						}
 					}
-				}
+				},
+				FrequentlyAskedQuestion: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'FrequentlyAskedQuestion', true),
+					}
+				},
 			},
 		},
 		volunteer: {
