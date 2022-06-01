@@ -1,7 +1,7 @@
 import { SchemaDefinition as def } from '@contember/schema-definition'
 import { OfferParameter, OfferType } from './Offer'
 
-export const QuestionType = def.createEnum('radio', 'checkbox', 'text', 'textarea', 'number', 'date', 'district')
+export const QuestionType = def.createEnum('radio', 'checkbox', 'text', 'textarea', 'number', 'date', 'district', 'image')
 
 export class Question {
 	offerType = def.manyHasOne(OfferType, 'questions').notNull().cascadeOnDelete()

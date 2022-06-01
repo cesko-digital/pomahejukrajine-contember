@@ -54,8 +54,6 @@ export class OfferType {
 	hideInDemand = def.boolColumn().notNull().default(false)
 }
 
-
-
 export class OfferLog {
 	offer = def.manyHasOne(Offer, 'logs').notNull()
 	createdAt = def.dateTimeColumn().notNull().default('now')
