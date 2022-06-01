@@ -1,0 +1,27 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/public/entities/FrequentlyAskedQuestion",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"order": true,
+								"question": true,
+								"questionUA": true,
+								"answer": true,
+								"answerUA": true
+							}
+						}
+					}
+				}
+			]
+		}
+	]
+}
