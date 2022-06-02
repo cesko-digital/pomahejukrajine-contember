@@ -1,0 +1,19 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "updateEnum",
+			"enumName": "QuestionType",
+			"values": [
+				"radio",
+				"checkbox",
+				"text",
+				"textarea",
+				"number",
+				"date",
+				"district",
+				"image"
+			]
+		}
+	]
+}

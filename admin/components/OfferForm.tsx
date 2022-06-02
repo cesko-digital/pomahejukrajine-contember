@@ -1,6 +1,6 @@
 import {
 	Checkbox,
-	Component, DateFieldView,
+	Component,
 	DateTimeInput,
 	Entity,
 	EntityAccessor,
@@ -24,11 +24,11 @@ import {
 	useEntityListSubTree,
 	EntitySubTree,
 	TextField,
+	ImageUploadField,
 } from "@contember/admin"
 import { Conditional } from "./Conditional"
 import * as React from "react"
-import Select, { SelectInstance } from 'react-select'
-import offers from "../pages/offers"
+import Select from 'react-select'
 
 type OfferParametersFormProps = {
 	currentType?: boolean
@@ -65,19 +65,14 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 		const parameters = useEntityList('parameters')
 		const districts = useEntityListSubTree('districts')
 
-		const setParameter = (question: EntityAccessor, value: string | number, field: 'value' | 'specification' | 'numericValue' = 'value') => {
+		const getParameterEntity = (question: EntityAccessor): EntityAccessor | undefined => {
 			const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
-			if (parameter) {
-				parameter.getField<string | number>(field).updateValue(value)
-			} else {
-				parameters.createNewEntity((getAccessor) => {
-					getAccessor().connectEntityAtField('question', question)
-					getAccessor().getField(field).updateValue(value)
-				})
-			}
+			return parameter
 		}
-		const setUKParameter = (question: EntityAccessor, value: string | number, field: 'valueUK' | 'specification' | 'numericValue' = 'valueUK') => {
-			const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
+
+		const setParameter = (question: EntityAccessor, value: string | number, field: 'value' | 'specification' | 'numericValue' | 'valueUK' | 'specificationUK' = 'value') => {
+			const parameter = getParameterEntity(question)
+
 			if (parameter) {
 				parameter.getField<string | number>(field).updateValue(value)
 			} else {
@@ -88,28 +83,20 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 			}
 		}
 
-		const getParameter = (question: EntityAccessor, field: 'value' | 'specification' = 'value'): string => {
-			const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
-			return parameter?.getField<string>(field).value ?? ''
-		}
-
-		const getUKParameter = (question: EntityAccessor, field: 'valueUK' | 'specification' = 'valueUK'): string => {
-			const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
-			return parameter?.getField<string>(field).value ?? ''
+		const getParameter = (question: EntityAccessor, field: 'value' | 'specification' | 'valueUK' = 'value'): string => {
+			return getParameterEntity(question)?.getField<string>(field).value ?? ''
 		}
 
 		const setParameters = (question: EntityAccessor, value: string[]) => {
-			let parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
+			let parameter = getParameterEntity(question)
 			if (!parameter) {
 				parameters.createNewEntity((getAccessor) => {
 					getAccessor().connectEntityAtField('question', question)
-
 					parameter = getAccessor()
 				})
 			}
 			const optionsList = parameter?.getEntityList('values')
 			const options = Array.from(optionsList ?? [])
-			const staying = options.filter(option => value.includes(option.getField<string>('value').value ?? ''))
 			const remove = options.filter(option => !value.includes(option.getField<string>('value').value ?? ''))
 			const add = value.filter(value => !options.find(option => option.getField<string>('value').value === value))
 			for (const option of remove) {
@@ -140,7 +127,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 					}
 				}
 			}
-			const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
+			const parameter = getParameterEntity(question)
 			if (parameter !== undefined) {
 				updateParameter(parameter)
 			} else {
@@ -151,41 +138,44 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 			}
 		}
 
-
 		const getParameterValues = (question: EntityAccessor): string[] => {
-			const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
+			const parameter = getParameterEntity(question)
 			return Array.from(parameter?.getEntityList('values') ?? []).map(option => option.getField<string>('value').value!)
 		}
 
 		const getParameters = (question: EntityAccessor, value: string): boolean => {
-			const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
+			const parameter = getParameterEntity(question)
 			const option = Array.from(parameter?.getEntityList('values') ?? []).find(option => option.getField<string>('value').value === value)
 			return option !== undefined
 		}
 
-		const getParametersSpecification = (question: EntityAccessor, value: string): string => {
-			const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
+		const getParametersSpecification = (question: EntityAccessor, value: string, field: 'specification' | 'specificationUK' = 'specification'): string => {
+			const parameter = getParameterEntity(question)
 			const option = Array.from(parameter?.getEntityList('values') ?? []).find(option => option.getField<string>('value').value === value)
-			return option?.getField<string>('specification').value ?? ''
+			return option?.getField<string>(field).value ?? ''
 		}
 
-		const getParametersSpecificationUK = (question: EntityAccessor, value: string): string => {
-			const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
+		const setParametersSpecification = (question: EntityAccessor, value: string, specification: string, field: 'specification' | 'specificationUK' = 'specification') => {
+			const parameter = getParameterEntity(question)
 			const option = Array.from(parameter?.getEntityList('values') ?? []).find(option => option.getField<string>('value').value === value)
-			return option?.getField<string>('specificationUK').value ?? ''
+			option?.getField<string>(field).updateValue(specification)
 		}
 
-		const setParametersSpecification = (question: EntityAccessor, value: string, specification: string) => {
-			const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
-			const option = Array.from(parameter?.getEntityList('values') ?? []).find(option => option.getField<string>('value').value === value)
-			option?.getField<string>('specification').updateValue(specification)
-		}
+		const questions = useEntityList({ field: 'type.questions', orderBy: 'order' })
 
-		const setParametersSpecificationUK = (question: EntityAccessor, value: string, specification: string) => {
-			const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
-			const option = Array.from(parameter?.getEntityList('values') ?? []).find(option => option.getField<string>('value').value === value)
-			option?.getField<string>('specificationUK').updateValue(specification)
-		}
+		const [_, setState] = React.useState<number>(0)
+		React.useEffect(() => {
+			for (const question of questions) {
+				const parameter = Array.from(parameters).find(parameter => parameter.getEntity('question').idOnServer === question.idOnServer)
+				if (!parameter) {
+					parameters.createNewEntity((getAccessor) => {
+						getAccessor().connectEntityAtField('question', question)
+					})
+
+					setState(state => state + 1)
+				}
+			}
+		})
 
 		return (
 			<>
@@ -231,7 +221,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 									render={(entity) => (
 										<>
 											<TextInput value={getParameter(entity)} onChange={e => setParameter(entity, e.target.value)} />
-											<TextInput value={getUKParameter(entity)} onChange={e => setUKParameter(entity, e.target.value)} />
+											<TextInput value={getParameter(entity, 'valueUK')} onChange={e => setParameter(entity, e.target.value, 'valueUK')} />
 										</>
 									)}
 								/>
@@ -242,7 +232,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 									render={(entity) => (
 										<>
 											<TextInput allowNewlines value={getParameter(entity)} onChange={e => setParameter(entity, e.target.value)} />
-											<TextInput allowNewlines value={getUKParameter(entity)} onChange={e => setUKParameter(entity, e.target.value)} />
+											<TextInput allowNewlines value={getParameter(entity, 'valueUK')} onChange={e => setParameter(entity, e.target.value, 'valueUK')} />
 										</>
 									)}
 								/>
@@ -256,7 +246,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 								/>
 							</Conditional>
 
-							<Conditional showIf={acc => { console.log(currentType, acc.getField('type').value); return acc.getField('type').value === 'number' }}>
+							<Conditional showIf={acc => acc.getField('type').value === 'number'}>
 								<EntityView
 									render={(entity) => (
 										<>
@@ -320,7 +310,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 														{optionEntity.getField<boolean>('requireSpecification').value && (
 															<>
 																<TextInput value={getParametersSpecification(questionEntity, value)} onChange={e => setParametersSpecification(questionEntity, value, e.target.value)} />
-																<TextInput value={getParametersSpecificationUK(questionEntity, value)} onChange={e => setParametersSpecificationUK(questionEntity, value, e.target.value)} />
+																<TextInput value={getParametersSpecification(questionEntity, value, 'specificationUK')} onChange={e => setParametersSpecification(questionEntity, value, e.target.value, 'specificationUK')} />
 															</>
 														)}
 													</Entity>
@@ -356,6 +346,16 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 									}}
 								/>
 							</Conditional>
+
+							<Conditional showIf={acc => acc.getField('type').value === 'image'}>
+								<EntityView render={(entity) => (
+									getParameterEntity(entity) ? <Entity accessor={getParameterEntity(entity)!}>
+										<ImageUploadField urlField="value" label={undefined} />
+										<FieldView<string> field="value" render={(accessor) => accessor.value && <a href={accessor.value} target="_blank">Otevřít v novém okně</a>} />
+									</Entity> : null
+								)} />
+							</Conditional>
+
 						</FieldContainer>
 					</CurrentType>
 				</Conditional>
@@ -417,7 +417,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 				</HasMany>
 			</HasMany>
 			<HasMany field="parameters">
-				<Field field="question.id" />
+				<HasOne field="question" isNonbearing />
 				<Field field="value" />
 				<Field field="valueUK" />
 				<Field field="numericValue" />

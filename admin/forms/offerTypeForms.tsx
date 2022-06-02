@@ -35,6 +35,7 @@ export const OfferTypeForms = Component(
 						{ value: 'number', label: 'Číslo' },
 						{ value: 'date', label: 'Datum' },
 						{ value: 'district', label: 'Výběr okresu' },
+						{ value: 'image', label: 'Nahrání obrázku' },
 					]}
 				/>
 				<Conditional showIf={acc => ['radio', 'checkbox'].includes(acc.getField<string>('type').value ?? '')}>

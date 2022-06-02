@@ -4,6 +4,7 @@ import { Conditional } from '../components/Conditional'
 import { OfferForm } from "../components/OfferForm"
 import { OfferManage } from '../components/OfferManage'
 import { RoleConditional } from '../components/RoleConditional'
+import { VisitMarker } from '../components/VisitMarker'
 import './offerEdit.sass'
 
 export default (
@@ -15,6 +16,7 @@ export default (
 		}}
 	>
 		{/* <CurrentEntitySharedKeyAcquirer /> */}
+		<VisitMarker />
 		<RoleConditional role={['admin', 'organizationAdmin']}>
 			<Conditional
 				showIf={(entity) => (entity.getField('isDeleted').valueOnServer != entity.getField('isDeleted').value) && entity.getField('isDeleted').valueOnServer === true}
