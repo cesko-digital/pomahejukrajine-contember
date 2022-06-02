@@ -2,14 +2,18 @@ import * as React from 'react'
 import { Component, EntityListSubTree, Field, FieldView, HasMany, useEntityList, useEntityListSubTree } from '@contember/admin'
 import './visitCell.sass'
 
-export const VisitCell = Component(
-	() => {
+export type VisitCellProps = {
+	personId: string
+}
+
+export const VisitCell = Component<VisitCellProps>(
+	({ personId }) => {
 		const visits = useEntityListSubTree('offerVisit')
-		const id = useEntityList({ field: 'visits', limit: 1 })
+		const id = useEntityList({ field: `visits[organizationManager.personId = '${personId}']`, limit: 1 })
 		const isLast = Array.from(visits)[0]?.id === Array.from(id)[0]?.id
 
 		return (
-			<HasMany field="visits" limit={1}>
+			<HasMany field={`visits[organizationManager.personId = '${personId}']`} limit={1}>
 				<FieldView<string> field="stamp" render={(accessor) => {
 					const today = new Date()
 					const visitDate = new Date(accessor.value!)
@@ -21,10 +25,10 @@ export const VisitCell = Component(
 			</HasMany>
 		)
 	},
-	() => (
+	({ personId }) => (
 		<>
 			<EntityListSubTree entities="OfferVisit" alias="offerVisit" orderBy="stamp desc" limit={1} />
-			<HasMany field="visits" limit={1}>
+			<HasMany field={`visits[organizationManager.personId = '${personId}']`} limit={1}>
 				<Field field="stamp" />
 			</HasMany>
 		</>
