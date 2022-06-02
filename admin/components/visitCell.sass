@@ -1,0 +1,17 @@
+.visit-marker
+	width: 10px
+	height: 10px
+	background-color: rgb(106, 180, 0)
+	display: inline-block
+	border-radius: 50%
+
+	&.is-last
+		opacity: 1
+		animation: pulse-animation 1500ms infinite
+
+@keyframes pulse-animation
+	0%
+		box-shadow: 0 0 0 0px rgba(106, 180, 0, 0.5)
+
+	100%
+		box-shadow: 0 0 0 10px rgba(106, 180, 0, 0)

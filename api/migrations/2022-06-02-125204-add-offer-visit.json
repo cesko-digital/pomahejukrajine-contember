@@ -1,0 +1,265 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createEntity",
+			"entity": {
+				"eventLog": {
+					"enabled": true
+				},
+				"name": "OfferVisit",
+				"primary": "id",
+				"primaryColumn": "id",
+				"tableName": "offer_visit",
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"columnType": "uuid",
+						"nullable": false,
+						"type": "Uuid"
+					}
+				},
+				"unique": {}
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "OfferVisit",
+			"field": {
+				"name": "stamp",
+				"columnName": "stamp",
+				"columnType": "timestamptz",
+				"nullable": false,
+				"type": "DateTime",
+				"default": "now"
+			},
+			"fillValue": "now"
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "OfferVisit",
+			"owningSide": {
+				"type": "ManyHasOne",
+				"name": "offer",
+				"target": "Offer",
+				"joiningColumn": {
+					"columnName": "offer_id",
+					"onDelete": "cascade"
+				},
+				"nullable": false,
+				"inversedBy": "visits"
+			},
+			"inverseSide": {
+				"type": "OneHasMany",
+				"name": "visits",
+				"target": "OfferVisit",
+				"ownedBy": "offer",
+				"orderBy": [
+					{
+						"path": [
+							"stamp"
+						],
+						"direction": "desc"
+					}
+				]
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "OfferVisit",
+			"owningSide": {
+				"type": "ManyHasOne",
+				"name": "organizationManager",
+				"target": "OrganizationManager",
+				"joiningColumn": {
+					"columnName": "organization_manager_id",
+					"onDelete": "cascade"
+				},
+				"nullable": false,
+				"inversedBy": "visits"
+			},
+			"inverseSide": {
+				"type": "OneHasMany",
+				"name": "visits",
+				"target": "OfferVisit",
+				"ownedBy": "organizationManager",
+				"orderBy": [
+					{
+						"path": [
+							"stamp"
+						],
+						"direction": "desc"
+					}
+				]
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OfferVisit",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"stamp": true,
+								"offer": true,
+								"organizationManager": true
+							},
+							"create": {
+								"id": true,
+								"stamp": true,
+								"offer": true,
+								"organizationManager": true
+							},
+							"update": {
+								"id": true,
+								"stamp": true,
+								"offer": true,
+								"organizationManager": true
+							},
+							"delete": true
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/create/visits",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/update/visits",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/read/visits",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OrganizationManager/operations/create/visits",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OrganizationManager/operations/update/visits",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/OrganizationManager/operations/read/visits",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/update/visits",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/read/visits",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/create/visits",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OfferVisit",
+					"value": {
+						"predicates": {
+							"isMe": {
+								"organizationManager": {
+									"personId": "personId"
+								}
+							}
+						},
+						"operations": {
+							"read": {
+								"id": "isMe",
+								"stamp": "isMe",
+								"offer": "isMe",
+								"organizationManager": "isMe"
+							},
+							"create": {
+								"id": "isMe",
+								"stamp": "isMe",
+								"offer": "isMe",
+								"organizationManager": "isMe"
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Offer/operations/read/visits",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/OrganizationManager/operations/read/visits",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/OfferVisit",
+					"value": {
+						"predicates": {
+							"isMe": {
+								"organizationManager": {
+									"personId": "personId"
+								}
+							}
+						},
+						"operations": {
+							"read": {
+								"id": "isMe",
+								"stamp": "isMe",
+								"offer": "isMe",
+								"organizationManager": "isMe"
+							},
+							"create": {
+								"id": "isMe",
+								"stamp": "isMe",
+								"offer": "isMe",
+								"organizationManager": "isMe"
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Offer/operations/read/visits",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Offer/operations/update/visits",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Offer/operations/create/visits",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/Offer/operations/read/visits",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/Offer/operations/update/visits",
+					"value": true
+				}
+			]
+		}
+	]
+}

@@ -3,6 +3,7 @@ import { Model } from '@contember/schema'
 import { Offer } from './Offer'
 import { District } from './District'
 import { Region } from './Region'
+import { OfferVisit } from './OfferVisit'
 
 export const OrganizationTypeEnum = def.createEnum(
 	'collegeInitiative',
@@ -57,4 +58,5 @@ export class OrganizationManager {
 	phone = def.stringColumn().notNull().default('')
 	assignedOffers = def.manyHasManyInverse(Offer, 'assignees')
 	role = def.enumColumn(OrganizationManagerRoleEnum).notNull().default('organizationManager')
+	visits = def.oneHasMany(OfferVisit, 'organizationManager').orderBy('stamp', def.OrderDirection.desc)
 }

@@ -1,6 +1,6 @@
 import { PermissionsBuilder } from '@contember/schema-definition'
 import { Acl, Model } from '@contember/schema'
-import {OrganizationManager, TypesenseSearchToken, VolunteerTag} from "./model"
+import { OrganizationManager, TypesenseSearchToken, VolunteerTag } from "./model"
 
 const fieldNames = (model: Model.Schema, entity: string): string[] => {
 	return Object.keys(model.entities[entity].fields)
@@ -78,6 +78,13 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 							internalNote: true,
 						},
 					},
+				},
+				OfferVisit: {
+					predicates: { isMe: { organizationManager: { personId: 'personId' } } },
+					operations: {
+						read: allField(model, 'OfferVisit', 'isMe'),
+						create: allField(model, 'OfferVisit', 'isMe'),
+					}
 				},
 				OfferLog: {
 					predicates: {},
@@ -220,6 +227,13 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 						read: allField(model, 'Offer', true),
 						update: allField(model, 'Offer', true),
 					},
+				},
+				OfferVisit: {
+					predicates: { isMe: { organizationManager: { personId: 'personId' } } },
+					operations: {
+						read: allField(model, 'OfferVisit', 'isMe'),
+						create: allField(model, 'OfferVisit', 'isMe'),
+					}
 				},
 				Volunteer: {
 					predicates: {},

@@ -1,6 +1,7 @@
 import { SchemaDefinition as def } from '@contember/schema-definition'
 import { Demand } from './Demand'
 import { District } from './District'
+import { OfferVisit } from './OfferVisit'
 import { OrganizationManager } from './Organization'
 import { Question } from './Question'
 import { Reaction } from './Reaction'
@@ -23,6 +24,7 @@ export class Offer {
 	isDeleted = def.boolColumn().notNull().default(false)
 	createdAt = def.dateTimeColumn().notNull().default('now')
 	isUKLanguage = def.boolColumn().notNull().default(false)
+	visits = def.oneHasMany(OfferVisit, 'offer').orderBy('stamp', def.OrderDirection.desc)
 }
 
 @def.View(`
