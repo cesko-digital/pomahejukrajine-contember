@@ -39,7 +39,7 @@ const SpecificationValue = ({ entity }: any) => {
 }
 
 export const OffersGrid = (
-	({ query, offerTypeId, offerTypeName }: { query: { data: QuestionQueryResult }, offerTypeId: string, offerTypeName: string }) => {
+	({ query, offerTypeId, offerTypeName, personId }: { query: { data: QuestionQueryResult }, offerTypeId: string, offerTypeName: string, personId: string }) => {
 		const dataGridProps = useDataGrid({
 			entities: 'Offer[type.id=$id][isDeleted=false][volunteer.verified=true][volunteer.banned=false]',
 			itemsPerPage: 20,
@@ -47,7 +47,7 @@ export const OffersGrid = (
 				() => (
 					<>
 						<GenericCell shrunk>
-							<VisitCell />
+							<VisitCell personId={personId} />
 						</GenericCell>
 						<GenericCell canBeHidden={false} shrunk>
 							<LinkButton to="editOffer(id: $entity.id)">Otevřít</LinkButton>
