@@ -1,0 +1,15 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createUniqueConstraint",
+			"entityName": "District",
+			"unique": {
+				"fields": [
+					"nameUK"
+				],
+				"name": "unique_District_nameUK_af4ade"
+			}
+		}
+	]
+}
