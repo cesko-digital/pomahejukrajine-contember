@@ -13,6 +13,8 @@ import {
 	HasMany,
 	HasOne,
 	ImageUploadField,
+	Link,
+	LinkButton,
 	NumberInput,
 	Radio,
 	Repeater,
@@ -221,13 +223,13 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 							<Conditional showIf={acc => acc.getField('type').value === 'text'}>
 								<EntityView
 									render={(entity) => (
-										<>
+										<Stack direction="horizontal">
 											<TextInput
 											value={getParameter(entity) as string}
 											onChange={value => setParameter(entity, value ?? null)}
 										/>
 											<TextInput value={getParameter<string>(entity, 'valueUK')} onChange={value => setParameter(entity, value ?? null, 'valueUK')} />
-										</>
+										</Stack>
 									)}
 								/>
 							</Conditional>
@@ -235,10 +237,10 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 							<Conditional showIf={acc => acc.getField('type').value === 'textarea'}>
 								<EntityView
 									render={(entity) => (
-										<>
+										<Stack direction="horizontal">
 											<TextareaInput value={getParameter<string>(entity)} onChange={value => setParameter(entity, value)} />
 											<TextareaInput value={getParameter<string>(entity, 'valueUK')} onChange={value => setParameter(entity, value, 'valueUK')} />
-										</>
+										</Stack>
 									)}
 								/>
 							</Conditional>
@@ -314,7 +316,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 															/>
 														</FieldContainer>
 														{optionEntity.getField<boolean>('requireSpecification').value && (
-															<>
+															<Stack direction="horizontal">
 																<TextInput
 																	notNull
 																	value={getParametersSpecification(questionEntity, value)}
@@ -333,7 +335,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 																		}
 																	}}
 																/>
-															</>
+															</Stack>
 														)}
 													</Entity>
 												)
@@ -526,13 +528,19 @@ export const OfferForm = Component(
 					<FieldView field="createdAt" render={date => dateFormat.format(new Date(date.value as string))} />
 				</FieldContainer>
 				<LogForm />
-				<Section heading="Nabídka">
-					<Stack direction="horizontal">
-						<TextField label="Název nabídky" field="name" />
-						<TextField label="Název nabídky v Ukrajinštině" field="nameUK" />
+				<div>
+					<h2>Nabídka</h2>
+					<Stack direction="vertical">
+						<Link to="editOffer(id: $entity.id)">Přejít na detail nabídky</Link>
+						<Field field="isDeleted" format={r => r ? <div className="deleted-offer">Nabídka smazána</div> : ''} />
+						Kód: <Field field="code" />
+						<Stack direction="horizontal">
+							<TextField label="Název nabídky" field="name" />
+							<TextField label="Název nabídky v Ukrajinštině" field="nameUK" />
+						</Stack>
+						<OfferParametersForm />
 					</Stack>
-					<OfferParametersForm />
-				</Section>
+				</div>
 			</>
 		)
 	},
