@@ -93,7 +93,10 @@ export const OffersGrid = (
 											field={`parameters(question.id='${question.id}').values`}
 											header={question.label}
 											createWhere={(query) => ({
-												value: query,
+												or: [
+													{ value: query },
+													{ specification: query }
+												]
 											})}
 											render={({ entities }) => (
 												<>
