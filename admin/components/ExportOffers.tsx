@@ -1,6 +1,6 @@
-import * as React from 'react'
 import { Button, Component, useCurrentContentGraphQlClient } from '@contember/admin'
 import Papa from 'papaparse'
+import * as React from 'react'
 import { QuestionQueryResult } from './OffersGrid'
 
 
@@ -135,7 +135,7 @@ export const ExportOffers = Component<{ dataGridProps: any, listQuestion: Questi
 						setTimeout(async () => setOffers(await handler()), 1500)
 					}}
 					distinction="outlined"
-					isLoading={prepareDownload}
+					loading={prepareDownload}
 				>
 					Export
 				</Button>

@@ -1,6 +1,6 @@
-import * as React from "react"
 import { Button, Component, useCurrentContentGraphQlClient } from "@contember/admin"
 import Papa from "papaparse"
+import * as React from "react"
 
 const LIST_ORGANIZATION_MANAGERS_QUERY = `
 	query {
@@ -47,7 +47,7 @@ export const ExportOrganizationManagers = Component(
 						setTimeout(async () => setOrganizationManagers(await handler()), 1500)
 					}}
 					distinction="outlined"
-					isLoading={prepareDownload}
+					loading={prepareDownload}
 				>
 					Export
 				</Button>

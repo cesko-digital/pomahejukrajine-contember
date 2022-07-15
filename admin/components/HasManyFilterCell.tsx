@@ -5,7 +5,7 @@ import {
 	DataGridColumn,
 	DataGridHeaderCellPublicProps,
 	EntityAccessor,
-	Field,
+	FieldContainer,
 	FieldFallbackViewPublicProps,
 	Filter,
 	HasMany,
@@ -14,7 +14,7 @@ import {
 	Select,
 	SugaredRelativeEntityList,
 	TextInput,
-	wrapFilterInHasOnes,
+	wrapFilterInHasOnes
 } from '@contember/admin'
 import React, { ComponentType, FunctionComponent, ReactNode } from 'react'
 import { NestedHasMany } from './NestedHasMany'
@@ -142,35 +142,40 @@ export const HasManyFilterCell: FunctionComponent<HasManyFilterCellProps> = Comp
 				]
 				return (
 					<>
-						<Checkbox
-							value={filter.onlyHasNone}
-							onChange={(checked) => setFilter({ ...filter, onlyHasNone: checked })}
+						<FieldContainer
+							label="Zahrnout prázdné"
+							labelPosition="labelInlineRight"
 						>
-							Zahrnout prázdné
-						</Checkbox>
+							<Checkbox
+								notNull
+								value={filter.onlyHasNone}
+								onChange={(checked) => setFilter({ ...filter, onlyHasNone: !!checked })}
+							/>
+						</FieldContainer>
 
 						<div style={{ display: 'flex', gap: '0.5em', alignItems: 'center', marginTop: '1em' }}>
 							<Select
+								notNull
 								value={filter.mode}
 								options={options}
-								onChange={(e) => {
-									const value = e.currentTarget.value as TextFilterArtifacts['mode']
-
-									setFilter({
-										...filter,
-										mode: value,
-									})
+								onChange={(value) => {
+									if (value) {
+										setFilter({
+											...filter,
+											mode: value,
+										})
+									}
 								}}
 								disabled={filter.onlyHasNone}
 							/>
 							<TextInput
+								notNull
 								value={filter.query}
 								placeholder="Query"
-								onChange={(e) => {
-									const value = e.currentTarget.value
+								onChange={(value) => {
 									setFilter({
 										...filter,
-										query: value,
+										query: value ?? '',
 									})
 								}}
 								disabled={filter.onlyHasNone}
