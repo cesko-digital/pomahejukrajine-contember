@@ -51,7 +51,7 @@ export const ExportOrganization = Component(
 						setTimeout(async () => setOrganization(await handler()), 1500)
 					}}
 					distinction="outlined"
-					isLoading={prepareDownload}
+					loading={prepareDownload}
 				>
 					Export
 				</Button>
