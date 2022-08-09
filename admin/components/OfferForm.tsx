@@ -224,11 +224,11 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 								<EntityView
 									render={(entity) => (
 										<Stack direction="horizontal">
-											<TextInput
+											<TextareaInput
 											value={getParameter(entity) as string}
 											onChange={value => setParameter(entity, value ?? null)}
 										/>
-											<TextInput value={getParameter<string>(entity, 'valueUK')} onChange={value => setParameter(entity, value ?? null, 'valueUK')} />
+											<TextareaInput value={getParameter<string>(entity, 'valueUK')} onChange={value => setParameter(entity, value ?? null, 'valueUK')} />
 										</Stack>
 									)}
 								/>
@@ -286,7 +286,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 													.find(it => it.getField<string>('value').value === getParameter(entity))
 													?.getField<boolean>('requireSpecification').value!
 												&& (
-													<TextInput
+													<TextareaInput
 														value={getParameter(entity, 'specification') as string}
 														onChange={value => setParameter(entity, value ?? null, 'specification')}
 													/>
@@ -317,7 +317,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 														</FieldContainer>
 														{optionEntity.getField<boolean>('requireSpecification').value && (
 															<Stack direction="horizontal">
-																<TextInput
+																<TextareaInput
 																	notNull
 																	value={getParametersSpecification(questionEntity, value)}
 																	onChange={nextValue => {
@@ -326,7 +326,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 																		}
 																	}}
 																/>
-																<TextInput
+																<TextareaInput
 																	notNull
 																	value={getParametersSpecification(questionEntity, value, 'specificationUK')}
 																	onChange={nextValue => {
