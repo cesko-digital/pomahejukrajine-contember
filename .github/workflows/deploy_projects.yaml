@@ -1,4 +1,4 @@
-name: Deploy projects
+name: Deploy projects to Contember Cloud
 
 on:
   push:
@@ -16,53 +16,29 @@ jobs:
       - name: Detect Stage        # refs/heads/deploy/beta -> beta
         run: 'echo "STAGE=${GITHUB_REF: -4}" >> $GITHUB_ENV'
 
-      - name: Setup repo
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      # - name: Check that deploy branch is behind main
-      #   run: git merge-base --is-ancestor HEAD refs/remotes/origin/main
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Install dependencies
-        run: npm ci --also=dev
-
-      - name: TypeScript
-        run: node_modules/.bin/tsc
+        run: npm ci
 
       - name: Validate Schema
-        uses: docker://contember/cli:1.1.0-beta.2
+        uses: docker://contember/cli:1.1
         with:
           args: project:validate .
 
-      - name: Build Admin
+      - name: Deploy Beta
+        if: ${{ env.STAGE == 'beta' }}
         env:
           NODE_ENV: production
           VITE_USER_NODE_ENV: production
-          VITE_CONTEMBER_ADMIN_API_BASE_URL: '/_api'
-          VITE_CONTEMBER_ADMIN_SESSION_TOKEN: '__SESSION_TOKEN__'
           VITE_CONTEMBER_ADMIN_SENTRY_DSN: ${{ secrets.ADMIN_SENTRY_DSN }}
-          VITE_CONTEMBER_ADMIN_TYPESENSE_HOST: u1pwsqakrc6h89f2p-1.a1.typesense.net
-          VITE_CONTEMBER_ADMIN_TYPESENSE_PORT: 443
-          VITE_CONTEMBER_ADMIN_TYPESENSE_PROTOCOL: https
-        run: node_modules/.bin/vite build "admin" --base "/ukrajina/"
-
-      - name: Deploy Beta
-        if: ${{ env.STAGE == 'beta' }}
-        uses: docker://contember/cli:1.1.0-beta.2
-        env:
-          CONTEMBER_API_URL: https://api.ukrajina-beta.contember.cz
-          CONTEMBER_API_TOKEN: ${{ secrets.CONTEMBER_BETA_API_TOKEN }}
-          CONTEMBER_PROJECT_NAME: ukrajina
-        with:
-          args: deploy ukrajina --admin https://ukrajina-beta.contember.cz --yes
+        run: npm run -- deploy ${{ secrets.CLOUD_BETA_DSN }} --yes
 
       - name: Deploy Prod
         if: ${{ env.STAGE == 'prod' }}
-        uses: docker://contember/cli:1.1.0-beta.2
         env:
-          CONTEMBER_API_URL: https://api.ukrajina.contember.cz
-          CONTEMBER_API_TOKEN: ${{ secrets.CONTEMBER_PROD_API_TOKEN }}
-          CONTEMBER_PROJECT_NAME: ukrajina
-        with:
-          args: deploy ukrajina --admin https://ukrajina.contember.cz --yes
+          NODE_ENV: production
+          VITE_USER_NODE_ENV: production
+          VITE_CONTEMBER_ADMIN_SENTRY_DSN: ${{ secrets.ADMIN_SENTRY_DSN }}
+        run: npm run -- deploy ${{ secrets.CLOUD_PROD_DSN }} --yes

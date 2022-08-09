@@ -18,12 +18,12 @@ if (typeof sentryDsn === 'string') {
 	});
 }
 const apiBaseUrl = import.meta.env.VITE_CONTEMBER_ADMIN_API_BASE_URL as string
-const loginTOken = import.meta.env.VITE_CONTEMBER_ADMIN_LOGIN_TOKEN as string
-if (window.location.hash === '#login') {
+const loginToken = import.meta.env.VITE_CONTEMBER_ADMIN_LOGIN_TOKEN as string
+if (window.location.hash === '#login' && loginToken) {
 	runReactApp(
 		<LoginEntrypoint
 			apiBaseUrl={apiBaseUrl}
-			loginToken={loginTOken}
+			loginToken={loginToken}
 			projects={[import.meta.env.VITE_CONTEMBER_ADMIN_PROJECT_NAME]}
 			formatProjectUrl={it => `/${it.slug}/`}
 		/>,
@@ -47,7 +47,7 @@ if (window.location.hash === '#login') {
 			{/* <CollaborationClientProvider> */}
 				<Pages
 					layout={Layout}
-					children={import.meta.glob('./pages/**/*.tsx')}
+					children={import.meta.globEager('./pages/**/*.tsx')}
 				/>
 			{/* </CollaborationClientProvider> */}
 		</ApplicationEntrypoint>,
