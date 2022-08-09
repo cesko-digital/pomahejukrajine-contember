@@ -2,5 +2,5 @@
 /admin/dist
 /node_modules
 /docker-compose.override.yaml
-.env
-.env.*
+/admin/.env.local
+/admin/.env.*.local
