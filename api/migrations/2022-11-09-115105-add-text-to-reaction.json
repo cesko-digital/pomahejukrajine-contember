@@ -1,0 +1,36 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createColumn",
+			"entityName": "Reaction",
+			"field": {
+				"name": "text",
+				"columnName": "text",
+				"columnType": "text",
+				"nullable": true,
+				"type": "String"
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Reaction/operations/create/text",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Reaction/operations/update/text",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Reaction/operations/read/text",
+					"value": true
+				}
+			]
+		}
+	]
+}

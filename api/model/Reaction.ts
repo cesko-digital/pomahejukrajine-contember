@@ -6,6 +6,7 @@ export class Reaction {
 	createdAt = def.dateTimeColumn().notNull().default('now')
 	email = def.stringColumn().notNull()
 	phone = def.stringColumn().notNull().default('')
+	text = def.stringColumn()
 	secretCode = def.stringColumn().unique()
 	verified = def.boolColumn().default(false).notNull()
 	volunteerNotified = def.boolColumn().notNull().default(false)
