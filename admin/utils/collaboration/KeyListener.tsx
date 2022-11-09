@@ -1,9 +1,10 @@
+import { EntityId } from '@contember/admin'
 import * as React from 'react'
 import { CollaborationClientContext } from './CollaborationClientContext'
 import { hasOwnProperty, JsonObject } from "./utils"
 
 interface CollaborationKeyListenerProps {
-	collaborationKey: string
+	collaborationKey: EntityId
 	children: (keyData: KeyData | undefined) => React.ReactElement
 }
 

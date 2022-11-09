@@ -16,7 +16,7 @@ export const Navigation = () => (
 				</RoleConditional>
 			</Menu.Item>
 			<Menu.Item title="Nabídky">
-				<DataBindingProvider stateComponent={FeedbackRenderer} refreshOnEnvironmentChange={false}>
+				<DataBindingProvider stateComponent={FeedbackRenderer}>
 					<EntityListSubTree entities="OfferType" orderBy="order">
 						<FieldView
 							fields={["name", "id"]}

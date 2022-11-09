@@ -185,7 +185,7 @@ export const OffersGrid = (
 					</RoleConditional>
 				</>
 			}>
-				<DataBindingProvider stateComponent={FeedbackRenderer} refreshOnEnvironmentChange={false}>
+				<DataBindingProvider stateComponent={FeedbackRenderer}>
 					<div className='data-grid-container'>
 						<ControlledDataGrid {...dataGridProps} />
 					</div>

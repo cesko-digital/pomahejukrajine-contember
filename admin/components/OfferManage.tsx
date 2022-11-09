@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Component, Field, HasMany, useAuthedContentMutation, useEntity, useEnvironment, useIdentity, useRedirect } from '@contember/admin'
+import { Button, Component, EntityId, Field, HasMany, useAuthedContentMutation, useEntity, useEnvironment, useIdentity, useRedirect } from '@contember/admin'
 
 export const OfferManage = Component(
 	() => {
@@ -10,7 +10,7 @@ export const OfferManage = Component(
 		const [assignSelf] = useAuthedContentMutation<{
 			ok: boolean
 			errorMessage?: string
-		}, { personId: string, offerId: string }>(`
+		}, { personId: string, offerId: EntityId }>(`
 mutation($offerId: UUID!, $personId: UUID!) {
 	updateOffer(by: {id: $offerId}, data: {assignees: {connect: {personId: $personId}}}) {
 		ok
@@ -27,7 +27,7 @@ mutation($offerId: UUID!, $personId: UUID!) {
 		const [unassignSelf] = useAuthedContentMutation<{
 			ok: boolean
 			errorMessage?: string
-		}, { offerId: string, personId: string }>(`
+		}, { offerId: EntityId, personId: string }>(`
 mutation($offerId: UUID!, $personId: UUID!) {
 	updateOffer(by: {id: $offerId}, data: {assignees: {disconnect: {personId: $personId}}}) {
 		ok

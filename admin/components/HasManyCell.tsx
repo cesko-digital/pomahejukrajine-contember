@@ -6,6 +6,7 @@ import {
 	DataGridColumn,
 	DataGridHeaderCellPublicProps,
 	Entity,
+	EntityId,
 	EntityListSubTree,
 	FieldContainer,
 	HasMany,
@@ -28,7 +29,7 @@ export type HasManyCellProps = DataGridHeaderCellPublicProps &
 }
 
 type HasManyCellFilterState = {
-	ids: string[]
+	ids: EntityId[]
 	combinator: 'or' | 'and'
 }
 

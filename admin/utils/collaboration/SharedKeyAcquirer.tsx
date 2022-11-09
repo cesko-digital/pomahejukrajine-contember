@@ -1,9 +1,10 @@
+import { EntityId } from '@contember/admin'
 import * as React from 'react'
 import { CollaborationClientContext } from './CollaborationClientContext'
 import { JsonObject } from './utils'
 
 interface SharedKeyAcquirerProps {
-	collaborationKey: string
+	collaborationKey: EntityId
 	value?: JsonObject
 }
 
