@@ -88,31 +88,44 @@ export const OffersGrid = (
 									)
 								} else if (["checkbox"].includes(question.type)) {
 									return (
-										<HasManyFilterCell
-											key={question.id}
-											field={`parameters(question.id='${question.id}').values`}
-											header={question.label}
-											createWhere={(query) => ({
-												or: [
-													{ value: query },
-													{ specification: query }
-												]
-											})}
-											render={({ entities }) => (
-												<>
-													{entities.map((entity) => (
-														<React.Fragment key={entity.key}>
-															{entity.getField('value').value}
-															{' '}<SpecificationValue entity={entity} />
-															<br />
-														</React.Fragment>
-													))}
-												</>
-											)}
-										>
-											<Field field={`value`} />
-											<Field field={`specification`} />
-										</HasManyFilterCell>
+										<>
+											<HasManyFilterCell
+												key={question.id}
+												field={`parameters(question.id='${question.id}').values`}
+												header={question.label}
+												createWhere={(query) => ({ value: query })}
+												render={({ entities }) => (
+													<>
+														{entities.map((entity) => (
+															<React.Fragment key={entity.key}>
+																{entity.getField('value').value}
+																{' '}<SpecificationValue entity={entity} />
+																<br />
+															</React.Fragment>
+														))}
+													</>
+												)}
+											>
+												<Field field={`value`} />
+											</HasManyFilterCell>
+											<HasManyFilterCell
+												key={question.id + 'specification'}
+												field={`parameters(question.id='${question.id}').values`}
+												header={question.label + ' specifikace'}
+												createWhere={(query) => ({ specification: query })}
+												render={({ entities }) => (
+													<>
+														{entities.map((entity) => (
+															<React.Fragment key={entity.key}>
+																<SpecificationValue entity={entity} />
+															</React.Fragment>
+														))}
+													</>
+												)}
+											>
+												<Field field={`specification`} />
+											</HasManyFilterCell>
+										</>
 									)
 								} else if (["district"].includes(question.type)) {
 									return (
