@@ -97,10 +97,8 @@ export const OffersGrid = (
 												render={({ entities }) => (
 													<>
 														{entities.map((entity) => (
-															<React.Fragment key={entity.key}>
-																{entity.getField('value').value}
-															</React.Fragment>
-														))}
+															entity.getField('value').value
+														)).join(', ')}
 													</>
 												)}
 											>
@@ -113,10 +111,8 @@ export const OffersGrid = (
 												createWhere={(query) => ({ specification: query })}
 												render={({ entities }) => (
 													<>
-														{entities.map((entity) => (
-															<React.Fragment key={entity.key}>
-																<SpecificationValue entity={entity} />
-															</React.Fragment>
+														{entities.map((entity, index) => (
+															<SpecificationValue key={index} entity={entity} />
 														))}
 													</>
 												)}
