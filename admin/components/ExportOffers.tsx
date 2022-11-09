@@ -37,6 +37,9 @@ const LIST_LIST_OFFER_QUERY = `
 				values {
 					value
 					specification
+					district {
+						name
+					}
 				}
 			}
 		}
@@ -65,7 +68,7 @@ type Offer = {
 		}
 		value: string
 		specification: string
-		values: { value: string, specification: string }[]
+		values: { value: string, specification: string, district: { name: string } }[]
 	}[]
 }
 
@@ -90,7 +93,7 @@ export const ExportOffers = Component<{ dataGridProps: any, listQuestion: Questi
 						offer.assignees.map((assignee: { name: string }) => assignee.name).join(', '),
 						offer.status?.name,
 						offer.volunteer.languages.map(((language) => language.language.name)).join(', '),
-						...listQuestion.map(question => {
+						...listQuestion.flatMap(question => {
 							if (["text", "textarea", "date", "radio", "number"].includes(question.type)) {
 								const parameter = offer.parameters.find(parameter => parameter.question.id === question.id)
 								if (!parameter) {
@@ -101,18 +104,32 @@ export const ExportOffers = Component<{ dataGridProps: any, listQuestion: Questi
 								)
 							} else if (["checkbox"].includes(question.type)) {
 								return (
-									offer.parameters.find(parameter => parameter.question.id === question.id)?.values.map(value => value.specification ? `${value.value} (${value.specification})` : value.value).join(', ')
+									offer.parameters
+										.find(parameter => parameter.question.id === question.id)?.values
+										.map(value => value.specification ? `${value.value} (${value.specification})` : value.value)
+										.join(', ')
 								)
 							} else if (["district"].includes(question.type)) {
-								return (
-									offer.parameters.find(parameter => parameter.question.id === question.id)?.values.map(value => value.value).join(', ')
-								)
+								return ([
+									offer.parameters
+										.find(parameter => parameter.question.id === question.id)?.values
+										.map(value => value.value).join(', '),
+									offer
+										.parameters
+										.find(parameter => parameter.question.id === question.id)?.values
+										.map(value => value.district.name).join(', '),
+								])
+
 							} else {
 								return null
 							}
 						}).filter(item => item !== null),
 					])
 				})
+
+				console.log({ csv })
+
+
 				const myCsv = Papa.unparse(csv, { delimiter: ';' })
 				const blob = new Blob([myCsv], { type: 'text/csv;charset=utf-8;' })
 				const url = URL.createObjectURL(blob)
@@ -125,7 +142,9 @@ export const ExportOffers = Component<{ dataGridProps: any, listQuestion: Questi
 
 		if (objectUrl) {
 			return (
-				<a href={objectUrl} download="offers.csv"><Button distinction="outlined">Stáhnout</Button></a>
+				<a href={objectUrl} download="offers.csv">
+					<Button distinction="outlined">Stáhnout</Button>
+				</a>
 			)
 		} else {
 			return (
