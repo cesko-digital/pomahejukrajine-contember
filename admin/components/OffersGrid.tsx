@@ -99,8 +99,6 @@ export const OffersGrid = (
 														{entities.map((entity) => (
 															<React.Fragment key={entity.key}>
 																{entity.getField('value').value}
-																{' '}<SpecificationValue entity={entity} />
-																<br />
 															</React.Fragment>
 														))}
 													</>
