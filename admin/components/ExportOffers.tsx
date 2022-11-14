@@ -39,6 +39,9 @@ const LIST_LIST_OFFER_QUERY = `
 					specification
 					district {
 						name
+						region {
+							name
+						}
 					}
 				}
 			}
@@ -68,7 +71,7 @@ type Offer = {
 		}
 		value: string
 		specification: string
-		values: { value: string, specification: string, district: { name: string } }[]
+		values: { value: string, specification: string, district: { name: string, region: { name: string } } }[]
 	}[]
 }
 
@@ -114,10 +117,6 @@ export const ExportOffers = Component<{ dataGridProps: any, listQuestion: Questi
 									offer.parameters
 										.find(parameter => parameter.question.id === question.id)?.values
 										.map(value => value.value).join(', '),
-									offer
-										.parameters
-										.find(parameter => parameter.question.id === question.id)?.values
-										.map(value => value.district.name).join(', '),
 								])
 
 							} else {
