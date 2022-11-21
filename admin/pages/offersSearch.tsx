@@ -158,7 +158,7 @@ export default () => {
 								<strong>Stav</strong>
 							</summary>
 							<RefinementList
-								attribute="status_name"
+								attribute="status_name_facet"
 								limit={10}
 								showMore
 								translations={{
