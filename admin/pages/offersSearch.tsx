@@ -18,6 +18,7 @@ import {
 } from "react-instantsearch-dom";
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 import { QuestionQueryResult } from "../components/OffersGrid";
+import { parseIdFromFacetName } from "../utils/search/parseIdFromFacetName";
 
 const LIST_QUESTION_QUERY = `
 	query ($id: UUID!) {
@@ -33,26 +34,30 @@ const LIST_QUESTION_QUERY = `
 	}
 `;
 
-function parseIdFromFacetName(facetName: string): string | null {
-	const regex = /^parameter_(.*)_facet$/;
-	const match = regex.exec(facetName);
-	return match ? match[1] : null;
-}
+const GET_TYPESENSE_SEARCH_TOKEN = `
+	{
+		token: getTypesenseSearchToken(by: { unique: One }) {
+			token
+		}
+	}
+`;
+
+type AuthedContent = { token?: { token: string } };
 
 export default () => {
-	const { state: apiTokenQuery } = useAuthedContentQuery<
-		{ token?: { token: string } },
+	const { state: apiTokenQuery } = useAuthedContentQuery<AuthedContent, {}>(
+		GET_TYPESENSE_SEARCH_TOKEN,
 		{}
-	>("{ token: getTypesenseSearchToken(by: { unique: One }) { token } }", {});
+	);
 	const token =
 		(apiTokenQuery.state === "success"
 			? apiTokenQuery.data?.token?.token
 			: null) ?? null;
 
 	const env = useEnvironment();
-
 	const req = useCurrentRequest();
 	const offerTypeId = req?.parameters.id as string;
+
 	const { state: query } = useAuthedContentQuery<
 		QuestionQueryResult,
 		{ id: string }
@@ -80,6 +85,7 @@ export default () => {
 					"volunteer_phone",
 					"volunteer_name",
 					...query.data.listQuestion
+						.filter((it) => ["checkbox", "radio", "district"].includes(it.type))
 						.filter(
 							(question) =>
 								![
@@ -173,17 +179,21 @@ export default () => {
 									to={`editOffer(id:'${hit.hit.id}')`}
 									style={{ color: "black", flexGrow: 1 }}
 								>
-									{query.data.listQuestion.map((question) => (
-										<div key={question.id}>
-											<strong>{question.label}: </strong>
-											<span>
-												<Highlight
-													attribute={`parameter_${question.id}`}
-													hit={hit.hit}
-												/>
-											</span>
-										</div>
-									))}
+									{query.data.listQuestion
+										.filter((it) =>
+											["checkbox", "radio", "district"].includes(it.type)
+										)
+										.map((question) => (
+											<div key={question.id}>
+												<strong>{question.label}: </strong>
+												<span>
+													<Highlight
+														attribute={`parameter_${question.id}`}
+														hit={hit.hit}
+													/>
+												</span>
+											</div>
+										))}
 									{hit.hit.logs?.length > 0 && (
 										<p>
 											<strong>Log: </strong>
