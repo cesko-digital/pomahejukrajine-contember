@@ -94,6 +94,7 @@ export default () => {
 								].includes(question.id)
 						)
 						.map((question) => `parameter_${question.id}`),
+					"status_name",
 				].join(","),
 			} as any,
 		});
@@ -152,6 +153,21 @@ export default () => {
 									/>
 								</details>
 							))}
+						<details>
+							<summary>
+								<strong>Stav</strong>
+							</summary>
+							<RefinementList
+								attribute="status_name"
+								limit={10}
+								showMore
+								translations={{
+									showMore: "Více možností",
+									placeholder: "Hledat",
+									noResults: "Žádné výsledky",
+								}}
+							/>
+						</details>
 					</div>
 
 					<Stats
