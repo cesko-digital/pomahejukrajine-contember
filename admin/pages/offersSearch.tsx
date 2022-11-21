@@ -158,7 +158,7 @@ export default () => {
 								<strong>Stav</strong>
 							</summary>
 							<RefinementList
-								attribute="volunteer_email"
+								attribute="status_name"
 								limit={10}
 								showMore
 								translations={{
