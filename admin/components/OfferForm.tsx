@@ -741,6 +741,12 @@ export const OfferForm = Component(() => {
 				field="status"
 				allowNull
 			/>
+			<FieldContainer label="Datum poslední úpravy nabídky">
+				<FieldView
+					field="updatedAt"
+					render={(date) => dateFormat.format(new Date(date.value as string))}
+				/>
+			</FieldContainer>
 			<FieldContainer label="Datum vložení nabídky">
 				<FieldView
 					field="createdAt"

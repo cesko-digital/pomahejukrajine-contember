@@ -10,6 +10,7 @@ import {
 	PersistButton,
 	RichTextField,
 	Section,
+	usePersist,
 } from "@contember/admin";
 import * as React from "react";
 import { Conditional } from "../components/Conditional";
@@ -22,6 +23,10 @@ import "./offerEdit.sass";
 export default (
 	<EditPage
 		entity="Offer(id=$id)"
+		onBeforePersist={(entityAccessor) => {
+			const updatedAt = entityAccessor().getField("updatedAt");
+			updatedAt.updateValue("now");
+		}}
 		rendererProps={{
 			title: <Field field="type.name" />,
 			navigation: (

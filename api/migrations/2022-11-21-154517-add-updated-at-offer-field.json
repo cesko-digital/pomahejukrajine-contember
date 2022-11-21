@@ -1,0 +1,83 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "createColumn",
+			"entityName": "Offer",
+			"field": {
+				"name": "updatedAt",
+				"columnName": "updated_at",
+				"columnType": "timestamptz",
+				"nullable": false,
+				"type": "DateTime",
+				"default": "now"
+			},
+			"copyValue": "createdAt"
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/create/updatedAt",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/update/updatedAt",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/admin/entities/Offer/operations/read/updatedAt",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/update/updatedAt",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/read/updatedAt",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/volunteer/entities/Offer/operations/create/updatedAt",
+					"value": "self"
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationManager/entities/Offer/operations/read/updatedAt",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Offer/operations/read/updatedAt",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Offer/operations/update/updatedAt",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Offer/operations/create/updatedAt",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/Offer/operations/read/updatedAt",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/callcenterAPI/entities/Offer/operations/update/updatedAt",
+					"value": true
+				}
+			]
+		}
+	]
+}
