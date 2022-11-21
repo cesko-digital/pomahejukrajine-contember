@@ -13,6 +13,7 @@ import {
 	HasOneSelectCell,
 	LinkButton,
 	NumberCell,
+	RichTextRenderer,
 	TextCell,
 	useDataGrid,
 } from "@contember/admin";
@@ -31,21 +32,6 @@ export type QuestionQueryResult = {
 		options: { label: string; value: string }[];
 	}[];
 };
-
-function parseJSON(json: string) {
-	try {
-		var parsedText = "";
-		var parsedJSON = JSON.parse(json);
-		for (var text in parsedJSON.children) {
-			parsedText += parsedJSON.children[text].text
-				? parsedJSON.children[text].text
-				: "";
-		}
-		return parsedText;
-	} catch (e) {
-		return null;
-	}
-}
 
 const SpecificationValue = ({ entity }: any) => {
 	const specification = entity.getField("specification").value;
@@ -223,7 +209,7 @@ export const OffersGrid = ({
 						})
 						.filter((item) => item !== null)}
 					<GenericCell header="Interní poznámka">
-						<FieldView
+						<FieldView<string>
 							field="internalNote"
 							render={(accessor) => (
 								<span
@@ -234,7 +220,7 @@ export const OffersGrid = ({
 										fontSize: "12px",
 									}}
 								>
-									{parseJSON(accessor.value as string)}
+									<RichTextRenderer source={accessor.value} />
 								</span>
 							)}
 						/>
