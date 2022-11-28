@@ -9,7 +9,7 @@
 					"path": "/roles/public/entities/Question/predicates/isPublic",
 					"value": {
 						"public": {
-							"eq": "true"
+							"eq": true
 						}
 					}
 				},
