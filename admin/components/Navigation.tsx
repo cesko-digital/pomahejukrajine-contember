@@ -29,6 +29,7 @@ export const Navigation = () => (
 			</Menu.Item>
 			<RoleConditional role={['admin', 'organizationAdmin']}>
 				<Menu.Item title="Nastavení">
+					<Menu.Item title="Přehled reakcí" to="reactionList" />
 					<Menu.Item title="Typy nabídek" to="offerTypes" />
 					<Menu.Item title="Tagy dobrovolníků" to="tags" />
 					<Menu.Item title="Kraje" to="districts" />
