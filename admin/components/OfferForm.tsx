@@ -24,6 +24,7 @@ import {
 	TextareaField,
 	TextareaInput,
 	TextField,
+	useEntity,
 	useEntityBeforePersist,
 	useEntityList,
 	useEntityListSubTree,
@@ -32,6 +33,7 @@ import {
 import { Conditional } from "./Conditional";
 import * as React from "react";
 import Select from "react-select";
+import generateUniqueCode from "../utils/generateUniqueCode";
 
 type OfferParametersFormProps = {
 	currentType?: boolean;
@@ -245,8 +247,7 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 		return (
 			<>
 				{!currentType && (
-					
-					<div style={{maxWidth: '770px'}}>
+					<div style={{ maxWidth: "770px" }}>
 						<SelectField
 							label="Typ nabídky"
 							field="type"
@@ -735,8 +736,64 @@ const LogForm = Component(
 	}
 );
 
-export const OfferForm = Component(() => {
-	return (
+export const OfferForm = Component(
+	() => {
+		const allOffers = useEntityListSubTree("allOffers");
+		const allOfferCodes = Array.from(allOffers).map(
+			(offer) => offer.getField<string>("code").value
+		);
+		const entity = useEntity();
+		const code = entity.getField("code");
+		if (!code.valueOnServer && !code.value) {
+			code.updateValue(generateUniqueCode(6, allOfferCodes));
+		}
+		return (
+			<>
+				<SelectField
+					label="Stav nabídky"
+					options="OfferStatus.name"
+					field="status"
+					allowNull
+				/>
+				<FieldContainer label="Datum poslední úpravy nabídky">
+					<FieldView
+						field="updatedAt"
+						render={(date) => dateFormat.format(new Date(date.value as string))}
+					/>
+				</FieldContainer>
+				<FieldContainer label="Datum vložení nabídky">
+					<FieldView
+						field="createdAt"
+						render={(date) => dateFormat.format(new Date(date.value as string))}
+					/>
+				</FieldContainer>
+				<LogForm />
+				<div>
+					<h2>Nabídka</h2>
+					<Stack direction="vertical">
+						{entity.existsOnServer && (
+							<Link to="editOffer(id: $entity.id)">
+								Přejít na detail nabídky
+							</Link>
+						)}
+						<Field
+							field="isDeleted"
+							format={(r) =>
+								r ? <div className="deleted-offer">Nabídka smazána</div> : ""
+							}
+						/>
+						Kód: <Field field="code" />
+						<Stack direction="horizontal">
+							<TextField label="Název nabídky" field="name" />
+							<TextField label="Název nabídky v Ukrajinštině" field="nameUK" />
+						</Stack>
+						<OfferParametersForm />
+					</Stack>
+				</div>
+			</>
+		);
+	},
+	() => (
 		<>
 			<SelectField
 				label="Stav nabídky"
@@ -744,37 +801,18 @@ export const OfferForm = Component(() => {
 				field="status"
 				allowNull
 			/>
-			<FieldContainer label="Datum poslední úpravy nabídky">
-				<FieldView
-					field="updatedAt"
-					render={(date) => dateFormat.format(new Date(date.value as string))}
-				/>
-			</FieldContainer>
-			<FieldContainer label="Datum vložení nabídky">
-				<FieldView
-					field="createdAt"
-					render={(date) => dateFormat.format(new Date(date.value as string))}
-				/>
-			</FieldContainer>
+			<Field field="updatedAt" />
+			<Field field="createdAt" />
+			<Field field="isDeleted" />
+			<Field field="code" />
+			<Field field="name" />
+			<Field field="nameUK" />
 			<LogForm />
-			<div>
-				<h2>Nabídka</h2>
-				<Stack direction="vertical">
-					<Link to="editOffer(id: $entity.id)">Přejít na detail nabídky</Link>
-					<Field
-						field="isDeleted"
-						format={(r) =>
-							r ? <div className="deleted-offer">Nabídka smazána</div> : ""
-						}
-					/>
-					Kód: <Field field="code" />
-					<Stack direction="horizontal">
-						<TextField label="Název nabídky" field="name" />
-						<TextField label="Název nabídky v Ukrajinštině" field="nameUK" />
-					</Stack>
-					<OfferParametersForm />
-				</Stack>
-			</div>
+			<OfferParametersForm />
+			<EntityListSubTree entities={`Offer`} alias="allOffers">
+				<Field field="code" />
+			</EntityListSubTree>
 		</>
-	);
-}, "OfferForm");
+	),
+	"OfferForm"
+);
