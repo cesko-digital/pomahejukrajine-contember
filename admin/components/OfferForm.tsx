@@ -245,33 +245,36 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 		return (
 			<>
 				{!currentType && (
-					<SelectField
-						label="Typ nabídky"
-						field="type"
-						options="OfferType"
-						renderOption={(option) => {
-							const infoText = option.getField<string>("infoText").value;
-							return (
-								option.getField("name").value +
-								(infoText ? ` (${infoText})` : "")
-							);
-						}}
-						optionsStaticRender={
-							<>
-								<Field field="name" />
-								<Field field="infoText" />
-								<HasMany field="questions" orderBy="order">
-									<Field field="question" />
-									<Field field="required" />
-									<Field field="type" />
-									<HasMany field="options">
-										<Field field="label" />
-										<Field field="requireSpecification" />
+					
+					<div style={{maxWidth: '770px'}}>
+						<SelectField
+							label="Typ nabídky"
+							field="type"
+							options="OfferType"
+							renderOption={(option) => {
+								const infoText = option.getField<string>("infoText").value;
+								return (
+									option.getField("name").value +
+									(infoText ? ` (${infoText})` : "")
+								);
+							}}
+							optionsStaticRender={
+								<>
+									<Field field="name" />
+									<Field field="infoText" />
+									<HasMany field="questions" orderBy="order">
+										<Field field="question" />
+										<Field field="required" />
+										<Field field="type" />
+										<HasMany field="options">
+											<Field field="label" />
+											<Field field="requireSpecification" />
+										</HasMany>
 									</HasMany>
-								</HasMany>
-							</>
-						}
-					/>
+								</>
+							}
+						/>
+					</div>
 				)}
 				<Conditional showIf={(acc) => acc.getEntity("type").existsOnServer}>
 					<CurrentType currentType={currentType}>
