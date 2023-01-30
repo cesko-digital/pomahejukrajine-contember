@@ -76,6 +76,7 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 							status: true,
 							volunteer: true,
 							internalNote: true,
+							updatedAt: true
 						},
 					},
 				},
@@ -255,6 +256,7 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 						read: allField(model, 'OfferParameterValueDetails', true),
 						update: allField(model, 'OfferParameterValueDetails', true),
 						create: allField(model, 'OfferParameterValueDetails', true),
+						delete: true
 					}
 				},
 				OfferParameterValue: {
@@ -263,6 +265,7 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 						read: allField(model, 'OfferParameterValue', true),
 						update: allField(model, 'OfferParameterValue', true),
 						create: allField(model, 'OfferParameterValue', true),
+						delete: true
 					}
 				},
 				OfferStatus: {
@@ -279,6 +282,7 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 						read: allField(model, 'OfferParameter', true),
 						update: allField(model, 'OfferParameter', true),
 						create: allField(model, 'OfferParameter', true),
+						delete: true
 					}
 				},
 				OfferParameterDetails: {
