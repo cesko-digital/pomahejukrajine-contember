@@ -24,7 +24,6 @@ import {
 	TextareaField,
 	TextareaInput,
 	TextField,
-	useEntity,
 	useEntityBeforePersist,
 	useEntityList,
 	useEntityListSubTree,
@@ -33,7 +32,7 @@ import {
 import { Conditional } from "./Conditional";
 import * as React from "react";
 import Select from "react-select";
-import generateUniqueCode from "../utils/generateUniqueCode";
+import { RoleConditional } from './RoleConditional'
 
 type OfferParametersFormProps = {
 	currentType?: boolean;
@@ -738,15 +737,6 @@ const LogForm = Component(
 
 export const OfferForm = Component(
 	() => {
-		const allOffers = useEntityListSubTree("allOffers");
-		const allOfferCodes = Array.from(allOffers).map(
-			(offer) => offer.getField<string>("code").value
-		);
-		const entity = useEntity();
-		const code = entity.getField("code");
-		if (!code.valueOnServer && !code.value) {
-			code.updateValue(generateUniqueCode(6, allOfferCodes));
-		}
 		return (
 			<>
 				<SelectField
@@ -758,8 +748,39 @@ export const OfferForm = Component(
 				<FieldContainer label="Datum poslední úpravy nabídky">
 					<FieldView
 						field="updatedAt"
-						render={(date) => dateFormat.format(new Date(date.value as string))}
+						render={(date) => dateFormat.format(new Date(date.valueOnServer as string))}
 					/>
+				<EntityView
+					render={(entity) => {
+						React.useEffect(() => {
+							entity.getField("updatedAt").updateValue('now')
+						}, [])
+						return (
+							<RoleConditional role={["admin", "organizationAdmin"]}>
+								<FieldContainer
+									label="Zaznamenat datum aktualizace nabídky"
+									labelPosition="labelInlineRight"
+								>
+									<Checkbox
+										onChange={(value) => {
+											value
+												? entity
+														.getField("updatedAt")
+														.updateValue('now')
+												: entity
+														.getField("updatedAt")
+														.updateValue(
+															entity.getField("updatedAt").valueOnServer
+														);
+										}}
+										value={true}
+										defaultChecked
+									/>
+								</FieldContainer>
+							</RoleConditional>
+						);
+					}}
+				/>
 				</FieldContainer>
 				<FieldContainer label="Datum vložení nabídky">
 					<FieldView
@@ -771,11 +792,11 @@ export const OfferForm = Component(
 				<div>
 					<h2>Nabídka</h2>
 					<Stack direction="vertical">
-						{entity.existsOnServer && (
+						<If condition={(entity) => entity.existsOnServer}>
 							<Link to="editOffer(id: $entity.id)">
 								Přejít na detail nabídky
 							</Link>
-						)}
+						</If>
 						<Field
 							field="isDeleted"
 							format={(r) =>
@@ -793,26 +814,5 @@ export const OfferForm = Component(
 			</>
 		);
 	},
-	() => (
-		<>
-			<SelectField
-				label="Stav nabídky"
-				options="OfferStatus.name"
-				field="status"
-				allowNull
-			/>
-			<Field field="updatedAt" />
-			<Field field="createdAt" />
-			<Field field="isDeleted" />
-			<Field field="code" />
-			<Field field="name" />
-			<Field field="nameUK" />
-			<LogForm />
-			<OfferParametersForm />
-			<EntityListSubTree entities={`Offer`} alias="allOffers">
-				<Field field="code" />
-			</EntityListSubTree>
-		</>
-	),
 	"OfferForm"
 );
