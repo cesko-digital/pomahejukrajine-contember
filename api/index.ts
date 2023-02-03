@@ -6,6 +6,7 @@ import aclFactory from './acl'
 const model = SchemaDefinition.createModel(modelDefinition)
 
 const schema: Schema = {
+	settings: {},
 	model: model,
 	acl: aclFactory(model),
 	validation: InputValidation.parseDefinition(modelDefinition),
