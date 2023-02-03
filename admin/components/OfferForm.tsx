@@ -751,11 +751,7 @@ export const OfferForm = Component(
 						render={(date) => dateFormat.format(new Date(date.valueOnServer as string))}
 					/>
 				<EntityView
-					render={(entity) => {
-						React.useEffect(() => {
-							entity.getField("updatedAt").updateValue('now')
-						}, [])
-						return (
+					render={(entity) => 
 							<RoleConditional role={["admin", "organizationAdmin"]}>
 								<FieldContainer
 									label="Zaznamenat datum aktualizace nabídky"
@@ -773,13 +769,12 @@ export const OfferForm = Component(
 															entity.getField("updatedAt").valueOnServer
 														);
 										}}
-										value={true}
-										defaultChecked
+										value={undefined}
+										defaultChecked={false}
 									/>
 								</FieldContainer>
 							</RoleConditional>
-						);
-					}}
+					}
 				/>
 				</FieldContainer>
 				<FieldContainer label="Datum vložení nabídky">
