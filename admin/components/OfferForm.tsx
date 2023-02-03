@@ -32,6 +32,7 @@ import {
 import { Conditional } from "./Conditional";
 import * as React from "react";
 import Select from "react-select";
+import { RoleConditional } from './RoleConditional'
 
 type OfferParametersFormProps = {
 	currentType?: boolean;
@@ -245,33 +246,35 @@ export const OfferParametersForm = Component<OfferParametersFormProps>(
 		return (
 			<>
 				{!currentType && (
-					<SelectField
-						label="Typ nabídky"
-						field="type"
-						options="OfferType"
-						renderOption={(option) => {
-							const infoText = option.getField<string>("infoText").value;
-							return (
-								option.getField("name").value +
-								(infoText ? ` (${infoText})` : "")
-							);
-						}}
-						optionsStaticRender={
-							<>
-								<Field field="name" />
-								<Field field="infoText" />
-								<HasMany field="questions" orderBy="order">
-									<Field field="question" />
-									<Field field="required" />
-									<Field field="type" />
-									<HasMany field="options">
-										<Field field="label" />
-										<Field field="requireSpecification" />
+					<div style={{ maxWidth: "770px" }}>
+						<SelectField
+							label="Typ nabídky"
+							field="type"
+							options="OfferType"
+							renderOption={(option) => {
+								const infoText = option.getField<string>("infoText").value;
+								return (
+									option.getField("name").value +
+									(infoText ? ` (${infoText})` : "")
+								);
+							}}
+							optionsStaticRender={
+								<>
+									<Field field="name" />
+									<Field field="infoText" />
+									<HasMany field="questions" orderBy="order">
+										<Field field="question" />
+										<Field field="required" />
+										<Field field="type" />
+										<HasMany field="options">
+											<Field field="label" />
+											<Field field="requireSpecification" />
+										</HasMany>
 									</HasMany>
-								</HasMany>
-							</>
-						}
-					/>
+								</>
+							}
+						/>
+					</div>
 				)}
 				<Conditional showIf={(acc) => acc.getEntity("type").existsOnServer}>
 					<CurrentType currentType={currentType}>
@@ -732,46 +735,79 @@ const LogForm = Component(
 	}
 );
 
-export const OfferForm = Component(() => {
-	return (
-		<>
-			<SelectField
-				label="Stav nabídky"
-				options="OfferStatus.name"
-				field="status"
-				allowNull
-			/>
-			<FieldContainer label="Datum poslední úpravy nabídky">
-				<FieldView
-					field="updatedAt"
-					render={(date) => dateFormat.format(new Date(date.value as string))}
+export const OfferForm = Component(
+	() => {
+		return (
+			<>
+				<SelectField
+					label="Stav nabídky"
+					options="OfferStatus.name"
+					field="status"
+					allowNull
 				/>
-			</FieldContainer>
-			<FieldContainer label="Datum vložení nabídky">
-				<FieldView
-					field="createdAt"
-					render={(date) => dateFormat.format(new Date(date.value as string))}
-				/>
-			</FieldContainer>
-			<LogForm />
-			<div>
-				<h2>Nabídka</h2>
-				<Stack direction="vertical">
-					<Link to="editOffer(id: $entity.id)">Přejít na detail nabídky</Link>
-					<Field
-						field="isDeleted"
-						format={(r) =>
-							r ? <div className="deleted-offer">Nabídka smazána</div> : ""
-						}
+				<FieldContainer label="Datum poslední úpravy nabídky">
+					<FieldView
+						field="updatedAt"
+						render={(date) => dateFormat.format(new Date(date.valueOnServer as string))}
 					/>
-					Kód: <Field field="code" />
-					<Stack direction="horizontal">
-						<TextField label="Název nabídky" field="name" />
-						<TextField label="Název nabídky v Ukrajinštině" field="nameUK" />
+				<EntityView
+					render={(entity) => 
+							<RoleConditional role={["admin", "organizationAdmin"]}>
+								<FieldContainer
+									label="Zaznamenat datum aktualizace nabídky"
+									labelPosition="labelInlineRight"
+								>
+									<Checkbox
+										onChange={(value) => {
+											value
+												? entity
+														.getField("updatedAt")
+														.updateValue('now')
+												: entity
+														.getField("updatedAt")
+														.updateValue(
+															entity.getField("updatedAt").valueOnServer
+														);
+										}}
+										value={undefined}
+										defaultChecked={false}
+									/>
+								</FieldContainer>
+							</RoleConditional>
+					}
+				/>
+				</FieldContainer>
+				<FieldContainer label="Datum vložení nabídky">
+					<FieldView
+						field="createdAt"
+						render={(date) => dateFormat.format(new Date(date.value as string))}
+					/>
+				</FieldContainer>
+				<LogForm />
+				<div>
+					<h2>Nabídka</h2>
+					<Stack direction="vertical">
+						<If condition={(entity) => entity.existsOnServer}>
+							<Link to="editOffer(id: $entity.id)">
+								Přejít na detail nabídky
+							</Link>
+						</If>
+						<Field
+							field="isDeleted"
+							format={(r) =>
+								r ? <div className="deleted-offer">Nabídka smazána</div> : ""
+							}
+						/>
+						Kód: <Field field="code" />
+						<Stack direction="horizontal">
+							<TextField label="Název nabídky" field="name" />
+							<TextField label="Název nabídky v Ukrajinštině" field="nameUK" />
+						</Stack>
+						<OfferParametersForm />
 					</Stack>
-					<OfferParametersForm />
-				</Stack>
-			</div>
-		</>
-	);
-}, "OfferForm");
+				</div>
+			</>
+		);
+	},
+	"OfferForm"
+);

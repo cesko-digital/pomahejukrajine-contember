@@ -10,7 +10,7 @@ import {
 	PersistButton,
 	RichTextField,
 	Section,
-	usePersist,
+	useProjectUserRoles,
 } from "@contember/admin";
 import * as React from "react";
 import { Conditional } from "../components/Conditional";
@@ -20,187 +20,195 @@ import { RoleConditional } from "../components/RoleConditional";
 import { VisitMarker } from "../components/VisitMarker";
 import "./offerEdit.sass";
 
-export default (
-	<EditPage
-		entity="Offer(id=$id)"
-		onBeforePersist={(entityAccessor) => {
-			const updatedAt = entityAccessor().getField("updatedAt");
-			updatedAt.updateValue("now");
-		}}
-		rendererProps={{
-			title: <Field field="type.name" />,
-			navigation: (
-				<NavigateBackButton to="offers(id: $entity.type.id)">
-					Zpět na nabídky <Field field="type.name" />
-				</NavigateBackButton>
-			),
-		}}
-	>
-		{/* <CurrentEntitySharedKeyAcquirer /> */}
-		<VisitMarker />
-		<RoleConditional role={["admin", "organizationAdmin"]}>
-			<Conditional
-				showIf={(entity) =>
-					entity.getField("isDeleted").valueOnServer !=
-						entity.getField("isDeleted").value &&
-					entity.getField("isDeleted").valueOnServer === true
+const EditOffer = () => {
+	const roles = useProjectUserRoles()
+	return (
+		<EditPage
+			entity="Offer(id=$id)"
+			onBeforePersist={(entityAccessor) => {
+				if (!roles.has('admin') && !roles.has('organizationAdmin')) {
+					const updatedAt = entityAccessor().getField("updatedAt");
+					updatedAt.updateValue("now");
 				}
-				additionalStaticChildren={<Field field="isDeleted" />}
-			>
-				<div
-					style={{
-						backgroundColor: "#fff",
-						padding: "10px",
-						borderRadius: "10px",
-					}}
+			}}
+			rendererProps={{
+				title: <Field field="type.name" />,
+				navigation: (
+					<NavigateBackButton to="offers(id: $entity.type.id)">
+						Zpět na nabídky <Field field="type.name" />
+					</NavigateBackButton>
+				),
+			}}
+		>
+			{/* <CurrentEntitySharedKeyAcquirer /> */}
+			<VisitMarker />
+			<RoleConditional role={["admin", "organizationAdmin"]}>
+				<Conditional
+					showIf={(entity) =>
+						entity.getField("isDeleted").valueOnServer !=
+							entity.getField("isDeleted").value &&
+						entity.getField("isDeleted").valueOnServer === true
+					}
+					additionalStaticChildren={<Field field="isDeleted" />}
 				>
-					<span style={{ fontSize: "120%", color: "green" }}>
-						Opravdu chcete obnovit tuto nabídku?
-					</span>
-					<br />
+					<div
+						style={{
+							backgroundColor: "#fff",
+							padding: "10px",
+							borderRadius: "10px",
+						}}
+					>
+						<span style={{ fontSize: "120%", color: "green" }}>
+							Opravdu chcete obnovit tuto nabídku?
+						</span>
+						<br />
 
-					<PersistButton />
+						<PersistButton />
+					</div>
+				</Conditional>
+				<Conditional
+					showIf={(entity) =>
+						entity.getField("isDeleted").valueOnServer === true &&
+						entity.getField("isDeleted").value === true
+					}
+					additionalStaticChildren={<Field field="isDeleted" />}
+				>
+					<div
+						style={{
+							backgroundColor: "#fff",
+							padding: "10px",
+							borderRadius: "10px",
+						}}
+					>
+						<span style={{ fontSize: "120%", color: "red" }}>
+							Tato nabídka je smazaná
+						</span>
+						<br />
+
+						<EntityView
+							render={(entity) => (
+								<Button
+									onClick={() => {
+										entity.getField("isDeleted").updateValue(false);
+									}}
+								>
+									Obnovit nabídku
+								</Button>
+							)}
+						/>
+					</div>
+				</Conditional>
+			</RoleConditional>
+			<OfferManage />
+			<div style={{ color: "#000" }}>
+				Kód nabídky:{" "}
+				<strong>
+					<Field field="code" />
+				</strong>
+			</div>
+			<RichTextField field="internalNote" label="Interní poznámka" />
+			<OfferForm />
+			<RoleConditional role={["admin", "organizationAdmin"]}>
+				<LinkButton to="offerMove(id: $entity.id)">
+					Přesunout nabídku do jiné kategorie
+				</LinkButton>
+			</RoleConditional>
+			<Section heading="Dobrovolník">
+				<div>
+					Pro zobrazení konktaktních údajů musíte mít na sebe přiřazenou
+					nabídku.
 				</div>
-			</Conditional>
-			<Conditional
-				showIf={(entity) =>
-					entity.getField("isDeleted").valueOnServer === true &&
-					entity.getField("isDeleted").value === true
-				}
-				additionalStaticChildren={<Field field="isDeleted" />}
-			>
-				<div
-					style={{
-						backgroundColor: "#fff",
-						padding: "10px",
-						borderRadius: "10px",
-					}}
+				<div className="volunteer-wrapper">
+					<MultiSelectField
+						label="Tagy dobrovolníka"
+						field="volunteer.tags"
+						options="VolunteerTag.name"
+					/>
+					<table style={{ marginTop: "10px" }}>
+						<tr>
+							<td>Jméno</td>
+							<td>
+								<Field field="volunteer.name" />
+							</td>
+						</tr>
+						<tr>
+							<td>Organizace</td>
+							<td>
+								<Field field="volunteer.organization" />
+							</td>
+						</tr>
+						<tr>
+							<td>Telefon</td>
+							<td>
+								<Field field="volunteer.phone" />
+							</td>
+						</tr>
+						<tr>
+							<td>Email</td>
+							<td>
+								<Field field="volunteer.email" />
+							</td>
+						</tr>
+						<tr>
+							<td>Odbornost</td>
+							<td>
+								<Field field="volunteer.expertise" />
+							</td>
+						</tr>
+						<tr>
+							<td>Jazyky</td>
+							<td>
+								<HasMany field="volunteer.languages">
+									<Field field="language.name" />{" "}
+								</HasMany>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</Section>
+			<RoleConditional role={["admin", "organizationAdmin"]}>
+				<Conditional
+					showIf={(entity) =>
+						entity.getField("isDeleted").valueOnServer !=
+							entity.getField("isDeleted").value &&
+						entity.getField("isDeleted").valueOnServer === false
+					}
+					additionalStaticChildren={<Field field="isDeleted" />}
 				>
-					<span style={{ fontSize: "120%", color: "red" }}>
-						Tato nabídka je smazaná
-					</span>
-					<br />
+					<div
+						style={{
+							backgroundColor: "#fff",
+							padding: "10px",
+							borderRadius: "10px",
+						}}
+					>
+						<span style={{ fontSize: "120%", color: "red" }}>
+							Opravdu chcete smazat tuto nabídku?
+						</span>
+						<br />
 
+						<PersistButton />
+					</div>
+				</Conditional>
+				<Conditional
+					showIf={(entity) => entity.getField("isDeleted").value === false}
+					additionalStaticChildren={<Field field="isDeleted" />}
+				>
 					<EntityView
 						render={(entity) => (
 							<Button
 								onClick={() => {
-									entity.getField("isDeleted").updateValue(false);
+									entity.getField("isDeleted").updateValue(true);
 								}}
 							>
-								Obnovit nabídku
+								Smazat nabídku
 							</Button>
 						)}
 					/>
-				</div>
-			</Conditional>
-		</RoleConditional>
-		<OfferManage />
-		<div style={{ color: "#000" }}>
-			Kód nabídky:{" "}
-			<strong>
-				<Field field="code" />
-			</strong>
-		</div>
-		<RichTextField field="internalNote" label="Interní poznámka" />
-		<OfferForm />
-		<RoleConditional role={["admin", "organizationAdmin"]}>
-			<LinkButton to="offerMove(id: $entity.id)">
-				Přesunout nabídku do jiné kategorie
-			</LinkButton>
-		</RoleConditional>
-		<Section heading="Dobrovolník">
-			<div>
-				Pro zobrazení konktaktních údajů musíte mít na sebe přiřazenou nabídku.
-			</div>
-			<div className="volunteer-wrapper">
-				<MultiSelectField
-					label="Tagy dobrovolníka"
-					field="volunteer.tags"
-					options="VolunteerTag.name"
-				/>
-				<table style={{ marginTop: "10px" }}>
-					<tr>
-						<td>Jméno</td>
-						<td>
-							<Field field="volunteer.name" />
-						</td>
-					</tr>
-					<tr>
-						<td>Organizace</td>
-						<td>
-							<Field field="volunteer.organization" />
-						</td>
-					</tr>
-					<tr>
-						<td>Telefon</td>
-						<td>
-							<Field field="volunteer.phone" />
-						</td>
-					</tr>
-					<tr>
-						<td>Email</td>
-						<td>
-							<Field field="volunteer.email" />
-						</td>
-					</tr>
-					<tr>
-						<td>Odbornost</td>
-						<td>
-							<Field field="volunteer.expertise" />
-						</td>
-					</tr>
-					<tr>
-						<td>Jazyky</td>
-						<td>
-							<HasMany field="volunteer.languages">
-								<Field field="language.name" />{" "}
-							</HasMany>
-						</td>
-					</tr>
-				</table>
-			</div>
-		</Section>
-		<RoleConditional role={["admin", "organizationAdmin"]}>
-			<Conditional
-				showIf={(entity) =>
-					entity.getField("isDeleted").valueOnServer !=
-						entity.getField("isDeleted").value &&
-					entity.getField("isDeleted").valueOnServer === false
-				}
-				additionalStaticChildren={<Field field="isDeleted" />}
-			>
-				<div
-					style={{
-						backgroundColor: "#fff",
-						padding: "10px",
-						borderRadius: "10px",
-					}}
-				>
-					<span style={{ fontSize: "120%", color: "red" }}>
-						Opravdu chcete smazat tuto nabídku?
-					</span>
-					<br />
+				</Conditional>
+			</RoleConditional>
+		</EditPage>
+	);
+};
 
-					<PersistButton />
-				</div>
-			</Conditional>
-			<Conditional
-				showIf={(entity) => entity.getField("isDeleted").value === false}
-				additionalStaticChildren={<Field field="isDeleted" />}
-			>
-				<EntityView
-					render={(entity) => (
-						<Button
-							onClick={() => {
-								entity.getField("isDeleted").updateValue(true);
-							}}
-						>
-							Smazat nabídku
-						</Button>
-					)}
-				/>
-			</Conditional>
-		</RoleConditional>
-	</EditPage>
-);
+export default EditOffer;

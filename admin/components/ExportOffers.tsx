@@ -156,11 +156,7 @@ export const ExportOffers = Component<{
 								} else if (["checkbox"].includes(question.type)) {
 									return offer.parameters
 										.find((parameter) => parameter.question.id === question.id)
-										?.values.map((value) =>
-											value.specification
-												? `${value.value} (${value.specification})`
-												: value.value
-										)
+										?.values.map((value) => [value.value, value.specification])
 										.join(", ");
 								} else if (["district"].includes(question.type)) {
 									return [
@@ -170,6 +166,13 @@ export const ExportOffers = Component<{
 											)
 											?.values.map((value) => value.value)
 											.join(", "),
+										offer.parameters
+											.find(
+												(parameter) => parameter.question.id === question.id
+											)
+											?.values.map((value) => value.district.region.name)
+											.join(", "),
+											
 									];
 								} else {
 									return null;
