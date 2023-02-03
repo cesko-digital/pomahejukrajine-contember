@@ -10,8 +10,8 @@
   "devDependencies": {
     "@contember/admin": "1.1.0-alpha.16",
     "@contember/admin-i18n": "1.1.0-alpha.16",
-    "@contember/schema": "^1.2.0-alpha.18",
-    "@contember/schema-definition": "^1.2.0-alpha.18",
+    "@contember/schema": "^1.2.0-rc.1",
+    "@contember/schema-definition": "^1.2.0-rc.1",
     "@types/papaparse": "^5.3.5",
     "@types/react": "^17",
     "@types/react-instantsearch-dom": "^6.12.3",
