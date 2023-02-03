@@ -26,6 +26,9 @@ export const Navigation = () => (
 						/>
 					</EntityListSubTree>
 				</DataBindingProvider>
+				<RoleConditional role={['admin']}>
+					<Menu.Item title="Přehled čerpání nabídek" to="offerListByOrganization" />
+				</RoleConditional>
 			</Menu.Item>
 			<RoleConditional role={['admin', 'organizationAdmin']}>
 				<Menu.Item title="Nastavení">
