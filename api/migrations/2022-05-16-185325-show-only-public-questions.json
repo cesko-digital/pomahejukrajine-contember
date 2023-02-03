@@ -1,4 +1,10 @@
 {
+	"skippedErrors": [
+		{
+				"code": "ACL_INVALID_CONDITION",
+				"path": "acl.public.entities.Question.predicates.isPublic"
+		}
+	],
 	"formatVersion": 3,
 	"modifications": [
 		{
@@ -9,7 +15,7 @@
 					"path": "/roles/public/entities/Question/predicates/isPublic",
 					"value": {
 						"public": {
-							"eq": true
+							"eq": "true"
 						}
 					}
 				},
