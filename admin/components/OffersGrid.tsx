@@ -23,6 +23,7 @@ import { HasManyCell } from "./HasManyCell";
 import { HasManyFilterCell } from "./HasManyFilterCell";
 import { RoleConditional } from "./RoleConditional";
 import { VisitCell } from "./VisitCell";
+import { format } from 'date-fns'
 
 export type QuestionQueryResult = {
 	listQuestion: {
@@ -72,7 +73,8 @@ export const OffersGrid = ({
 						<LinkButton to="editOffer(id: $entity.id)">Otevřít</LinkButton>
 					</GenericCell>
 					<TextCell field="code" header="Kód" />
-					<DateCell field="createdAt" header="Vytvořeno" />
+					<DateCell field="createdAt" header="Vytvořeno" format={(date) => format(date, 'dd. MM. y')} />
+					<DateCell field="updatedAt" header="Aktualizováno" format={(date) => format(date, 'dd. MM. y')} />
 					<HasManySelectCell
 						field="assignees"
 						header="Přiřazen"

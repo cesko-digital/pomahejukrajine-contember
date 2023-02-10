@@ -6,6 +6,7 @@ import {
 	LinkButton,
 	TextCell,
 } from "@contember/admin";
+import { format } from 'date-fns'
 import * as React from "react";
 
 export const GridContent = Component(
@@ -23,10 +24,10 @@ export const GridContent = Component(
 			/>
 			<HasOneSelectCell
 				field="offer"
-				header="Nabídka název"
-				options="Offer.name"
+				header="Kategorie nabídky"
+				options="Offer.type.name"
 			/>
-			<DateCell field="createdAt" header="Vytvořeno" initialOrder="desc" />
+			<DateCell field="createdAt" header="Vytvořeno" initialOrder="desc"  format={(date) => format(date, 'dd. MM. y')} />
 		</>
 	),
 	"GridContent"
