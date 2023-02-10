@@ -170,7 +170,7 @@ export const ExportOffers = Component<{
 											.find(
 												(parameter) => parameter.question.id === question.id
 											)
-											?.values.map((value) => value.district.region.name)
+											?.values.map((value) => value?.district?.region?.name)
 											.join(", "),
 											
 									];
@@ -182,8 +182,6 @@ export const ExportOffers = Component<{
 						parseJSON(offer.internalNote),
 					];
 				});
-
-				console.log({ csv });
 
 				const myCsv = Papa.unparse(csv, { delimiter: ";" });
 				const blob = new Blob([myCsv], { type: "text/csv;charset=utf-8;" });
