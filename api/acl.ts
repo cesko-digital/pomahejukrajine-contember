@@ -404,7 +404,7 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 						read: {
 							name: true,
 							address: true,
-							district: true,
+							districts: true,
 							region: true,
 							identificationNumber: true,
 							website: true,

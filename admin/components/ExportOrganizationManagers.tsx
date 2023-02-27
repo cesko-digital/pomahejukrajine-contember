@@ -36,6 +36,7 @@ export const ExportOrganizationManagers = Component(
 			const csv = organizationManagers.data?.listOrganizationManager?.map((manager: OrganizationManager) => {
 				return [manager.name, manager.email, manager.phone, manager.organization?.name, manager.role]
 			})
+			csv.unshift(['Jméno', 'E-mail', 'Telefon', 'Organizace', 'Role'])
 
 			const blob = new Blob([Papa.unparse(csv, { delimiter: ';' })], { type: 'text/csv;charset=utf-8;' })
 			return <a href={URL.createObjectURL(blob)} download="organization-managers.csv"><Button distinction="outlined">Stáhnout</Button></a>

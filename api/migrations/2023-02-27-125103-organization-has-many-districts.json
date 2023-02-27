@@ -1,0 +1,36 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "convertOneHasManyToManyHasManyRelation",
+			"entityName": "Organization",
+			"fieldName": "district",
+			"owningSide": {
+				"type": "ManyHasMany",
+				"name": "districts",
+				"target": "District",
+				"joiningTable": {
+					"tableName": "organization_districts",
+					"joiningColumn": {
+						"columnName": "organization_id",
+						"onDelete": "cascade"
+					},
+					"inverseJoiningColumn": {
+						"columnName": "district_id",
+						"onDelete": "cascade"
+					},
+					"eventLog": {
+						"enabled": true
+					}
+				},
+				"inversedBy": "organizations"
+			},
+			"inverseSide": {
+				"type": "ManyHasMany",
+				"name": "organizations",
+				"target": "Organization",
+				"ownedBy": "districts"
+			}
+		}
+	]
+}
