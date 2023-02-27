@@ -3,8 +3,10 @@ import {
 	DataGridPage,
 	DateCell,
 	Field,
+	GenericCell,
 	HasManySelectCell,
 	HasOneSelectCell,
+	LinkButton,
 	TextCell,
 } from "@contember/admin";
 import { format } from 'date-fns'
@@ -12,6 +14,9 @@ import { HasManyCell } from '../components/HasManyCell'
 
 export default (
 	<DataGridPage entities="Offer" rendererProps={{ title: "Přehled čerpání nabídek" }}>
+		<GenericCell canBeHidden={false} shrunk>
+			<LinkButton to="editOffer(id: $entity.id)">Otevřít</LinkButton>
+		</GenericCell>
 		<TextCell field="code" header="Nabídka kód" />
 		<HasOneSelectCell
 			field="type"
