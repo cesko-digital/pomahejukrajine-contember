@@ -12,6 +12,7 @@ const LIST_LIST_OFFER_QUERY = `
 		listOffer(filter: $filter, orderBy: { volunteer: { createdAt: desc } }) {
 			code
 			createdAt
+			updatedAt
 			assignees {
 				name
 			}
@@ -35,6 +36,7 @@ const LIST_LIST_OFFER_QUERY = `
 			parameters {
 				question {
 					id
+					label
 				}
 				value
 				specification
@@ -60,6 +62,7 @@ type ListOfferQueryResult = {
 type Offer = {
 	code: string;
 	createdAt: Date;
+	updatedAt: Date;
 	assignees: { name: string }[];
 	status: { name: string };
 	type: { name: string };
@@ -73,6 +76,7 @@ type Offer = {
 	parameters: {
 		question: {
 			id: string;
+			label: string;
 		};
 		value: string;
 		specification: string;
@@ -130,6 +134,7 @@ export const ExportOffers = Component<{
 						offer.volunteer.email,
 						offer.code,
 						offer.createdAt,
+						offer.updatedAt,
 						offer.assignees
 							.map((assignee: { name: string }) => assignee.name)
 							.join(", "),
@@ -139,40 +144,25 @@ export const ExportOffers = Component<{
 							.join(", "),
 						...listQuestion
 							.flatMap((question) => {
+								const parameter = offer.parameters.find((parameter) => parameter.question.id === question.id);
+
 								if (
 									["text", "textarea", "date", "radio", "number"].includes(
 										question.type
 									)
 								) {
-									const parameter = offer.parameters.find(
-										(parameter) => parameter.question.id === question.id
-									);
 									if (!parameter) {
-										return "";
+										return [];
 									}
 									return parameter.specification
 										? `${parameter.value} (${parameter.specification})`
 										: parameter.value;
 								} else if (["checkbox"].includes(question.type)) {
-									return offer.parameters
-										.find((parameter) => parameter.question.id === question.id)
-										?.values.map((value) => [value.value, value.specification])
-										.join(", ");
+									return parameter?.values.map((value) => [value.value, value.specification ?? ''])[0];
 								} else if (["district"].includes(question.type)) {
 									return [
-										offer.parameters
-											.find(
-												(parameter) => parameter.question.id === question.id
-											)
-											?.values.map((value) => value.value)
-											.join(", "),
-										offer.parameters
-											.find(
-												(parameter) => parameter.question.id === question.id
-											)
-											?.values.map((value) => value?.district?.region?.name)
-											.join(", "),
-											
+										parameter?.values.map((value) => value.value).join(", "),
+										parameter?.values.map((value) => value?.district?.region?.name).join(", "),
 									];
 								} else {
 									return null;
@@ -183,7 +173,38 @@ export const ExportOffers = Component<{
 					];
 				});
 
-				const myCsv = Papa.unparse(csv, { delimiter: ";" });
+				const firstOffer: Offer = offers.data?.listOffer[0]
+				csv.unshift([
+					'Dobrovolník e-mail',
+					'Kód nabídky',
+					'Datum vložení nabídky',
+					'Datum poslední úpravy nabídky',
+					'Přiřazen',
+					'Stav nabídky',
+					'Dobrovolník jazyky',
+					...listQuestion
+							.flatMap((question) => {
+								const parameter = firstOffer.parameters.find((parameter) => parameter.question.id === question.id);
+								if (
+									["text", "textarea", "date", "radio", "number"].includes(
+										question.type
+									)
+								) {
+									if (!parameter) {
+										return [];
+									}
+									return parameter.question.label;
+								} else if (["checkbox"].includes(question.type)) {
+									return parameter?.values ? [parameter.question.label, `${parameter.question.label} specifikace`] : [];
+								} else if (["district"].includes(question.type)) {
+									return ['Kraj', 'Okres'];
+								} else {
+									return null;
+								}
+							})
+				])
+
+				const myCsv = Papa.unparse(csv, { delimiter: ';' });
 				const blob = new Blob([myCsv], { type: "text/csv;charset=utf-8;" });
 				const url = URL.createObjectURL(blob);
 				setObjectUrl(url);

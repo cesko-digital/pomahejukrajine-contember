@@ -22,7 +22,7 @@ export const OrganizationTypeEnum = def.createEnum(
 export class Organization {
 	name = def.stringColumn().notNull()
 	address = def.stringColumn().notNull().default('')
-	district = def.manyHasOne(District, 'organizations')
+	districts = def.manyHasMany(District, 'organizations')
 	region = def.manyHasOne(Region, 'organizations')
 	identificationNumber = def.stringColumn().notNull().default('')
 	website = def.stringColumn().notNull().default('')

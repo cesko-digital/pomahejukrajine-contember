@@ -40,6 +40,7 @@ export const ExportOrganization = Component(
 			const csv = organizations.data?.listOrganization?.map((organization: Organization) => {
 				return [organization.name, organization.address, organization.identificationNumber, organization.website, organization.note, organization.parentOrganization, organization.organizationType, organization.district?.name, organization.region?.name, organization.nickname, organization.dateRegistered]
 			})
+			csv.unshift(['Název', 'Adresa', 'IČ', 'Web', 'Poznámka', 'Mateřská organizace', 'Typ organizace', 'Kraj', 'Okres', 'Zkratka', 'Datum registrace'])
 
 			const blob = new Blob([Papa.unparse(csv, { delimiter: ';' })], { type: 'text/csv;charset=utf-8;' })
 			return <a href={URL.createObjectURL(blob)} download="organizations.csv"><Button distinction="outlined">Stáhnout</Button></a>

@@ -11,5 +11,5 @@ export class District { // Okres
 	volunteers = def.oneHasMany(VolunteerDistrict, 'district')
 	offerParameterValues = def.oneHasMany(OfferParameterValueDetails, 'district')
 	offers = def.oneHasMany(OfferParameterValue, 'district')
-	organizations = def.oneHasMany(Organization, 'district')
+	organizations = def.manyHasManyInverse(Organization, 'districts')
 }
