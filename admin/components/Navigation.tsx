@@ -47,7 +47,7 @@ export const Navigation = () => (
 			</RoleConditional>
 		</RoleConditional>
 		<Menu.Item title="Uživatel">
-			<Menu.Item title="Změnit heslo" href="/_panel/security" />
+			<a href="/_panel/security"><span className='cui-label cui-menu-group-label'>Změnit heslo</span></a>
 			<LogoutLink><Menu.Item title="Odhlásit se" /></LogoutLink>
 		</Menu.Item>
 	</Menu>
