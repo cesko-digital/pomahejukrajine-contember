@@ -204,7 +204,7 @@ export const ExportOffers = Component<{
 							})
 				])
 
-				const myCsv = Papa.unparse(csv, { delimiter: ';' });
+				const myCsv = Papa.unparse(csv, { delimiter: ';', quotes: true });
 				const blob = new Blob([myCsv], { type: "text/csv;charset=utf-8;" });
 				const url = URL.createObjectURL(blob);
 				setObjectUrl(url);
