@@ -155,7 +155,7 @@ export default () => {
 							))}
 						<details>
 							<summary>
-								<strong>Stav</strong>
+								<strong>Stav nabídky</strong>
 							</summary>
 							<RefinementList
 								attribute="status_name_facet"
