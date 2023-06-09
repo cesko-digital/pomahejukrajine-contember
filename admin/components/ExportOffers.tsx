@@ -181,8 +181,8 @@ export const ExportOffers = Component<{
 				const firstOffer: Offer = offers.data?.listOffer[0]
 				csv.unshift([
 					'Dobrovolník e-mail',
-					'Kraj',
 					'Okres',
+					'Kraj',
 					'Kód nabídky',
 					'Datum vložení nabídky',
 					'Datum poslední úpravy nabídky',
