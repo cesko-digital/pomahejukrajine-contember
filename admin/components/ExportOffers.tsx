@@ -141,8 +141,9 @@ export const ExportOffers = Component<{
 										parameter?.values.map((value) => value?.district?.region?.name).join(", "),
 									];
 								}
+								return [];
 							})
-							.filter((item) => item !== null),
+							.filter((item) => item !== null && (item && item.length > 0)),
 						offer.code,
 						offer.createdAt,
 						offer.updatedAt,
