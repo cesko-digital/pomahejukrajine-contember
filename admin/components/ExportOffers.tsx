@@ -132,6 +132,17 @@ export const ExportOffers = Component<{
 				const csv = offers.data?.listOffer?.map((offer: Offer) => {
 					return [
 						offer.volunteer.email,
+						...listQuestion
+							.flatMap((question) => {
+								const parameter = offer.parameters.find((parameter) => parameter.question.id === question.id);
+								if (["district"].includes(question.type)) {
+									return [
+										parameter?.values.map((value) => value.value).join(", "),
+										parameter?.values.map((value) => value?.district?.region?.name).join(", "),
+									];
+								}
+							})
+							.filter((item) => item !== null),
 						offer.code,
 						offer.createdAt,
 						offer.updatedAt,
@@ -145,7 +156,6 @@ export const ExportOffers = Component<{
 						...listQuestion
 							.flatMap((question) => {
 								const parameter = offer.parameters.find((parameter) => parameter.question.id === question.id);
-
 								if (
 									["text", "textarea", "date", "radio", "number"].includes(
 										question.type
@@ -159,12 +169,7 @@ export const ExportOffers = Component<{
 										: parameter.value;
 								} else if (["checkbox"].includes(question.type)) {
 									return parameter?.values.map((value) => [value.value, value.specification ?? ''])[0];
-								} else if (["district"].includes(question.type)) {
-									return [
-										parameter?.values.map((value) => value.value).join(", "),
-										parameter?.values.map((value) => value?.district?.region?.name).join(", "),
-									];
-								} else {
+								}	else {
 									return null;
 								}
 							})
@@ -176,6 +181,8 @@ export const ExportOffers = Component<{
 				const firstOffer: Offer = offers.data?.listOffer[0]
 				csv.unshift([
 					'Dobrovolník e-mail',
+					'Kraj',
+					'Okres',
 					'Kód nabídky',
 					'Datum vložení nabídky',
 					'Datum poslední úpravy nabídky',
@@ -196,8 +203,6 @@ export const ExportOffers = Component<{
 									return parameter.question.label;
 								} else if (["checkbox"].includes(question.type)) {
 									return parameter?.values ? [parameter.question.label, `${parameter.question.label} specifikace`] : [];
-								} else if (["district"].includes(question.type)) {
-									return ['Kraj', 'Okres'];
 								} else {
 									return null;
 								}
