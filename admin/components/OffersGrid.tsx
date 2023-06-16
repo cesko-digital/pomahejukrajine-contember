@@ -72,100 +72,9 @@ export const OffersGrid = ({
 					<GenericCell canBeHidden={false} shrunk>
 						<LinkButton to="editOffer(id: $entity.id)">Otevřít</LinkButton>
 					</GenericCell>
-					<TextCell field="code" header="Kód" />
-					<DateCell field="createdAt" header="Vytvořeno" format={(date) => format(date, 'dd. MM. y')} />
-					<DateCell field="updatedAt" header="Aktualizováno" format={(date) => format(date, 'dd. MM. y')} />
-					<HasManySelectCell
-						field="assignees"
-						header="Přiřazen"
-						options={"OrganizationManager.name"}
-						renderElements={(els) => (
-							<span>
-								{els.map((el) => (
-									<span style={{ display: "block", fontSize: "90%" }}>
-										{el}
-									</span>
-								))}
-							</span>
-						)}
-					/>
-					{/* <GenericCell header="Prohlíží" shrunk>
-					<CurrentEntityKeyListener>
-						{(data) => (<CollaborationList emails={data?.keys?.map(key => key.client.email) ?? []} />)}
-					</CurrentEntityKeyListener>
-				</GenericCell> */}
-					<HasOneSelectCell
-						field="status"
-						options="OfferStatus.name"
-						header="Status"
-					/>
-					<HasManyCell
-						field="volunteer.languages"
-						entityList="Language"
-						hasOneField="language"
-						header="Dobrovolník: Jazyky"
-					>
-						<Field field="name" />
-					</HasManyCell>
 					{query.data.listQuestion
 						.map((question) => {
-							if (
-								["text", "radio", "textarea", "date"].includes(question.type)
-							) {
-								return (
-									<TextCell
-										key={question.id}
-										field={`parameters(question.id='${question.id}').value`}
-										header={question.label}
-										hidden={question.type === "textarea"}
-										format={limitLength(30, true)}
-										disableOrder
-									/>
-								);
-							} else if (question.type === "number") {
-								return (
-									<NumberCell
-										key={question.id}
-										field={`details.numericValue`}
-										header={question.label}
-									/>
-								);
-							} else if (["checkbox"].includes(question.type)) {
-								return (
-									<>
-										<HasManyFilterCell
-											key={question.id}
-											field={`parameters(question.id='${question.id}').values`}
-											header={question.label}
-											createWhere={(query) => ({ value: query })}
-											render={({ entities }) => (
-												<>
-													{entities
-														.map((entity) => entity.getField("value").value)
-														.join(", ")}
-												</>
-											)}
-										>
-											<Field field={`value`} />
-										</HasManyFilterCell>
-										<HasManyFilterCell
-											key={question.id + "specification"}
-											field={`parameters(question.id='${question.id}').values`}
-											header={question.label + " specifikace"}
-											createWhere={(query) => ({ specification: query })}
-											render={({ entities }) => (
-												<>
-													{entities.map((entity, index) => (
-														<SpecificationValue key={index} entity={entity} />
-													))}
-												</>
-											)}
-										>
-											<Field field={`specification`} />
-										</HasManyFilterCell>
-									</>
-								);
-							} else if (["district"].includes(question.type)) {
+							if (["district"].includes(question.type)) {
 								return (
 									<>
 										<HasManyFilterCell
@@ -203,6 +112,104 @@ export const OffersGrid = ({
 											<Field field={`name`} />
 											<br />
 										</HasManyCell>
+									</>
+								);
+							} else if (question.type === "number") {
+								return (
+									<NumberCell
+										key={question.id}
+										field={`details.numericValue`}
+										header={question.label}
+									/>
+								);
+							} else {
+								return null;
+							}
+						})
+						.filter((item) => item !== null)}
+					<HasOneSelectCell
+						field="status"
+						options="OfferStatus.name"
+						header="Status"
+					/>
+					<TextCell field="code" header="Kód" />
+					<DateCell field="createdAt" header="Vytvořeno" format={(date) => format(date, 'dd. MM. y')} />
+					<DateCell field="updatedAt" header="Aktualizováno" format={(date) => format(date, 'dd. MM. y')} />
+					<HasManySelectCell
+						field="assignees"
+						header="Přiřazen"
+						options={"OrganizationManager.name"}
+						renderElements={(els) => (
+							<span>
+								{els.map((el) => (
+									<span style={{ display: "block", fontSize: "90%" }}>
+										{el}
+									</span>
+								))}
+							</span>
+						)}
+					/>
+					{/* <GenericCell header="Prohlíží" shrunk>
+					<CurrentEntityKeyListener>
+						{(data) => (<CollaborationList emails={data?.keys?.map(key => key.client.email) ?? []} />)}
+					</CurrentEntityKeyListener>
+				</GenericCell> */}
+					<HasManyCell
+						field="volunteer.languages"
+						entityList="Language"
+						hasOneField="language"
+						header="Dobrovolník: Jazyky"
+					>
+						<Field field="name" />
+					</HasManyCell>
+					{query.data.listQuestion
+						.map((question) => {
+							if (
+								["text", "radio", "textarea", "date"].includes(question.type)
+							) {
+								return (
+									<TextCell
+										key={question.id}
+										field={`parameters(question.id='${question.id}').value`}
+										header={question.label}
+										hidden={question.type === "textarea"}
+										format={limitLength(30, true)}
+										disableOrder
+									/>
+								);
+							} else if (["checkbox"].includes(question.type)) {
+								return (
+									<>
+										<HasManyFilterCell
+											key={question.id}
+											field={`parameters(question.id='${question.id}').values`}
+											header={question.label}
+											createWhere={(query) => ({ value: query })}
+											render={({ entities }) => (
+												<>
+													{entities
+														.map((entity) => entity.getField("value").value)
+														.join(", ")}
+												</>
+											)}
+										>
+											<Field field={`value`} />
+										</HasManyFilterCell>
+										<HasManyFilterCell
+											key={question.id + "specification"}
+											field={`parameters(question.id='${question.id}').values`}
+											header={question.label + " specifikace"}
+											createWhere={(query) => ({ specification: query })}
+											render={({ entities }) => (
+												<>
+													{entities.map((entity, index) => (
+														<SpecificationValue key={index} entity={entity} />
+													))}
+												</>
+											)}
+										>
+											<Field field={`specification`} />
+										</HasManyFilterCell>
 									</>
 								);
 							} else {
