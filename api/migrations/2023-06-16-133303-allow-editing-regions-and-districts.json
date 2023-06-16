@@ -1,0 +1,62 @@
+{
+	"formatVersion": 3,
+	"modifications": [
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/Region",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"name": true,
+								"nameUK": true,
+								"districts": true,
+								"organizations": true
+							},
+							"update": {
+								"id": true,
+								"name": true,
+								"nameUK": true,
+								"districts": true,
+								"organizations": true
+							}
+						}
+					}
+				},
+				{
+					"op": "add",
+					"path": "/roles/organizationAdmin/entities/District",
+					"value": {
+						"predicates": {},
+						"operations": {
+							"read": {
+								"id": true,
+								"region": true,
+								"name": true,
+								"nameUK": true,
+								"volunteers": true,
+								"offerParameterValues": true,
+								"offers": true,
+								"organizations": true
+							},
+							"update": {
+								"id": true,
+								"region": true,
+								"name": true,
+								"nameUK": true,
+								"volunteers": true,
+								"offerParameterValues": true,
+								"offers": true,
+								"organizations": true
+							}
+						}
+					}
+				}
+			]
+		}
+	]
+}

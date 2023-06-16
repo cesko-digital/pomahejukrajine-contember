@@ -309,6 +309,20 @@ const aclFactory = (model: Model.Schema): Acl.Schema => ({
 						create: allField(model, 'Organization', true),
 					}
 				},
+				Region: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'Region', true),
+						update: allField(model, 'Region', true),
+					},
+				},
+				District: {
+					predicates: {},
+					operations: {
+						read: allField(model, 'District', true),
+						update: allField(model, 'District', true),
+					}
+				},
 				OrganizationStats: {
 					predicates: {},
 					operations: {
