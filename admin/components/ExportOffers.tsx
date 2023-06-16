@@ -141,16 +141,24 @@ export const ExportOffers = Component<{
 										parameter?.values.map((value) => value?.district?.region?.name).join(", "),
 									];
 								}
+								if (["number"].includes(question.type)) {
+									if (!parameter) {
+										return [];
+									}
+									return parameter.specification
+										? `${parameter.value} (${parameter.specification})`
+										: parameter.value;
+								}
 								return [];
 							})
 							.filter((item) => item !== null && (item && item.length > 0)),
+						offer.status?.name,
 						offer.code,
 						offer.createdAt,
 						offer.updatedAt,
 						offer.assignees
 							.map((assignee: { name: string }) => assignee.name)
 							.join(", "),
-						offer.status?.name,
 						offer.volunteer.languages
 							.map((language) => language.language.name)
 							.join(", "),
@@ -158,7 +166,7 @@ export const ExportOffers = Component<{
 							.flatMap((question) => {
 								const parameter = offer.parameters.find((parameter) => parameter.question.id === question.id);
 								if (
-									["text", "textarea", "date", "radio", "number"].includes(
+									["text", "textarea", "date", "radio"].includes(
 										question.type
 									)
 								) {
@@ -184,11 +192,22 @@ export const ExportOffers = Component<{
 					'Dobrovolník e-mail',
 					'Okres',
 					'Kraj',
+					...listQuestion
+						.flatMap((question) => {
+							const parameter = firstOffer.parameters.find((parameter) => parameter.question.id === question.id);
+							if (["number"].includes(question.type)) {
+								if (!parameter) {
+									return [];
+								}
+								return parameter.question.label;
+							}
+							return [];
+						}),
+					'Stav nabídky',
 					'Kód nabídky',
 					'Datum vložení nabídky',
 					'Datum poslední úpravy nabídky',
 					'Přiřazen',
-					'Stav nabídky',
 					'Dobrovolník jazyky',
 					...listQuestion
 							.flatMap((question) => {
