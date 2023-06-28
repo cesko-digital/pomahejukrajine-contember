@@ -12,7 +12,7 @@ query {
 		note
 		parentOrganization
 		organizationType
-		district { name }
+		districts { name }
 		region { name }
 		nickname
 		dateRegistered
@@ -24,7 +24,7 @@ type ListOrganizationQueryResult = {
 	listOrganization: Organization[]
 }
 
-type Organization = { name: string, address: string, identificationNumber: string, website: string, note: string, parentOrganization: string, organizationType: string, district: { name: string }, region: { name: string }, nickname: string, dateRegistered: string }
+type Organization = { name: string, address: string, identificationNumber: string, website: string, note: string, parentOrganization: string, organizationType: string, districts: [{ name: string }], region: { name: string }, nickname: string, dateRegistered: string }
 
 export const ExportOrganization = Component(
 	() => {
@@ -36,9 +36,10 @@ export const ExportOrganization = Component(
 		}, [client])
 
 		if (organizations) {
-			console.log(organizations)
 			const csv = organizations.data?.listOrganization?.map((organization: Organization) => {
-				return [organization.name, organization.address, organization.identificationNumber, organization.website, organization.note, organization.parentOrganization, organization.organizationType, organization.district?.name, organization.region?.name, organization.nickname, organization.dateRegistered]
+				let districtNames = organization.districts?.map(district => district.name).join(", ");
+
+				return [organization.name, organization.address, organization.identificationNumber, organization.website, organization.note, organization.parentOrganization, organization.organizationType, districtNames, organization.region?.name, organization.nickname, organization.dateRegistered]
 			})
 			csv.unshift(['Název', 'Adresa', 'IČ', 'Web', 'Poznámka', 'Mateřská organizace', 'Typ organizace', 'Kraj', 'Okres', 'Zkratka', 'Datum registrace'])
 
