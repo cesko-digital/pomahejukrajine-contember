@@ -286,6 +286,14 @@ export const OffersGrid = ({
 		),
 	});
 
+
+	const setFilter = dataGridProps.stateMethods.setFilter
+
+	React.useEffect(() => {
+		// This ID is only in production ("Aktivní - k využití"). Would be good to not set filter when none is available but this works.
+		setFilter('status',{ id: ['cf197569-5b2e-4258-9050-600d5c1330f6']})
+	}, [setFilter])
+
 	return (
 		<GenericPage
 			title={offerTypeName}
